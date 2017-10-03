@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
     # use our session controller instead of clearance session controller
     delete "/sign_out" => "sessions#destroy", as: :sign_out
+    post '/sign_up' => "sessions#sign_up_oauth", as: :sign_up
 
 end
