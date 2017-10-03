@@ -1,1 +1,11 @@
 <h4>Hi</h4>
+
+
+
+<!--testing block for oauth-->
+<% if current_user %>
+    <h5>Signed in as <%= current_user.name %></h5>
+<% else %>
+    <h5>Not signed in</h5>
+<% end %>
+<!---->
