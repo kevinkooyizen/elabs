@@ -5,11 +5,12 @@ class SessionsController < Clearance::SessionsController
         auth_hash = request.env["omniauth.auth"]
         if auth_hash.present?
             # passed steam authentication
-            user = User.find_by uid: User.change_uid_to_32bit(auth_hash[:uid]), provider: auth_hash[:provider]
+            user = User.find_by uid: User.change_uid_to_32_bit(uid_64_bit: auth_hash[:uid]), provider: auth_hash[:provider]
 
             # first time sign in
+            byebug
             if user.nil?
-                user = User.create_from_omniauth uid:auth_hash[:uid], name:auth_hash[:info][:name], country: auth_hash[:info][:location], provider: auth_hash[:provider]
+                user = User.create_from_omniauth uid: auth_hash[:uid], name:auth_hash[:info][:name], country: auth_hash[:info][:location], provider: auth_hash[:provider]
                 if user.errors.messages.present?
                     # error in user creation
                     flash[:error] = user.errors.messages

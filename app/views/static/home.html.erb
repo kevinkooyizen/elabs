@@ -6,6 +6,7 @@
 <% if current_user %>
     <h5>Signed in as <%= current_user.name %></h5>
 <% else %>
+    <%= link_to 'Sign in with Steam', '/auth/steam' %>
     <h5>Not signed in</h5>
 <% end %>
 <!---->

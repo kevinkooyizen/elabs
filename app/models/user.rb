@@ -3,9 +3,11 @@ class User < ApplicationRecord
 
     BIT_CONVERSION = 76561197960265728
 
-    def create_from_omniauth(uid:nil, name:'anonymous', country:nil, provider:nil)
+    def self.create_from_omniauth(uid:nil, name: 'anonymous', country: nil, provider: nil)
         user = User.new
-        user.uid = User.change_uid_to_32bit uid_64bit: uid
+        # TODO need to confirm the flow of filling in email
+        user.email = SecureRandom.hex(5) + '@gmail.com'
+        user.uid = User.change_uid_to_32_bit uid_64_bit: uid
         user.provider = provider
         user.name = name
         user.country = country
@@ -14,13 +16,13 @@ class User < ApplicationRecord
         return user
     end
 
-    def self.find_by_uid(uid_64bit: nil)
-        self.find_by uid: self.change_uid_to_32bit(uid_64bit)
-    end
+    # def self.find_by_uid(uid_64bit: nil)
+    #     self.find_by uid: self.change_uid_to_32bit(uid_64bit)
+    # end
 
 
-    def self.change_uid_to_32bit(uid_64bit:nil)
-        (uid_64bit.to_i - self.bit_conversion).to_s
+    def self.change_uid_to_32_bit(uid_64_bit: nil)
+        (uid_64_bit.to_i - self.bit_conversion).to_s
     end
 
     private

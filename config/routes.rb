@@ -8,7 +8,5 @@ Rails.application.routes.draw do
     # route to create session after steam authentication
     match '/auth/:provider/callback', to: 'sessions#create_from_omniauth', via: :all
 
-    # steam sign in route
-    get 'sign_in_steam', to: 'sessions#test', as: :sign_in_steam
 
 end
