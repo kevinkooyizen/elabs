@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
     # route to create session after steam authentication
-    match '/auth/:provider/callback', to: 'sessions#create', via: :all
+    match '/auth/:provider/callback', to: 'sessions#create_from_omniauth', via: :all
 
-    get 'sign_in_steam', to: '/auth/steam', as: :sign_in_steam
+    # steam sign in route
+    get 'sign_in_steam', to: 'sessions#test', as: :sign_in_steam
+
 end
