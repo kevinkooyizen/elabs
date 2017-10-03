@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
     root 'static#home'
+    resources :sessions
     resources :users
     resources :teams
     resources :tournaments
@@ -8,5 +9,7 @@ Rails.application.routes.draw do
     # route to create session after steam authentication
     match '/auth/:provider/callback', to: 'sessions#create_from_omniauth', via: :all
 
+    # use our session controller instead of clearance session controller
+    delete "/sign_out" => "sessions#destroy", as: :sign_out
 
 end

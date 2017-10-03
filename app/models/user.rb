@@ -1,12 +1,20 @@
 class User < ApplicationRecord
   include Clearance::User
+  # validates :email, presence:true, uniqueness: true, unless: :skip_email_validation?
 
     BIT_CONVERSION = 76561197960265728
+
+  attr_accessor :skip_email_validation
+
+  def skip_email_validation?
+      self.skip_email_validation
+  end
 
     def self.create_from_omniauth(uid:nil, name: 'anonymous', country: nil, provider: nil)
         user = User.new
         # TODO need to confirm the flow of filling in email
-        user.email = SecureRandom.hex(5) + '@gmail.com'
+        user.email = SecureRandom.hex(5) + '@example.com'
+        user.skip_email_validation= true
         user.uid = User.change_uid_to_32_bit uid_64_bit: uid
         user.provider = provider
         user.name = name

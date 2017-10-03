@@ -8,7 +8,6 @@ class SessionsController < Clearance::SessionsController
             user = User.find_by uid: User.change_uid_to_32_bit(uid_64_bit: auth_hash[:uid]), provider: auth_hash[:provider]
 
             # first time sign in
-            byebug
             if user.nil?
                 user = User.create_from_omniauth uid: auth_hash[:uid], name:auth_hash[:info][:name], country: auth_hash[:info][:location], provider: auth_hash[:provider]
                 if user.errors.messages.present?
