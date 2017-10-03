@@ -1,4 +1,5 @@
 class SessionsController < Clearance::SessionsController
+    # steam oauth needs to bypass rails authenticity check to work
     skip_before_action :verify_authenticity_token, only: :create_from_omniauth
 
     def create_from_omniauth
@@ -15,30 +16,24 @@ class SessionsController < Clearance::SessionsController
                     flash[:error] = user.errors.messages
                     return redirect_to root_path
                 else
-                    # sign in the user and redirect them to complete their profile
+                    # create and sign in the user and redirect them to complete their profile
                     sign_in(user)
-                    flash[:notice] = 'Successfully sign in! Please complete your profile!'
+                    flash[:notice] = 'Successfully sign in! Please update your email!'
                     # TODO change to user profile path
                     return redirect_to root_path
                 end
 
             end
 
-            # existing user flow
+            # existing user oauth sign in flow
             sign_in(user)
             flash[:notice] = 'Successfully sign in!'
             return redirect_to root_path
         else
-            # failed to authenticate steam account
+            # failed steam authentication
             flash[:error] = 'Please make sure you can sign in your Steam account!'
             return redirect_to root_path
         end
-
-
-    end
-
-    def test
-        render 'test'
     end
 
     private
@@ -57,7 +52,6 @@ class SessionsController < Clearance::SessionsController
     def url_after_destroy
         #  TODO to be decided
         root_path
-        # sign_in_url
     end
 
     def url_for_signed_in_users

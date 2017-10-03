@@ -1,16 +1,9 @@
 class User < ApplicationRecord
-  include Clearance::User
-  # validates :email, presence:true, uniqueness: true, unless: :skip_email_validation?
+    include Clearance::User
 
     BIT_CONVERSION = 76561197960265728
 
-  attr_accessor :skip_email_validation
-
-  def skip_email_validation?
-      self.skip_email_validation
-  end
-
-    def self.create_from_omniauth(uid:nil, name: 'anonymous', country: nil, provider: nil)
+    def self.create_from_omniauth(uid: nil, name: 'anonymous', country: nil, provider: nil)
         user = User.new
         # TODO need to confirm the flow of filling in email
         user.email = SecureRandom.hex(5) + '@example.com'
@@ -28,9 +21,13 @@ class User < ApplicationRecord
     #     self.find_by uid: self.change_uid_to_32bit(uid_64bit)
     # end
 
-
+    # uid from steam oauth is in 64bit, convert it to 32bit as most of the third party api are using 32bit
     def self.change_uid_to_32_bit(uid_64_bit: nil)
         (uid_64_bit.to_i - self.bit_conversion).to_s
+    end
+
+    def self.change_uid_to_64_bit(uid_32_bit: nil)
+      (uid_32_bit.to_i + self.bit_conversion).to_s
     end
 
     private
