@@ -10,10 +10,58 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003075145) do
+ActiveRecord::Schema.define(version: 20171003084643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "participants", force: :cascade do |t|
+    t.bigint "team_id"
+    t.bigint "tournament_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_participants_on_team_id"
+    t.index ["tournament_id"], name: "index_participants_on_tournament_id"
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_players_on_team_id"
+    t.index ["user_id"], name: "index_players_on_user_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "game"
+    t.string "position"
+    t.string "team"
+    t.boolean "captain"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_roles_on_user_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "name"
+    t.string "sponsor"
+    t.string "coach"
+    t.string "manager"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tournaments", force: :cascade do |t|
+    t.string "name"
+    t.datetime "start"
+    t.datetime "end"
+    t.string "game"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -25,4 +73,9 @@ ActiveRecord::Schema.define(version: 20171003075145) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "participants", "teams"
+  add_foreign_key "participants", "tournaments"
+  add_foreign_key "players", "teams"
+  add_foreign_key "players", "users"
+  add_foreign_key "roles", "users"
 end
