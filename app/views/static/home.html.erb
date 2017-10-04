@@ -1,6 +1,39 @@
-<h4>eLabs</h4>
+<div class="header">
+  <h1>eLabs</h1>
+  <h3>Bringing the gap between amateurs and pros.</h3>
+</div>
+<!--testing block for oauth-->
+<div class="signin">
+  <% if current_user %>
+      <h5>Signed in as <%= current_user.real_name %></h5>
+      <%= link_to 'Sign out', sign_out_path, method: :delete %>
+  <% else %>
+      <h5>First time sign in</h5>
+      <%= form_for :oauth, url: sign_up_path do |f| %>
+          <%= f.label :email %>
+          <br>
+          <%= f.text_field :email %>
+          <br>
+          <%= f.submit 'Sign up with Steam' %>
+      <% end %>
+      <hr>
+      <h5>Sign in</h5>
+      <%= link_to 'Sign in with Steam', oauth_path %>
+      <h5>Not signed in</h5>
+  <% end %>
+</div>
+<!---->
 
+<div class="sections">
+  <div class="weekly">
+    <div class="team">
+      <h2>Team of the week</h2>
+    </div>
 
+    <div class="player">
+      <h2>Player of the week</h2>
+    </div>
+  </div>
 
 <!--testing block for oauth-->
 <% if current_user %>
@@ -19,3 +52,37 @@
     <h5>Not signed in</h5>
 <% end %>
 <!---->
+  <div class="events">
+    <h2>Events</h2>
+    <p>insert thumbnails of tournaments</p>
+  </div>
+
+  <div class="hot">
+    <h2>Hot players</h2>
+  </div>
+
+  <div class="team">
+    <h2>Team of the week</h2>
+  </div>
+
+  <div class="active">
+    <h2>Active streams of players and tournaments</h2>
+  </div>
+
+  <div class="team">
+    <h2>Team of the week</h2>
+  </div>
+
+  <div class="sponsors">
+    <h2>Featured Sponsors</h2>
+    <h4>Want to become a sponsor? Find out how.</h4>
+  </div>
+
+  <div class="team">
+    <h2>Team of the week</h2>
+  </div>
+
+  <div class="ads">
+    <h2>Advertisements</h2>
+  </div>
+</div>

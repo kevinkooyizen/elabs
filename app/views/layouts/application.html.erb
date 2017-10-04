@@ -10,13 +10,20 @@
 
   <body>
     <div id="navbar">
-      <%= link_to "Home", root_path%>
-      <% if signed_in? %>
-        <%= link_to "Profile", user_path(current_user) %>
-      <% else %>
-        <%= link_to "Sign Up", sign_up_path %>
-      <% end %>
+      <div class="nav-links">
+        <%= link_to "Home", root_path%>
+        <% if signed_in? %>
+          <%= link_to "Profile", user_path(current_user) %>
+        <% else %>
+          <%= link_to "Sign Up", sign_up_path %>
+        <% end %>
+      </div>
     </div>
+
     <%= yield %>
+
+    <div id="footer">
+      Footer here
+    </div>
   </body>
 </html>

@@ -13,4 +13,8 @@ Rails.application.routes.draw do
     delete "/sign_out" => "sessions#destroy", as: :sign_out
     post '/sign_up' => "sessions#sign_up_oauth", as: :sign_up
 
+
+    # get '/edit/:id' => "users#edit", as: :edit_user
+    # patch '/update/:id' => "users#update", as: :update_user
+
 end
