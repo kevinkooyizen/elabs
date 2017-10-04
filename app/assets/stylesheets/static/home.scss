@@ -12,15 +12,18 @@ body {
 }
 
 .header {
-  padding: 100px;
+  padding: 150px;
   text-align: center;
-
+  background-image: url('https://web2.hirez.com/paladins//wp-content/uploads/2017/03/DH_PR_PaldinsGame_Header.png');
+  background-position: center;
+  background-size: cover;
 }
 
 .signin {
   text-align: center;
   margin: auto;
   width: 400px;
+  margin-top: 30px;
   padding: 30px;
   background-color: $light-grey;
   border-radius: 10px;
