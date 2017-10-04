@@ -17,16 +17,17 @@ h1, h2, h3, h4 {
 
 #navbar {
   padding: 20px;
-  background-color: $light-grey;
+  background-color: $dark-grey;
 
   a {
     font-size: 12px;
     font-weight: bold;
+    color: $white;
   }
 }
 
 #footer {
-  background-color: $light-grey;
+  background-color: $dark-grey;
   padding: 10px;
   font-size: 12px;
 }
