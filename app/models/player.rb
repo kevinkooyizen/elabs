@@ -6,7 +6,15 @@ class Player < ApplicationRecord
 
     def self.persona_name(persona_name=nil)
         if persona_name.present?
-            joins(:user).where('users.real_name ilike ?', "%#{persona_name}%")
+            joins(:user).where('users.persona_name ilike ?', "%#{persona_name}%")
+        else
+            all
+        end
+    end
+
+    def self.real_name(real_name=nil)
+        if persona_name.present?
+            joins(:user).where('users.real_name ilike ?', "%#{real_name}%")
         else
             all
         end
@@ -20,10 +28,10 @@ class Player < ApplicationRecord
         end
     end
 
-    def self.player_search(persona_name: nil, state: nil, mmr_lower_range: min_mmr, mmr_upper_range: max_mmr)
+    def self.player_search(persona_name: nil, real_name: nil, state: nil, mmr_lower_range: self.min_mmr, mmr_upper_range: self.max_mmr)
         # initialize an array to store the players ids for query later
         players_ids = []
-        players = self.persona_name(persona_name).state(state).includes(:user)
+        players = self.persona_name(persona_name).real_name(real_name).state(state).includes(:user)
 
         if players.present?
             players.each do |player|
@@ -73,11 +81,11 @@ class Player < ApplicationRecord
         end
     end
 
-    def min_mmr
+    def self.min_mmr
         0
     end
 
-    def max_mmr
+    def self.max_mmr
         100000
     end
 end
