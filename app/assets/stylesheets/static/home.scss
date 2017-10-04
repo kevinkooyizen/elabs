@@ -12,11 +12,13 @@ body {
 }
 
 .header {
-  padding: 150px;
+  padding: 100px;
   text-align: center;
   background-image: url('https://web2.hirez.com/paladins//wp-content/uploads/2017/03/DH_PR_PaldinsGame_Header.png');
   background-position: center;
   background-size: cover;
+  font-size: 2em;
+  height: 300px;
 }
 
 .signin {
@@ -27,9 +29,31 @@ body {
   padding: 30px;
   background-color: $light-grey;
   border-radius: 10px;
+
+  .button {
+    background-color: #4CAF50;
+    padding: 10px 24px;
+    font-size: 12px;
+    color: black;
+    border-radius: 10px;
+    margin: 5px;
+    border: none;
+  }
 }
 
 .sections {
   text-align: center;
   margin: 30px;
+}
+
+.weekly {
+  display: flex;
+}
+
+.team {
+  flex: 1 1 0;
+}
+
+.player {
+  flex: 1 1 0;
 }
