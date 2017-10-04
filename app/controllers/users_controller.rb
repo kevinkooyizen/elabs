@@ -30,6 +30,7 @@ class UsersController < ApplicationController
     def update
         @user = current_user
         @user.country = user_update_params[:country]
+        @user.state = user_update_params[:state]
         @user.occupation = user_update_params[:occupation]
         @user.birthday = Date.new(user_update_params[:"birthday(1i)"].to_i, user_update_params[:"birthday(2i)"].to_i, user_update_params[:"birthday(3i)"].to_i)
         if @user.save
@@ -57,7 +58,7 @@ class UsersController < ApplicationController
     private
 
     def user_update_params
-        params.require(:user).permit(:occupation, :country, :"birthday(1i)", :"birthday(2i)", :"birthday(3i)")
+        params.require(:user).permit(:occupation, :country, :state, :"birthday(1i)", :"birthday(2i)", :"birthday(3i)")
     end
 
 end
