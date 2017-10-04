@@ -23,6 +23,8 @@ class UsersController < ApplicationController
 
     def edit
 
+    end
+
 
   def show
     user_id = 100893614
