@@ -1,3 +1,4 @@
+require 'open-uri'
 class User < ApplicationRecord
     include Clearance::User
 
@@ -30,7 +31,39 @@ class User < ApplicationRecord
       (uid_32_bit.to_i + self.bit_conversion).to_s
     end
 
+    def get_user_stats
+        api_result = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}").read
+        user_stats = parse_user_stats(api_result: api_result)
+        user_stats
+    end
+
+    def parse_user_stats(api_result: nil)
+
+        if api_result.nil?
+            return nil
+        end
+        User_stats.new(self.id, api_result["profile"]["last_login"], api_result["solo_competitive_rank"], get_user_win_lose)
+    end
+
+    def get_user_win_lose
+        user_winlose = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/wl").read
+
+        if user_winlose["win"] == 0 && user_winlose["lose"] == 0
+            0
+        else
+            100 * user_winlose["win"]/(user_winlose["win"] + user_winlose["lose"])
+        end
+    end
+
+
+
     private
+
+    User_stats = Struct.new(:id, :last_login_date, :solo_mmr, :win_lose) do
+        def last_login
+            Date.strptime(last_login_date, '%Y-%m-%dT%H:%M:%S')
+        end
+    end
 
     def self.bit_conversion
         BIT_CONVERSION
