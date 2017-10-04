@@ -3,6 +3,14 @@ $light-grey: #7f7f7f;
 $white: #ffffff;
 $purple: #d442f4;
 
+body {
+  background: #333232; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(-90deg, #333232, #7f7f7f); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(-90deg, #333232, #7f7f7f); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(-90deg, #333232, #7f7f7f); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(-90deg, #333232, #7f7f7f); /* Standard syntax (must be last) */
+}
+
 .header {
   padding: 100px;
   text-align: center;
