@@ -35,6 +35,23 @@
     </div>
   </div>
 
+<!--testing block for oauth-->
+<% if current_user %>
+    <h5>Signed in as <%= current_user.real_name %></h5>
+    <%= link_to 'Sign out', sign_out_path, method: :delete %>
+<% else %>
+    <h5>First time sign in</h5>
+    <%= form_for :oauth, url: sign_up_path do |f| %>
+        <%= f.label :email %>
+        <%= f.text_field :email %>
+        <%= f.submit 'Sign up with Steam' %>
+    <% end %>
+    <hr>
+    <h5>Sign in</h5>
+    <%= link_to 'Sign in with Steam', oauth_path %>
+    <h5>Not signed in</h5>
+<% end %>
+<!---->
   <div class="events">
     <h2>Events</h2>
     <p>insert thumbnails of tournaments</p>
