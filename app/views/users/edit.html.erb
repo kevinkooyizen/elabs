@@ -2,6 +2,9 @@
     <%= f.label :country %>
     <%= f.text_field :country, value: @user.country %>
 
+    <%= f.label :state %>
+    <%= f.text_field :state, value: @user.state %>
+
     <%= f.label :occupation %>
     <%= f.select :occupation,  @occupations.collect {|x| [x[1], x[0]]}, include_blank: false %>
 
