@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003084643) do
+ActiveRecord::Schema.define(version: 20171003152206) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authentications", force: :cascade do |t|
+    t.string "uid"
+    t.string "token"
+    t.string "provider"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
 
   create_table "participants", force: :cascade do |t|
     t.bigint "team_id"
@@ -71,8 +81,16 @@ ActiveRecord::Schema.define(version: 20171003084643) do
     t.string "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "encrypted_password", limit: 128
+    t.string "confirmation_token", limit: 128
+    t.string "remember_token", limit: 128
+    t.string "provider"
+    t.string "uid"
+    t.index ["email"], name: "index_users_on_email"
+    t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "authentications", "users"
   add_foreign_key "participants", "teams"
   add_foreign_key "participants", "tournaments"
   add_foreign_key "players", "teams"
