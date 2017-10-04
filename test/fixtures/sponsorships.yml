@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sponsor: one
+  team: one
+  game: one
+
+two:
+  sponsor: two
+  team: two
+  game: two
