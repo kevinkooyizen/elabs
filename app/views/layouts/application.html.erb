@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Elabs</title>
+    <title>eLabs</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,6 +9,14 @@
   </head>
 
   <body>
+    <div id="navbar">
+      <%= link_to "Home", root_path%>
+      <% if signed_in? %>
+        <%= link_to "Profile", user_path %>
+      <% else %>
+        <%= link_to "Sign Up", sign_up_path %>
+      <% end %>
+    </div>
     <%= yield %>
   </body>
 </html>
