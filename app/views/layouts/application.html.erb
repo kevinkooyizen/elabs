@@ -10,12 +10,18 @@
 
   <body>
     <div id="navbar">
-      <%= link_to "Home", root_path%>
-      <% if signed_in? %>
-        <%= link_to "Profile", user_path %>
-      <% else %>
-        <%= link_to "Sign Up", sign_up_path %>
-      <% end %>
+      <h3>eLabs
+        <div class="nav-links">
+          <%= link_to "Home", root_path%>
+          <% if signed_in? %>
+            <%= link_to "Profile", user_path %>
+          <% else %>
+            <%= link_to "Sign Up", sign_up_path %>
+          <% end %>
+        </div>
+
+      </h3>
+
     </div>
     <%= yield %>
   </body>
