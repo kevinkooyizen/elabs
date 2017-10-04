@@ -9,7 +9,7 @@ class User < ApplicationRecord
         user.email = email
         user.uid = User.change_uid_to_32_bit uid_64_bit: uid
         user.provider = provider
-        user.name = name
+        user.real_name = name
         user.country = country
         user.password = SecureRandom.hex(10)
         user.save
