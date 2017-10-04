@@ -10,7 +10,7 @@
 
   <body>
     <div id="navbar">
-      <h3>eLabs
+      <h5> eLabs logo
         <div class="nav-links">
           <%= link_to "Home", root_path%>
           <% if signed_in? %>
@@ -19,10 +19,13 @@
             <%= link_to "Sign Up", sign_up_path %>
           <% end %>
         </div>
-
-      </h3>
-
+      </h5>
     </div>
+
     <%= yield %>
+
+    <div id="footer">
+      Footer here
+    </div>
   </body>
 </html>

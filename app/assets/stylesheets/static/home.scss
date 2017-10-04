@@ -1,0 +1,24 @@
+$dark-grey: #333232;
+$light-grey: #7f7f7f;
+$white: #ffffff;
+$purple: #d442f4;
+
+.header {
+  padding: 100px;
+  text-align: center;
+
+}
+
+.signin {
+  text-align: center;
+  margin: auto;
+  width: 400px;
+  padding: 30px;
+  background-color: $light-grey;
+  border-radius: 10px;
+}
+
+.sections {
+  text-align: center;
+  margin: 30px;
+}
