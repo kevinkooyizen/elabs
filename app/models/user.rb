@@ -1,5 +1,7 @@
+require 'open-uri'
 class User < ApplicationRecord
     include Clearance::User
+    attr_reader :stats
 
     BIT_CONVERSION = 76561197960265728
 
@@ -31,6 +33,7 @@ class User < ApplicationRecord
     end
 
     private
+
 
     def self.bit_conversion
         BIT_CONVERSION
