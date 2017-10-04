@@ -1,29 +1,28 @@
-require 'open-uri'
 class UsersController < ApplicationController
-    include UsersHelper
-    before_action(except: [:new, :create]) do
-        if !signed_in?
-            flash[:alert] = 'Please sign in to perform this action.'
-            return redirect_to root_path
-        elsif !is_resource_owner?(params[:id])
-            flash[:alert] = 'You do not have the permission to perform this action.'
-            return redirect_to root_path
-        end
-    end
+  include UsersHelper
+  before_action(except: [:new, :create]) do
+      if !signed_in?
+        flash[:alert] = 'Please sign in to perform this action.'
+        redirect_to root_path
+      elsif !is_resource_owner?(params[:id])
+        flash[:alert] = 'You do not have the permission to perform this action.'
+        redirect_to root_path
+      end
+  end
 
-    def new
-    end
+  def new
+  end
 
-    def create
-    end
+  def create
+  end
 
-    def update
+  def update
 
-    end
+  end
 
-    def edit
+  def edit
 
-    end
+  end
 
 
   def show
