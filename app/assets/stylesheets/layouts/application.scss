@@ -1,0 +1,15 @@
+$dark-grey: #333232;
+$light-grey: #7f7f7f;
+$white: #ffffff;
+$purple: #7b287d;
+
+
+body {
+  background-color: $dark-grey;
+  color: $white;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4 {
+  color: $purple;
+}
