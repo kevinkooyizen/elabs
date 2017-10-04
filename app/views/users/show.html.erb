@@ -5,7 +5,7 @@
 <p>Steam ID: <%= @user["profile"]["steamid"] %></p>
 <img src="<%= @user['profile']['avatar'] %>" />
 <p>Profile URL: <a href ="<%= @user["profile"]["profileurl"] %>"><%= @user["profile"]["profileurl"] %></a></p>
-<p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%d-%mT%H:%M:%S').strftime('%a %d %b %Y') %></p>
+<p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
 <p>Country: <%= @user["profile"]["loccountrycode"] %></p>
 <p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
 <p>Winrate: <%= @user_winrate %>%</p>
