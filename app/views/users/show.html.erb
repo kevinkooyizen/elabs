@@ -1,14 +1,18 @@
 <h1>Users#show</h1>
 <p>Find me in app/views/users/show.html.erb</p>
-<p>Steam Name: <%= @user["profile"]["personaname"] %></p>
-<p>Account ID: <%= @user["profile"]["account_id"] %></p>
-<p>Steam ID: <%= @user["profile"]["steamid"] %></p>
-<img src="<%= @user['profile']['avatar'] %>" />
-<p>Profile URL: <a href ="<%= @user["profile"]["profileurl"] %>"><%= @user["profile"]["profileurl"] %></a></p>
-<p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
-<p>Country: <%= @user["profile"]["loccountrycode"] %></p>
-<p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
-<p>Winrate: <%= @user_winrate %>%</p>
+<% if !@user["profile"].nil? %>
+  <p>Steam Name: <%= @user["profile"]["personaname"] %></p>
+  <p>Account ID: <%= @user["profile"]["account_id"] %></p>
+  <p>Steam ID: <%= @user["profile"]["steamid"] %></p>
+  <img src="<%= @user['profile']['avatar'] %>" />
+  <p>Profile URL: <a href ="<%= @user["profile"]["profileurl"] %>"><%= @user["profile"]["profileurl"] %></a></p>
+  <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
+  <p>Country: <%= @user["profile"]["loccountrycode"] %></p>
+  <p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
+  <p>Winrate: <%= @user_winrate %>%</p>
+<% else %>
+  <p>User does not have dota game history</p>
+<% end %>
 <!-- Missing:  
 Team
 Sponsors
