@@ -2,4 +2,6 @@
 
 require_relative 'config/environment'
 
+require "open-uri"
+
 run Rails.application
