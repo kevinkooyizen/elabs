@@ -1,4 +1,3 @@
-require 'open-uri'
 class UsersController < ApplicationController
     include UsersHelper
     before_action(except: [:new, :create]) do
@@ -59,5 +58,6 @@ class UsersController < ApplicationController
     def user_update_params
         params.require(:user).permit(:occupation, :country, :state, :"birthday(1i)", :"birthday(2i)", :"birthday(3i)")
     end
+
 
 end
