@@ -6,4 +6,8 @@ module UsersHelper
             false
         end
     end
+
+    def get_occupation_list
+        [['player','Player'], ['manager','Manager'], ['coach','Coach']]
+    end
 end

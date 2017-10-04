@@ -5,7 +5,7 @@
 <!--testing block for oauth-->
 <div class="signin">
   <% if current_user %>
-      <h5>Signed in as <%= current_user.name %></h5>
+      <h5>Signed in as <%= current_user.real_name %></h5>
       <%= link_to 'Sign out', sign_out_path, method: :delete %>
   <% else %>
       <h5>First time sign in</h5>
