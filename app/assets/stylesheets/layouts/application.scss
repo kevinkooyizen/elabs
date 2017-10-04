@@ -1,7 +1,7 @@
 $dark-grey: #333232;
 $light-grey: #7f7f7f;
 $white: #ffffff;
-$purple: #7b287d;
+$purple: #d442f4;
 
 
 body {
@@ -12,4 +12,13 @@ body {
 
 h1, h2, h3, h4 {
   color: $purple;
+}
+
+#navbar {
+  border: $white;
+}
+
+.nav-links {
+  display: inline;
+  float: right;
 }
