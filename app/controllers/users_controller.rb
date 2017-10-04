@@ -18,9 +18,11 @@ class UsersController < ApplicationController
     end
 
     def update
+
     end
 
     def edit
+
     end
 
     def destroy
