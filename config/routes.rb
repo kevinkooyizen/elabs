@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     post '/sign_up' => "sessions#sign_up_oauth", as: :sign_up
 
 
-    get '/update/:id' => "users#update", as: :update_user
+    # get '/edit/:id' => "users#edit", as: :edit_user
+    # patch '/update/:id' => "users#update", as: :update_user
 
 end
