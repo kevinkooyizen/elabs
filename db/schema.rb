@@ -10,19 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171004034750) do
+ActiveRecord::Schema.define(version: 20171004072001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "authentications", force: :cascade do |t|
-    t.string "uid"
-    t.string "token"
-    t.string "provider"
-    t.bigint "user_id"
+
+  create_table "games", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_authentications_on_user_id"
   end
 
   create_table "participants", force: :cascade do |t|
@@ -54,6 +51,25 @@ ActiveRecord::Schema.define(version: 20171004034750) do
     t.index ["user_id"], name: "index_roles_on_user_id"
   end
 
+  create_table "sponsors", force: :cascade do |t|
+    t.string "company_name"
+    t.string "company_email"
+    t.integer "company_phone"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sponsorships", force: :cascade do |t|
+    t.bigint "sponsor_id"
+    t.bigint "team_id"
+    t.bigint "game_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_sponsorships_on_game_id"
+    t.index ["sponsor_id"], name: "index_sponsorships_on_sponsor_id"
+    t.index ["team_id"], name: "index_sponsorships_on_team_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.string "sponsor"
@@ -74,7 +90,7 @@ ActiveRecord::Schema.define(version: 20171004034750) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
+    t.string "real_name"
     t.date "birthday"
     t.string "email"
     t.string "occupation"
@@ -87,6 +103,7 @@ ActiveRecord::Schema.define(version: 20171004034750) do
     t.string "provider"
     t.string "uid"
     t.string "state"
+    t.string "persona_name"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
@@ -97,4 +114,7 @@ ActiveRecord::Schema.define(version: 20171004034750) do
   add_foreign_key "players", "teams"
   add_foreign_key "players", "users"
   add_foreign_key "roles", "users"
+  add_foreign_key "sponsorships", "games"
+  add_foreign_key "sponsorships", "sponsors"
+  add_foreign_key "sponsorships", "teams"
 end
