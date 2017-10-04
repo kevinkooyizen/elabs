@@ -1,0 +1,12 @@
+<%= form_for @user, url: edit_user_path(@user), method: :patch do |f| %>
+    <%= f.label :country %>
+    <%= f.text_field :country %>
+
+    <%= f.label :occupation %>
+    <%= f.select :occupation,  @occupations.collect {|x| [x[1], x[0]]}, include_blank: false %>
+
+    <%= f.label :birthday %>
+    <%= f.date_select :birthday, start_year: 1970, end_year: Date.today.year - 10 %>
+
+    <%= f.submit "Edit" %>
+<% end %>
