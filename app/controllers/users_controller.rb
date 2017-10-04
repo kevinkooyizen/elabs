@@ -45,9 +45,8 @@ class UsersController < ApplicationController
 
 
     def show
-        user_id = 100893614
-        @user = JSON.parse open("https://api.opendota.com/api/players/#{user_id}").read
-        @user_winlose = JSON.parse open("https://api.opendota.com/api/players/#{user_id}/wl").read
+        @user = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}").read
+        @user_winlose = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}/wl").read
         if @user_winlose["win"] != 0 || @user_winlose["lose"] != 0
             @user_winrate = 100 * @user_winlose["win"]/(@user_winlose["win"] + @user_winlose["lose"])
         else
