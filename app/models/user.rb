@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
     BIT_CONVERSION = 76561197960265728
 
-    def self.create_from_omniauth(uid: nil, real_name: 'anonymous', persona_name:'anonymous' country: nil, provider: nil, email:nil)
+    def self.create_from_omniauth(uid: nil, real_name: 'anonymous', persona_name:'anonymous', country: nil, provider: nil, email:nil)
         user = User.new
         # TODO need to confirm the flow of filling in email
         user.email = email
