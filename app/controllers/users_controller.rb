@@ -1,22 +1,30 @@
 require 'open-uri'
 class UsersController < ApplicationController
-  def new
-  end
+    include UsersHelper
+    before_action(except: [:new, :create]) do
+        if !signed_in?
+            flash[:alert] = 'Please sign in to perform this action.'
+            return redirect_to root_path
+        elsif !is_resource_owner?(params[:id])
+            flash[:alert] = 'You do not have the permission to perform this action.'
+            return redirect_to root_path
+        end
+    end
 
-  def create
-  end
+    def new
+    end
 
-  def update
-  end
+    def create
+    end
 
-  def edit
-  end
+    def update
 
-  def destroy
-  end
+    end
 
-  def index
-  end
+    def edit
+
+    end
+
 
   def show
     user_id = 100893614
@@ -28,4 +36,5 @@ class UsersController < ApplicationController
       @user_winrate = 0
     end
   end
+
 end
