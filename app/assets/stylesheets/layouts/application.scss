@@ -1,8 +1,11 @@
-$dark-grey: #333232;
-$light-grey: #7f7f7f;
-$white: #ffffff;
-$purple: #d442f4;
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "bootstrap";
 
+$dark-grey: #333232;
+$light-grey: #363636;
+$white: #ffffff;
+$yellow: #FFCA2A;
 
 body {
   background-color: $dark-grey;
@@ -12,22 +15,59 @@ body {
 }
 
 h1, h2, h3, h4 {
-  color: $purple;
+  color: $yellow;
 }
 
 #navbar {
-  padding: 20px;
   background-color: $dark-grey;
+  height: 150px;
 
-  a {
-    font-size: 12px;
-    font-weight: bold;
+  .logo {
+    width: auto;
+    height: 70px;
+    padding: 10px;
+  }
+
+  .player {
+    text-align: right;
+  }
+
+  .nav-links {
+    width: 50%;
+    float: right;
+    text-align: right;
+    background-color: $yellow;
     color: $white;
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 10px;
+    }
+
+    li {
+      display: inline-block;
+      padding-left: 5px;
+      padding-right: 5px;
+      color: $light-grey;
+    }
   }
 }
 
 #footer {
   background-color: $dark-grey;
   padding: 10px;
-  font-size: 12px;
+  font-size: 14px;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
 }
