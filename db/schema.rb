@@ -109,6 +109,10 @@ ActiveRecord::Schema.define(version: 20171005085823) do
     t.string "game"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "status", default: true
+    t.string "description"
+    t.string "tournament_url"
+    t.string "itemdef"
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,35 +1,35 @@
 <% if current_user.id == @team.user_id %>
-  <p>link to edit team</p>
+ <p>link to edit team</p>
 <% end %>
 <% if @team.status == false %>
-  Team Status: Inactive
+ Team Status: Inactive
 <% else %>
-  Team Status: Active
+ Team Status: Active
 <% end %>
 <br>
 Team ID: 
 <% if @team["team_id"].present? %>
-  <%= @team["team_id"] %>
+ <%= @team["team_id"] %>
 <% end %>
 <br>
 Name: 
 <% if @team["name"].present? %>
-  <%= @team["name"] %>
+ <%= @team["name"] %>
 <% end %>
 <br>
 Rating: 
 <% if @team["rating"].present? %>
-  <%= @team["rating"] %>
+ <%= @team["rating"] %>
 <% end %>  
 <br>
 Wins: 
 <% if @team["wins"].present? %>
-  <%= @team["wins"] %>
+ <%= @team["wins"] %>
 <% end %>
 <br>
 Tags: 
 <% if @team["tag"].present? %>
-  <%= @team["tag"] %>
+ <%= @team["tag"] %>
 <% end %>
 <p>Team's current roster</p>
 <p>Tournament history</p>
