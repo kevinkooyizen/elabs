@@ -1,8 +1,39 @@
-<% @teams.each do |team| %>
-	Team id:<%= team["team_id"] %><br>
-	Name: <%= team["name"] %><br>
-	Rating: <%= team["rating"] %><br>
-	 Wins: <%= team["wins"] %><br>
-	 Tags: <%= team["tag"] %><br>
-	<br>	
+<% if @team.status == false %>
+  Team Status: Inactive
+<% else %>
+  Team Status: Active
 <% end %>
+<br>
+Team ID: 
+<% if @team["team_id"].present? %>
+  <%= @team["team_id"] %>
+<% end %>
+<br>
+Name: 
+<% if @team["name"].present? %>
+  <%= @team["name"] %>
+<% end %>
+<br>
+Rating: 
+<% if @team["rating"].present? %>
+  <%= @team["rating"] %>
+<% end %>  
+<br>
+Wins: 
+<% if @team["wins"].present? %>
+  <%= @team["wins"] %>
+<% end %>
+<br>
+Tags: 
+<% if @team["tag"].present? %>
+  <%= @team["tag"] %>
+<% end %>
+<p>link to form to join team</p>
+<p>Games team is affiliated with: HARDCODE=>Dota 2</p>
+<p>Team's current roster</p>
+<p>If present, looking for player(with position)?</p>
+<p>Tournament history</p>
+<p>Manager</p>
+<p>Coach</p>
+<p>Sponsors</p>
+<!-- Contact us option -->
