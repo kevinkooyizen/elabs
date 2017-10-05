@@ -9,9 +9,9 @@
 require 'open-uri'
 
 # this is to retain yizen, and kent user, player and team
-Player.where('user_id > 5').destroy_all
-Team.where('id > 1').destroy_all
-User.where('id > 5').destroy_all
+Player.all.destroy_all
+Team.all.destroy_all
+User.all.destroy_all
 
 players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 seed_counter = 1
