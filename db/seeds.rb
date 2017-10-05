@@ -65,7 +65,7 @@ tournaments_collection["result"]["leagues"].each do |item|
         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
         tournament.description = item["description"]
         tournament.tournament_url = item["tournament_url"]
-        # i am not sure what is itemdef is... but Daniel assume it is an id inside the api database 
+        # i am not sure what is itemdef is... but Daniel assume it is an id inside the api database
         tournament.itemdef = item["itemdef"]
         tournament.start = Date.new(2016, rand(1..12), rand(1..28))
         tournament.end = tournament.start + 7.days
@@ -86,3 +86,13 @@ end: "20171016", game: "dota2")
 tournament1.save
 tournament2.save
 tournament3.save
+
+# seed events data, no dependency
+max_counter = 20
+location = ['KL', 'PNG', 'JB']
+max_counter.times do
+    happening = Happening.new
+    happening.name = Faker::Lorem.sentence
+    happening.location = location.sample
+    happening.detail = Faker::Lorem.paragraph
+end
