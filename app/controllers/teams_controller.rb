@@ -8,16 +8,21 @@ class TeamsController < ApplicationController
 		api = Dota.api
 		@teams = JSON.parse open("https://api.opendota.com/api/teams").read
 		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
-		# @teams.select do |item|
-		# 	if item["name"] == @team.name
-		# 		@teaminfo = item
-		# 	end
-		# end
+		@teams.select do |item|
+			if item["name"] == @team.name
+				@teaminfo = item
+			end
+		end
 		@team_roster = []
 		@pros.select do |item|
 			if item["team_name"] == @team.name && item["locked_until"] != 0
 				@team_roster << item
 			end
+		end
+		if @teaminfo["wins"] != 0 && @teaminfo["losses"] != 0
+			@team_winrate = 100 * @teaminfo["wins"]/(@teaminfo["wins"] + @teaminfo["losses"])
+		else
+			@team_winrate = nil
 		end
 	end
 
@@ -44,7 +49,7 @@ class TeamsController < ApplicationController
 		@team = Team.find(params[:id])
 		if @team.update(team_params)
 			flash[:success] = "Updated the team details successfully."
-			redirect_to edit_team_path
+			redirect_to team_path(@team)
 		else
 			flash[:failure] = "You have failed to update the team details. Please try again."
 			redirect_to edit_user_path
