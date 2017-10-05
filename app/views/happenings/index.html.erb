@@ -1,0 +1,36 @@
+<!--search form here-->
+<%= form_for :search, url: happening_search_path, method: :get do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+
+    <%= f.label :location %>
+    <%= f.text_field :location %>
+
+    <%= f.label :from %>
+    <%= f.date_select :from %>
+
+    <%= f.label :to %>
+    <%= f.date_select :to %>
+    
+    <%= f.submit 'Search' %>
+<% end %>
+
+<!--search form end-->
+
+<% @happenings.each do |event| %>
+    <h1>
+        <%= event.name %>
+    </h1>
+    
+    <p>
+        <%= event.detail %>
+    </p>
+
+    <p>
+        <%= event.location %>
+    </p>
+
+    <p>
+        <%= event.time %>
+    </p>
+<% end %>

@@ -1,7 +1,12 @@
 class Happening < ApplicationRecord
+
+    def self.latest_10
+        order('time desc').limit(10)
+    end
+
     def self.happening_name(name=nil)
         if name.present?
-            where('name alike ?', "%#{name}%")
+            where('name ilike ?', "%#{name}%")
         else
             all
         end
@@ -9,7 +14,7 @@ class Happening < ApplicationRecord
 
     def self.location(location=nil)
         if location.present?
-            where('location alike ?', "%#{location}%")
+            where('location ilike ?', "%#{location}%")
         else
             all
         end

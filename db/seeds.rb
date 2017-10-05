@@ -92,11 +92,12 @@ Happening.all.destroy_all
 # seed events data, no dependency
 max_counter = 20
 location = ['KL', 'PNG', 'JB']
+date_range = (Date.new(2017,6,1)..Date.new(2017,10,30)).to_a
 max_counter.times do
     happening = Happening.new
     happening.name = Faker::Lorem.sentence
     happening.location = location.sample
     happening.detail = Faker::Lorem.paragraph
-    happening.time =
+    happening.time = date_range.sample
     happening.save
 end
