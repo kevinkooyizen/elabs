@@ -1,0 +1,29 @@
+################## Upcoming Event ##################<br>
+<% @tournaments["result"]["leagues"].each do |tournament|  %>
+	name <%= tournament["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ") %> <br>	
+	description <%= tournament["description"] %><br>
+	tournament_url <%= tournament["tournament_url"] %><br>
+	itemdef <%= tournament["itemdef"] %><br>
+<% end %>
+####################################################<br>
+
+################## Match History ##################<br>
+
+<% @matches["result"]["matches"].each do |match| %>
+	match_id <%= match["match_id"] %><br>
+	match_seq_num <%= match["match_seq_num"] %><br>
+	start_time <%= match["start_time"] %><br>
+	lobby_type <%= match["lobby_type"] %><br>
+	radiant_team_id <%= match["radiant_team_id"] %><br>
+	dire <%= match["dire_team_id"] %><br>
+	
+	<% match["players"].each do |player| %>
+		account_id <%= player["account_id"] %><br>
+		player_slot <%= player["player_slot"] %><br>
+		hero_id <%= player["hero_id"] %><br>
+		<% end %>
+<% end %>
+####################################################<br>
+
+
+
