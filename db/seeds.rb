@@ -86,3 +86,11 @@ end: "20171016", game: "dota2")
 tournament1.save
 tournament2.save
 tournament3.save
+
+# seed events data, no dependency
+max_counter = 20
+
+max_counter.times do
+    # event = Event.new
+
+end
