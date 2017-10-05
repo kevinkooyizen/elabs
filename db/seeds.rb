@@ -39,6 +39,7 @@ players_collection.each do |player|
             team = Team.new
             team.name=Faker::Team.name
             team.dota2_team_id = player['team_id']
+            team.user_id = user.id
             team.save!
         end
 
