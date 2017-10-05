@@ -2,6 +2,8 @@
 <p>Find me in app/views/users/show.html.erb</p>
 <% if !@user["profile"].nil? %>
   <p>Steam Name: <%= @user["profile"]["personaname"] %></p>
+  <p>Team if present?</p>
+  <p>Link to set up team</p>
   <p>Account ID: <%= @user["profile"]["account_id"] %></p>
   <p>Steam ID: <%= @user["profile"]["steamid"] %></p>
   <img src="<%= @user['profile']['avatar'] %>" />
