@@ -1,16 +1,13 @@
 class Tournament < ApplicationRecord
 
-	def show_tournament
-		url = URI("https://api.sportradar.us/dota2-t1/us/tournaments/sr:tournament:2464/results.xml?api_key=#{ENV['RADAR_KEY']}")
+	def self.display_tournaments
+		tour = Dota.api
+		league_id = 5364
+		tournaments = tour.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
+	end
 
-		http = Net::HTTP.new(localhost, 3000)
-		http.use_ssl = true
-		http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-
-		request = Net::HTTP::Get.new(url)
-
-		response = http.request(request)
-		puts response.read_body
-	end	
-
+	def self.display_matches_history
+		match_history_id = 3483429548
+		matches = JSON.parse open("https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=#{ENV["STEAM_KEY"]}").read
+	end
 end

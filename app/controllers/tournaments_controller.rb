@@ -1,13 +1,8 @@
 class TournamentsController < ApplicationController
-
 	def index
-		tour = Dota.api
-		league_id = 5364
-		match_history_id = 3483429548
-		@tournaments = tour.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
-		@matches = JSON.parse open("https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key=#{ENV["STEAM_KEY"]}").read
+		@tournaments = Tournament.display_tournaments
 		byebug
-		@team = JSON.parse open("https://api.sportradar.us/dota2-v1/us/teams/sr:competitor:262739/results.json?api_key=#{ENV["RADAR_KEY"]}").read
+		@matches = Tournament.display_matches_history
 	end	
 
 	def new
@@ -39,8 +34,20 @@ class TournamentsController < ApplicationController
 		end
 	end
 
+	def destroy
+		@tournament = Tournament.find(params[:id])
+		@tournament.status = false
+		if @team.save
+			flash[:success] = "You have removed your tournament. Hope to see you again."
+			redirect_to root_path #can be change
+		else
+			flash[:failure] = "You have failed to remove your tournament from elabs. Please try again."
+			redirect_to edit_path #can be change
+		end
+	end
+	
 	private
 	def tournament_params
-		params.require(:tournament).permit(:name, :start, :end, :game)
+		params.require(:tournament).permit(:name, :start, :end, :game, :status)
 	end
 end

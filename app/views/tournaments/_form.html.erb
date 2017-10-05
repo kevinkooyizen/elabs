@@ -1,0 +1,16 @@
+<%= form.label :name, "Tournament Name" %>:
+<%= form.text_field :name %>
+<br>
+
+<%= form.label :start, "Start Date" %>:
+<%= form.datetime_local_field :start, value: DateTime.now%>
+<br>
+
+<%= form.label :end, "End Date" %>:
+<%= form.datetime_local_field :end, value: DateTime.now%>
+<br>
+<!-- will prompt to ask for the user dota2 stream id for verification -->
+<%= form.label :game %>
+<%= form.number_field :game %>
+
+<br>

@@ -1,3 +1,8 @@
+<!-- 
+	for more information, you can go to the below link.
+	http://sharonkuo.me/dota2/tournament.html
+ -->
+
 ################## Upcoming Event ##################<br>
 <% @tournaments["result"]["leagues"].each do |tournament|  %>
 	name <%= tournament["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ") %> <br>	
@@ -8,6 +13,10 @@
 ####################################################<br>
 
 ################## Match History ##################<br>
+status <%= @matches["result"]["status"] %>
+num_results <%= @matches["result"]["num_results"] %>
+total_results <%= @matches["result"]["total_results"] %>
+results_remaining <%= @matches["result"]["results_remaining"] %>
 
 <% @matches["result"]["matches"].each do |match| %>
 	match_id <%= match["match_id"] %><br>
