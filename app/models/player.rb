@@ -36,7 +36,7 @@ class Player < ApplicationRecord
         if players.present?
             players.each do |player|
                 player.get_player_stats!
-                continue if player.stats.solo_mmr.nil? or player.stats.nil?
+                next if player.stats.solo_mmr.nil? or player.stats.nil?
 
                 if player.stats.solo_mmr >= mmr_lower_range && player.stats.solo_mmr <= mmr_upper_range
                     players_ids << player.id
