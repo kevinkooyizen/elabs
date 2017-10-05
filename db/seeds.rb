@@ -12,6 +12,7 @@ require 'open-uri'
 Player.all.destroy_all
 Team.all.destroy_all
 User.all.destroy_all
+Happening.all.destroy_all
 
 players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 seed_counter = 1
@@ -87,6 +88,7 @@ tournament1.save
 tournament2.save
 tournament3.save
 
+Happening.all.destroy_all
 # seed events data, no dependency
 max_counter = 20
 location = ['KL', 'PNG', 'JB']
@@ -95,4 +97,6 @@ max_counter.times do
     happening.name = Faker::Lorem.sentence
     happening.location = location.sample
     happening.detail = Faker::Lorem.paragraph
+    happening.time =
+    happening.save
 end
