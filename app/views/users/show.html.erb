@@ -2,6 +2,8 @@
 <p>Find me in app/views/users/show.html.erb</p>
 <% if !@user["profile"].nil? %>
   <p>Steam Name: <%= @user["profile"]["personaname"] %></p>
+  <p>Team if present?</p>
+  <p>Link to set up team</p>
   <p>Account ID: <%= @user["profile"]["account_id"] %></p>
   <p>Steam ID: <%= @user["profile"]["steamid"] %></p>
   <img src="<%= @user['profile']['avatar'] %>" />
@@ -10,6 +12,23 @@
   <p>Country: <%= @user["profile"]["loccountrycode"] %></p>
   <p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
   <p>Winrate: <%= @user_winrate %>%</p>
+  <p>Top Heroes: </p>
+  <% @top_heroes_names.each do |name| %>
+    <img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_sb.png" />
+  <% end %>
+  <br>
+  <% @top_heroes_names.each do |name| %>
+    <img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_lg.png" />
+  <% end %>
+  <br>
+  <% @top_heroes_names.each do |name| %>
+    <img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_full.png" />
+  <% end %>
+  <br>
+  <% @top_heroes_names.each do |name| %>
+    <img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_vert.jpg" />
+    <!-- All available formats of images are placed for front end to select which size/image style is appropriate -->
+  <% end %>
 <% else %>
   <p>User does not have dota game history</p>
 <% end %>
