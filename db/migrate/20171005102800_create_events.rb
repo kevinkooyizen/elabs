@@ -1,6 +1,6 @@
 class CreateEvents < ActiveRecord::Migration[5.1]
     def change
-        create_table :events do |t|
+        create_table :happenings do |t|
             t.string "name"
             t.datetime "time"
             t.string "location"
