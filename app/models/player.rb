@@ -36,7 +36,7 @@ class Player < ApplicationRecord
         if players.present?
             players.each do |player|
                 player.get_player_stats!
-                continue if player.stats.solo_mmr.nil?
+                next if player.stats.solo_mmr.nil? or player.stats.nil?
 
                 if player.stats.solo_mmr >= mmr_lower_range && player.stats.solo_mmr <= mmr_upper_range
                     players_ids << player.id
@@ -53,23 +53,50 @@ class Player < ApplicationRecord
         @stats = parse_player_stats(api_result: api_result)
     end
     
-    private
+    # private
 
     # use a better structure to keep the stats
-    Player_stats = Struct.new(:id, :last_login_date, :solo_mmr, :win_lose) do
+    Player_stats = Struct.new(:id,
+                              :last_login_date,
+                              :solo_mmr,
+                              :win_lose,
+                              :persona_name,
+                              :avatar,
+                              :profile_url,
+                              :country) do
         def last_login
             Date.strptime(last_login_date, '%Y-%m-%dT%H:%M:%S')
+        end
+
+        def show_attributes
+            self.each_pair do |k, v|
+                k = k.to_s
+                k = 'last_login' if k == 'last_login_date'
+                puts k
+            end
         end
     end
 
     # parse the api result stats into the Player_stats struct
     def parse_player_stats(api_result: nil)
-        if api_result.nil?
-            return nil
-        end
-        Player_stats.new(self.id, api_result["profile"]["last_login"], api_result["solo_competitive_rank"], get_player_win_lose)
-    end
 
+        if !api_result.present?
+            api_result = {}
+        end
+
+        api_result.deep_symbolize_keys!
+
+        api_result_profile = api_result.dig(:profile) || {}
+
+        Player_stats.new(self.id,
+                         api_result_profile.dig(:last_login),
+                         api_result_profile.dig(:solo_competitive_rank),
+                         get_player_win_lose,
+                         api_result_profile.dig(:personaname),
+                         api_result_profile.dig(:avatar),
+                         api_result_profile.dig(:profileurl),
+                         api_result_profile.dig(:loccountrycode))
+    end
     # get player win lose rate from dota api
     def get_player_win_lose
         player_winlose = JSON.parse open("https://api.opendota.com/api/players/#{self.user.uid}/wl").read

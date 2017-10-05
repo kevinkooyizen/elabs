@@ -45,43 +45,45 @@ class UsersController < ApplicationController
 
     def show
         @user = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}").read
-        @user_winlose = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}/wl").read
-        if @user_winlose["win"] != 0 || @user_winlose["lose"] != 0
-            @user_winrate = 100 * @user_winlose["win"]/(@user_winlose["win"] + @user_winlose["lose"])
-        else
-            @user_winrate = 0
-        end
-        top_heroes = []
-        @user_heroes = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}/heroes").read
-        @user_heroes[0..9].each do |hero|
-            # storing heroes into top heroes
-            if top_heroes.count < 3
-                top_heroes << hero
+        if !@user["profile"].nil?
+            @user_winlose = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}/wl").read
+            if @user_winlose["win"] != 0 || @user_winlose["lose"] != 0
+                @user_winrate = 100 * @user_winlose["win"]/(@user_winlose["win"] + @user_winlose["lose"])
+            else
+                @user_winrate = 0
             end
-            # arranging top heroes based on winrate
-            top_heroes.sort_by! do |current|
-                current["win"]*1000000/current["games"].to_i
-            end
-            if top_heroes.count == 3
-                top_heroes.each_with_index do |top, index|
-                    top_heroes_winrate = top["win"]*1000000/top["games"].to_i
-                    heroes_winrate = hero["win"]*1000000/hero["games"].to_i
-                    if heroes_winrate > top_heroes_winrate && !top_heroes.include?(hero)
-                        top_heroes.delete_at(index)
-                        top_heroes << hero
+            top_heroes = []
+            @user_heroes = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}/heroes").read
+            @user_heroes[0..9].each do |hero|
+                # storing heroes into top heroes
+                if top_heroes.count < 3
+                    top_heroes << hero
+                end
+                # arranging top heroes based on winrate
+                top_heroes.sort_by! do |current|
+                    current["win"]*1000000/current["games"].to_i
+                end
+                if top_heroes.count == 3
+                    top_heroes.each_with_index do |top, index|
+                        top_heroes_winrate = top["win"]*1000000/top["games"].to_i
+                        heroes_winrate = hero["win"]*1000000/hero["games"].to_i
+                        if heroes_winrate > top_heroes_winrate && !top_heroes.include?(hero)
+                            top_heroes.delete_at(index)
+                            top_heroes << hero
+                        end
                     end
                 end
             end
-        end
-        top_heroes_id = []
-        top_heroes.each do |select|
-            top_heroes_id << select["hero_id"].to_i
-        end
-        heroes = JSON.parse open("https://api.opendota.com/api/heroes").read
-        @top_heroes_names = []
-        heroes.each do |info|
-            if top_heroes_id.include?(info["id"])
-                @top_heroes_names << info["name"].match(/npc_dota_hero_(\w+)/)[1]
+            top_heroes_id = []
+            top_heroes.each do |select|
+                top_heroes_id << select["hero_id"].to_i
+            end
+            heroes = JSON.parse open("https://api.opendota.com/api/heroes").read
+            @top_heroes_names = []
+            heroes.each do |info|
+                if top_heroes_id.include?(info["id"])
+                    @top_heroes_names << info["name"].match(/npc_dota_hero_(\w+)/)[1]
+                end
             end
         end
         @user_matches = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}/matches").read

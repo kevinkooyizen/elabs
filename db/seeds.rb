@@ -8,9 +8,18 @@
 
 require 'open-uri'
 
-players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
+# this is to retain yizen, and kent user, player and team
+Player.where('user_id > 5').destroy_all
+Team.where('id > 1').destroy_all
+User.where('id > 5').destroy_all
 
+players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
+seed_counter = 1
+max_counter = 20
 players_collection.each do |player|
+    # seed only 20 players
+    break if seed_counter > max_counter
+
     User.transaction do
         user = User.new
         user.real_name=Faker::Name.name + ((1..1000).to_a).sample.to_s
@@ -41,6 +50,6 @@ players_collection.each do |player|
         new_player.save!
 
     end
-
+    seed_counter+=1
 end
 
