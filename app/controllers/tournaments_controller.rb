@@ -1,7 +1,5 @@
 class TournamentsController < ApplicationController
 	def index
-		@tournaments = Tournament.display_tournaments
-		byebug
 		@matches = Tournament.display_matches_history
 	end	
 

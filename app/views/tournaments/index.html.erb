@@ -4,11 +4,8 @@
  -->
 
 ################## Upcoming Event ##################<br>
-<% @tournaments["result"]["leagues"].each do |tournament|  %>
-	name <%= tournament["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ") %> <br>	
-	description <%= tournament["description"] %><br>
-	tournament_url <%= tournament["tournament_url"] %><br>
-	itemdef <%= tournament["itemdef"] %><br>
+<% Tournament.all.each do |tournament|  %>
+	<%= tournament %>
 <% end %>
 ####################################################<br>
 

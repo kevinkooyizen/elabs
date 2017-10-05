@@ -53,7 +53,7 @@ players_collection.each do |player|
     seed_counter+=1
 end
 
-# The upcoming event is on the bottom because we will treat it as a passed event and will only show the 4 latest event
+# The upcoming event is on the bottom because we will treat it as a pass event and will only show the 4 latest event
 tour = Dota.api
 league_id = 5364
 tournaments_collection = tournament_collection.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
