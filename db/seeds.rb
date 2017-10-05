@@ -53,3 +53,31 @@ players_collection.each do |player|
     seed_counter+=1
 end
 
+# The upcoming event is on the bottom because we will treat it as a passed event and will only show the 4 latest event
+tour = Dota.api
+league_id = 5364
+tournaments_collection = tournament_collection.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
+
+tournaments_collection["result"]["leagues"].each do |tournament|
+    tournament.name = tournament["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
+    tournament.description = tournament["description"]
+    tournament.tournament_url = tournament["tournament_url"]
+    # i am not sure what is itemdef is... but Daniel assume it is an id inside the api database 
+    tournament.itemdef = tournament["itemdef"]
+    tournament.start = Date.new(2016, rand(1..12), rand(1..28))
+    tournament.end = tournament.start + 7.days
+    tournament.status = true
+    tournament.save
+end
+    
+tournament1 = Tournament.new(name: "ROG MASTERS 2017: APAC Qualifier - Singapore", description: "ROG MASTERS 2017 APAC Qualifier Singapore", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16056-wellplay-invitational-9/4773-main-event/16058-main-event/bracket", itemdef: rand(2000), start: "20170829",
+end: "20170911")
+
+tournament2 = Tournament.new(name: "King’s Cup: America", description: "6 September, 201", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16290-king-s-cup-america/4848-playoffs/16292-playoffs/bracket", itemdef: rand(2000), start: "20170906",
+end: "20170920")
+
+tournament3 = Tournament.new(name: "Prodota Cup #10 SEA", description: "6 September, 201", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16241-prodota-cup-10-sea/4833-playoffs/16244-playoffs/bracket", itemdef: rand(2000), start: "20170908",
+end: "20171016")
+tournament1.save
+tournament2.save
+tournament3.save
