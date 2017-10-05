@@ -19,30 +19,54 @@ h1, h2, h3, h4 {
 }
 
 #navbar {
-  background-color: $dark-grey;
-  height: 150px;
+  background-image: url('https://s3-ap-southeast-1.amazonaws.com/elabs-next/navbar.png');
+  height: 140px;
+  border-bottom: solid $yellow 10px;
+  display: flex;
+
+  .left-navbar {
+    flex: 1;
+    padding-top: 20px;
+  }
+
+  .right-navbar {
+    flex: 1;
+    padding-top: 50px;
+  }
 
   .logo {
     width: auto;
-    height: 70px;
+    height: 75px;
     padding: 10px;
+    display: block;
+    margin: auto;
   }
 
   .player {
     text-align: right;
   }
 
+  .nav-links:before {
+    width: 0px;
+  height: 0px;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid blue;
+  }
+
   .nav-links {
-    width: 50%;
+    width: 600px;
     float: right;
     text-align: right;
     background-color: $yellow;
     color: $white;
+    position: relative;
 
     ul {
       list-style-type: none;
       margin: 0;
       padding: 10px;
+      text-align: left;
     }
 
     li {

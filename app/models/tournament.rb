@@ -1,6 +1,6 @@
 class Tournament < ApplicationRecord
     has_many :teams, through: :participants
-    
+
     def self.tournament_name(tournament_name)
     	if tournament_name.present?
  	   		where("name LIKE ?", "%#{tournament_name}%")

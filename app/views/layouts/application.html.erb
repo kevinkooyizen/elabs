@@ -9,10 +9,12 @@
   </head>
 
   <body>
-    <div id="navbar" class="w3-bar">
+    <div id="navbar">
 
       <div class="left-navbar">
-        <%= image_tag("layouts/logo.png", class:"logo") %>
+        <%= link_to root_path do %>
+          <%=image_tag("https://s3-ap-southeast-1.amazonaws.com/elabs-next/logo.png", class:"logo") %>
+        <% end %>
       </div>
 
       <div class="right-navbar">
@@ -23,19 +25,18 @@
         <div class="nav-links">
           <ul>
             <li><%= link_to "HOME", root_path%></li>
-            <li>EVENTS</li>
-            <li>PLAYERS</li>
-            <li>TEAMS</li>
+            <li><%= link_to "TOURNAMENTS", tournaments_path%></li>
+            <li><%= link_to "PLAYERS", users_path%></li>
+            <li><%= link_to "TEAMS", teams_path %></li>
             <li>SPONSORS</li>
             <% if signed_in? %>
               <li><%= link_to "PROFILE", user_path(current_user) %></li>
             <% else %>
-              <li><%= link_to "SIGN UP", sign_up_path %></li>
+              <li><%= link_to 'STEAM SIGN-IN', oauth_path %></li>
             <% end %>
           </ul>
         </div>
       </div>
-
 
     </div>
 

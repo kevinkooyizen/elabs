@@ -1,37 +1,34 @@
 <% if current_user.id == @team.user_id %>
- <p>link to edit team</p>
+  <%= link_to 'Edit Team Details', edit_team_path(@team) %>
 <% end %>
+<br>
 <% if @team.status == false %>
- Team Status: Inactive
+  Team Status: <span class="inactive"> Inactive </span>
 <% else %>
- Team Status: Active
+  Team Status: <span class="active"> Active </span>
 <% end %>
 <br>
 Team ID: 
-<% if @team["team_id"].present? %>
- <%= @team["team_id"] %>
+<% if @teaminfo["team_id"].present? %>
+ <%= @teaminfo["team_id"] %>
 <% end %>
 <br>
 Name: 
-<% if @team["name"].present? %>
- <%= @team["name"] %>
+<% if @teaminfo["name"].present? %>
+  <span class="team_name"> <%= @teaminfo["name"] %> </span>
+<% end %> 
+<br>
+Winrate: 
+<% if @team_winrate.present? %>
+  <%= @team_winrate %>%
+<% else %>
+  <span class="no_wins">Play some games to display winrate.</span>
 <% end %>
 <br>
-Rating: 
-<% if @team["rating"].present? %>
- <%= @team["rating"] %>
-<% end %>  
-<br>
-Wins: 
-<% if @team["wins"].present? %>
- <%= @team["wins"] %>
+<p>Team's current roster:</p>
+<% @team_roster.each do |item| %>
+  <%= item["name"] %><br>
 <% end %>
-<br>
-Tags: 
-<% if @team["tag"].present? %>
- <%= @team["tag"] %>
-<% end %>
-<p>Team's current roster</p>
 <p>Tournament history</p>
 <p>Manager: <%= @team.manager %></p>
 <p>Sponsor: <%= @team.sponsor %></p>
