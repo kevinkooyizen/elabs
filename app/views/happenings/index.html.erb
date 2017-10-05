@@ -1,16 +1,17 @@
 <!--search form here-->
+<% @params||={} %>
 <%= form_for :search, url: happening_search_path, method: :get do |f| %>
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, value: @params.fetch(:name, nil) %>
 
     <%= f.label :location %>
-    <%= f.text_field :location %>
+    <%= f.text_field :location, value: @params.fetch(:location, nil) %>
 
     <%= f.label :from %>
-    <%= f.date_select :from %>
+    <%= f.date_select :from, selected: @params.fetch(:from, Date.today) %>
 
     <%= f.label :to %>
-    <%= f.date_select :to %>
+    <%= f.date_select :to, selected: @params.fetch(:to, Date.today) %>
     
     <%= f.submit 'Search' %>
 <% end %>
