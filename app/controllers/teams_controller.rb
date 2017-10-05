@@ -6,6 +6,12 @@ class TeamsController < ApplicationController
 	def show
 		@team = Team.find(params[:id])
 		api = Dota.api
+		@teams = JSON.parse open("https://api.opendota.com/api/teams").read
+		@teams.select do |item|
+			if item["name"] == @team.name
+				teaminfo = item
+			end
+		end
 	end
 
 	def new
