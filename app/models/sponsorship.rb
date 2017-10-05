@@ -1,5 +1,5 @@
 class Sponsorship < ApplicationRecord
-  belongs_to :sponsor
-  belongs_to :team
-  belongs_to :game
+
+    belongs_to :sponsor
+    belongs_to :team
 end

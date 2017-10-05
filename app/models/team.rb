@@ -2,6 +2,11 @@ class Team < ApplicationRecord
 
     has_many :players
     belongs_to :user
+    has_many :sponsorships
+    has_many :sponsors, through :sponsorships
+    has_many :tournaments, through :participants
+
+    has_many :games, through :titles
 
     def self.team_search(name: nil, country: nil)
         team_name(name).country(country)
