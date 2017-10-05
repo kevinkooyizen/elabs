@@ -8,6 +8,6 @@ require "uri"
 
 require "net/http"
 
-require "openss1"
+require "openssl"
 	
 run Rails.application
