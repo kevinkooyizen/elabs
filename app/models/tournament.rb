@@ -1,4 +1,5 @@
 class Tournament < ApplicationRecord
+    has_many :teams, through :participants
 
 	def show_tournament
 		url = URI("https://api.sportradar.us/dota2-t1/us/tournaments/sr:tournament:2464/results.xml?api_key=#{ENV['RADAR_KEY']}")

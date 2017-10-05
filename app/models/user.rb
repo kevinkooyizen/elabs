@@ -2,6 +2,8 @@ require 'open-uri'
 class User < ApplicationRecord
     include Clearance::User
     has_one :player
+    has_many :sponsors
+    has_many :teams
     attr_reader :stats
 
     BIT_CONVERSION = 76561197960265728
