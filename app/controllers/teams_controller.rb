@@ -7,9 +7,16 @@ class TeamsController < ApplicationController
 		@team = Team.find(params[:id])
 		api = Dota.api
 		@teams = JSON.parse open("https://api.opendota.com/api/teams").read
-		@teams.select do |item|
-			if item["name"] == @team.name
-				teaminfo = item
+		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
+		# @teams.select do |item|
+		# 	if item["name"] == @team.name
+		# 		@teaminfo = item
+		# 	end
+		# end
+		@team_roster = []
+		@pros.select do |item|
+			if item["team_name"] == @team.name && item["locked_until"] != 0
+				@team_roster << item
 			end
 		end
 	end
