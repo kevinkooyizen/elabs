@@ -1,4 +1,4 @@
-class Event < ApplicationRecord
+class Happening < ApplicationRecord
     def self.title(title=nil)
         if title.present?
             where('title alike ?', "%#{title}%")
@@ -23,7 +23,7 @@ class Event < ApplicationRecord
         end
     end
 
-    def self.event_search(title:nil, location:nil, date_lower_range:nil, date_upper_range:nil)
+    def self.happening_search(title:nil, location:nil, date_lower_range:nil, date_upper_range:nil)
         self.title(title).location(location).time(date_lower_range, date_upper_range)
     end
 
@@ -36,5 +36,5 @@ class Event < ApplicationRecord
     def self.default_date__upper_range
         '20300101'
     end
-    
+
 end
