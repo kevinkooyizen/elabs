@@ -1,6 +1,6 @@
 class TournamentsController < ApplicationController
 	def index
-		@matches = Tournament.display_matches_history
+		@tournaments = Tournament.display_tournaments
 	end	
 
 	def new

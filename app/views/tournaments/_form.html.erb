@@ -2,6 +2,14 @@
 <%= form.text_field :name %>
 <br>
 
+<%= form.label :description %>:
+<%= form.text_field :description %>
+<br>
+
+<%= form.label :tournament_url, "Tournament URL" %>:
+<%= form.text_field :description, placeholder: "https://example.com" %>
+<br>
+
 <%= form.label :start, "Start Date" %>:
 <%= form.datetime_local_field :start, value: DateTime.now%>
 <br>
@@ -12,5 +20,3 @@
 <!-- will prompt to ask for the user dota2 stream id for verification -->
 <%= form.label :game %>
 <%= form.number_field :game %>
-
-<br>

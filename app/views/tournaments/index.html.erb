@@ -4,30 +4,11 @@
  -->
 
 ################## Upcoming Event ##################<br>
-<% Tournament.all.each do |tournament|  %>
-	<%= tournament %>
-<% end %>
-####################################################<br>
-
-################## Match History ##################<br>
-status <%= @matches["result"]["status"] %>
-num_results <%= @matches["result"]["num_results"] %>
-total_results <%= @matches["result"]["total_results"] %>
-results_remaining <%= @matches["result"]["results_remaining"] %>
-
-<% @matches["result"]["matches"].each do |match| %>
-	match_id <%= match["match_id"] %><br>
-	match_seq_num <%= match["match_seq_num"] %><br>
-	start_time <%= match["start_time"] %><br>
-	lobby_type <%= match["lobby_type"] %><br>
-	radiant_team_id <%= match["radiant_team_id"] %><br>
-	dire <%= match["dire_team_id"] %><br>
-	
-	<% match["players"].each do |player| %>
-		account_id <%= player["account_id"] %><br>
-		player_slot <%= player["player_slot"] %><br>
-		hero_id <%= player["hero_id"] %><br>
-		<% end %>
+<!-- for more attribute, please refer to schema -->
+<% @tournaments.each do |tournament|  %>
+	<a href=<%= tournament.tournament_url%> target="_blank"> <%= tournament.name %></a> <br>
+	<%= tournament.start.strftime("%Y-%m-%d") %><br>
+	<%= tournament.game %><br>
 <% end %>
 ####################################################<br>
 
