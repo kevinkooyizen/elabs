@@ -9,21 +9,46 @@
   </head>
 
   <body>
-    <div id="navbar">
-      <div class="nav-links">
-        <%= link_to "Home", root_path%>
-        <% if signed_in? %>
-          <%= link_to "Profile", user_path(current_user) %>
-        <% else %>
-          <%= link_to "Sign Up", sign_up_path %>
-        <% end %>
+    <div id="navbar" class="w3-bar">
+
+      <div class="logo">
+        <h4>ELABS</h4>
       </div>
+
+      <div class="right-navbar">
+        <div class="top-navbar">
+          <p>Username and avatar</p>
+        </div>
+        <div class="nav-links">
+          <ul>
+            <li><%= link_to "HOME", root_path%></li>
+            <li>EVENTS</li>
+            <li>PLAYERS</li>
+            <li>TEAMS</li>
+            <li>SPONSORS</li>
+            <% if signed_in? %>
+              <li><%= link_to "PROFILE", user_path(current_user) %></li>
+            <% else %>
+              <li><%= link_to "SIGN UP", sign_up_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+
     </div>
 
     <%= yield %>
 
     <div id="footer">
-      Footer here
+      <ul>
+        <li>About Us</li>
+        <li>Contact</li>
+        <li>Follow Us</li>
+        <li><i class="fa fa-facebook-square" aria-hidden="true"></i></li>
+        <li><i class="fa fa-twitter-square" aria-hidden="true"></i></li>
+        <li><i class="fa fa-youtube-square" aria-hidden="true"></i></li>
+      </ul>
     </div>
   </body>
 </html>
