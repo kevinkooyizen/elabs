@@ -1,7 +1,7 @@
 class Happening < ApplicationRecord
-    def self.title(title=nil)
-        if title.present?
-            where('title alike ?', "%#{title}%")
+    def self.happening_name(name=nil)
+        if name.present?
+            where('name alike ?', "%#{name}%")
         else
             all
         end
