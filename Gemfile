@@ -35,6 +35,8 @@ gem 'clearance'
 gem 'omniauth-steam'
 # use Faker for seeding
 gem 'faker'
+# use font-awesome for icons
+gem 'font-awesome-sass'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

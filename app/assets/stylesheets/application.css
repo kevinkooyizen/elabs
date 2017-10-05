@@ -13,4 +13,6 @@
  *= require_tree .
  *= require_self
  *= @import url('https://fonts.googleapis.com/css?family=Roboto');
+ *= @import "font-awesome-sprockets";
+ *= @import "font-awesome";
  */
