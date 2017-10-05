@@ -1,0 +1,5 @@
+<%= form_for @tournament do |form| %>
+	<%= render partial: '/tournaments/form', object: form %>
+
+	<%= form.submit "Submit" %>
+<% end %>
