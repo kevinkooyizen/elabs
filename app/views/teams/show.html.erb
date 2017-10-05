@@ -16,16 +16,13 @@ Team ID:
 Name: 
 <% if @team["name"].present? %>
   <span class="team_name"> <%= @team["name"] %> </span>
-<% end %>
-<br>
-Rating: 
-<% if @team["rating"].present? %>
- <%= @team["rating"] %>
-<% end %>  
+<% end %> 
 <br>
 Wins: 
 <% if @team["wins"].present? %>
- <%= @team["wins"] %>
+  <%= @team["wins"] %>
+<% else %>
+  <span class="no_wins">Play some games to display winrate.</span>
 <% end %>
 <br>
 Tags: 
