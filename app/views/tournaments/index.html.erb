@@ -2,12 +2,11 @@
 	for more information, you can go to the below link.
 	http://sharonkuo.me/dota2/tournament.html
  -->
-
 ################## Upcoming Event ##################<br>
 <!-- for more attribute, please refer to schema -->
 <% @tournaments.each do |tournament|  %>
 	<a href=<%= tournament.tournament_url%> target="_blank"> <%= tournament.name %></a> <br>
-	<%= tournament.start.strftime("%Y-%m-%d") %><br>
+	<%= tournament.start.strftime("%Y%m%d") %><br>
 	<%= tournament.game %><br>
 <% end %>
 ####################################################<br>

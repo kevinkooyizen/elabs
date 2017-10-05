@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005085823) do
+ActiveRecord::Schema.define(version: 20171005161636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "authentications", force: :cascade do |t|
-    t.string "uid"
-    t.string "token"
-    t.string "provider"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_authentications_on_user_id"
-  end
 
   create_table "games", force: :cascade do |t|
     t.string "name"
@@ -105,7 +95,7 @@ ActiveRecord::Schema.define(version: 20171005085823) do
   create_table "tournaments", force: :cascade do |t|
     t.string "name"
     t.datetime "start"
-    t.datetime "end"
+    t.datetime "end_date"
     t.string "game"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -134,7 +124,6 @@ ActiveRecord::Schema.define(version: 20171005085823) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
-  add_foreign_key "authentications", "users"
   add_foreign_key "participants", "teams"
   add_foreign_key "participants", "tournaments"
   add_foreign_key "players", "teams"
