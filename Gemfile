@@ -33,6 +33,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'clearance'
 # use oauth-steam for steam sign in
 gem 'omniauth-steam'
+# use Faker for seeding
+gem 'faker'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
