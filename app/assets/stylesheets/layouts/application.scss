@@ -20,32 +20,29 @@ h1, h2, h3, h4 {
 
 #navbar {
   background-color: $dark-grey;
-  height: 80px;
+  height: 150px;
 
   .logo {
-    width: 50%;
-    float:left;
-    text-align: center;
+    width: auto;
+    height: 70px;
+    padding: 10px;
   }
 
-  .top-navbar {
-    width: 50%;
-    float: right;
+  .player {
     text-align: right;
-    margin-top: 0;
   }
 
   .nav-links {
     width: 50%;
     float: right;
-    text-align: left;
+    text-align: right;
     background-color: $yellow;
     color: $white;
 
     ul {
       list-style-type: none;
       margin: 0;
-      padding: 0;
+      padding: 10px;
     }
 
     li {

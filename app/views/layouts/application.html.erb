@@ -11,14 +11,15 @@
   <body>
     <div id="navbar" class="w3-bar">
 
-      <div class="logo">
-        <h4>ELABS</h4>
+      <div class="left-navbar">
+        <%= image_tag("layouts/logo.png", class:"logo") %>
       </div>
 
       <div class="right-navbar">
-        <div class="top-navbar">
+        <div class="player">
           <p>Username and avatar</p>
         </div>
+
         <div class="nav-links">
           <ul>
             <li><%= link_to "HOME", root_path%></li>
