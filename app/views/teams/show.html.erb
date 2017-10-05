@@ -9,27 +9,26 @@
 <% end %>
 <br>
 Team ID: 
-<% if @team["team_id"].present? %>
- <%= @team["team_id"] %>
+<% if @teaminfo["team_id"].present? %>
+ <%= @teaminfo["team_id"] %>
 <% end %>
 <br>
 Name: 
-<% if @team["name"].present? %>
-  <span class="team_name"> <%= @team["name"] %> </span>
+<% if @teaminfo["name"].present? %>
+  <span class="team_name"> <%= @teaminfo["name"] %> </span>
 <% end %> 
 <br>
-Wins: 
-<% if @team["wins"].present? %>
-  <%= @team["wins"] %>
+Winrate: 
+<% if @team_winrate.present? %>
+  <%= @team_winrate %>%
 <% else %>
   <span class="no_wins">Play some games to display winrate.</span>
 <% end %>
 <br>
-Tags: 
-<% if @team["tag"].present? %>
- <%= @team["tag"] %>
+<p>Team's current roster:</p>
+<% @team_roster.each do |item| %>
+  <%= item["name"] %><br>
 <% end %>
-<p>Team's current roster</p>
 <p>Tournament history</p>
 <p>Manager: <%= @team.manager %></p>
 <p>Sponsor: <%= @team.sponsor %></p>
