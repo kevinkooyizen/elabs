@@ -56,7 +56,14 @@ class Player < ApplicationRecord
     private
 
     # use a better structure to keep the stats
-    Player_stats = Struct.new(:id, :last_login_date, :solo_mmr, :win_lose) do
+    Player_stats = Struct.new(:id,
+                              :last_login_date,
+                              :solo_mmr,
+                              :win_lose,
+                              :persona_name,
+                              :avatar,
+                              :profile_url,
+                              :country) do
         def last_login
             Date.strptime(last_login_date, '%Y-%m-%dT%H:%M:%S')
         end
@@ -67,9 +74,16 @@ class Player < ApplicationRecord
         if api_result.nil?
             return nil
         end
-        Player_stats.new(self.id, api_result["profile"]["last_login"], api_result["solo_competitive_rank"], get_player_win_lose)
+        api_result_profile = api_result['profile']
+        Player_stats.new(self.id,
+                         api_result_profile["last_login"],
+                         api_result["solo_competitive_rank"],
+                         get_player_win_lose,
+                         api_result_profile['personaname'],
+                         api_result_profile['avatar'],
+                         api_result_profile['profileurl'],
+                         api_result_profile['country'])
     end
-
     # get player win lose rate from dota api
     def get_player_win_lose
         player_winlose = JSON.parse open("https://api.opendota.com/api/players/#{self.user.uid}/wl").read
