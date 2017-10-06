@@ -77,6 +77,28 @@ class Player < ApplicationRecord
         end
     end
 
+    def get_player_stats(api_result: nil)
+        api_result = JSON.parse open("https://api.opendota.com/api/players/#{self.user.uid}").read
+        api_result.deep_symbolize_keys!
+
+        # todo cater for 2 exception: 1) error 2) user doest not play dota
+        if !api_result[:error].present? or api_result[:profile].nil?
+            return false
+        end
+
+        api_result_profile = api_result[:profile]
+
+        # validate the date if its empty
+        self.last_login = Date.strptime(api_result_profile.dig(:last_login), '%Y-%m-%dT%H:%M:%S')
+        self.mmr = api_result.dig(:solo_competitive_rank)
+        self.winrate = get_player_win_lose
+        self.persona_name = api_result_profile.dig(:personaname)
+        self.avatar = api_result_profile.dig(:avatar)
+        self.profile_url = api_result_profile.dig(:profileurl)
+
+        return true
+    end
+
     # parse the api result stats into the Player_stats struct
     def parse_player_stats(api_result: nil)
 

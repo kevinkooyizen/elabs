@@ -6,7 +6,6 @@ class PlayersController < ApplicationController
             redirect_to root_path
             continue = false
         end
-        # byebug
         if continue && !is_resource_owner?(resource_user_id: params[:id].to_i)
             flash[:alert] = 'You do not have the permission to perform this action.'
             redirect_to root_path
