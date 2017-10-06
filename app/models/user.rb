@@ -2,6 +2,7 @@ require 'open-uri'
 class User < ApplicationRecord
     include Clearance::User
     has_one :player
+    has_one :role
     has_many :sponsors
     has_many :teams
     attr_reader :stats
