@@ -37,11 +37,12 @@ class Tournament < ApplicationRecord
     	if game.present?
     		where(["game LIKE?", "%#{game}%"])
     	else
+    		all
     	end
     end
 
     def self.tournament_search(name: nil, description: nil, start: nil, end_date: nil, game: nil)
-    	tournament_name(name).description(description).start(start).tournament_end(end_date).game(game)
+    	self.tournament_name(name).description(description).start(start).tournament_end(end_date).game(game)
 	end
 
 	def self.display_tournaments

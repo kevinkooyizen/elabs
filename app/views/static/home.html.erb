@@ -9,55 +9,63 @@
 <div class="main-body">
   <div class="overlay">
     <div class="sections">
-      <div class="team">
-        <h6>Team of the week</h6>
-        <i class="fa fa-magic" aria-hidden="true"></i>
+
+      <div class="sidebar">
+        <div class="team">
+          <h6>Team of the week</h6>
+          <i class="fa fa-magic" aria-hidden="true"></i>
+        </div>
+
+        <div class="player">
+          <h6>Player of the week</h6>
+          <i class="fa fa-play" aria-hidden="true"></i>
+        </div>
+
+        <div class="ads">
+          <h6>Advertisements</h6>
+          <i class="fa fa-archive" aria-hidden="true"></i>
+        </div>
       </div>
 
-      <div class="events">
-        <h3 class="title-stamp">EVENTS</h3>
-        <p>insert thumbnails of tournaments</p>
+      <div class="content">
+        <div class="events">
+          <h3 class="title-stamp">EVENTS</h3>
+          <p>insert thumbnails of tournaments</p>
+        </div>
+
+        <div class="active">
+          <h3 class="title-stamp">STREAMS</h3>
+        </div>
+
+        <div class="sponsors">
+          <h3 class="title-stamp">SPONSORS</h3>
+          <p>Want to become a sponsor? Find out how.</p>
+        </div>
       </div>
 
-      <div class="player">
-        <h6>Player of the week</h6>
+      <!--testing block for oauth-->
+      <div class="signin">
+        <% if current_user %>
+            <h6>Signed in as <%= current_user.real_name %></h6>
+            <%= link_to 'Sign out', sign_out_path, method: :delete %>
+        <% else %>
+            <h6>First time sign in</h6>
+            <%= form_for :oauth, url: sign_up_path do |f| %>
+                <%= f.label :email %>
+                <br>
+                <%= f.text_field :email %>
+                <br>
+                <%= f.submit 'Sign up with Steam', class: 'button' %>
+            <% end %>
+            <hr>
+            <h6>Sign in</h6>
+            <%= link_to 'Sign in with Steam', oauth_path %>
+            <!-- <h6>Not signed in</h6> -->
+        <% end %>
       </div>
-
-      <div class="active">
-        <h3 class="title-stamp">STREAMS</h3>
-      </div>
-
-      <div class="ads">
-        <h6>Advertisements</h6>
-      </div>
-
-      <div class="sponsors">
-        <h3 class="title-stamp">SPONSORS</h3>
-        <p>Want to become a sponsor? Find out how.</p>
-      </div>
+      <!---->
     </div>
   </div>
 
-  <!--testing block for oauth-->
-  <div class="signin">
-    <% if current_user %>
-        <h6>Signed in as <%= current_user.real_name %></h6>
-        <%= link_to 'Sign out', sign_out_path, method: :delete %>
-    <% else %>
-        <h6>First time sign in</h6>
-        <%= form_for :oauth, url: sign_up_path do |f| %>
-            <%= f.label :email %>
-            <br>
-            <%= f.text_field :email %>
-            <br>
-            <%= f.submit 'Sign up with Steam', class: 'button' %>
-        <% end %>
-        <hr>
-        <h6>Sign in</h6>
-        <%= link_to 'Sign in with Steam', oauth_path %>
-        <h6>Not signed in</h6>
-    <% end %>
-  </div>
-  <!---->
 
 </div>
