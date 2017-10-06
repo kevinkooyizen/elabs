@@ -1,4 +1,5 @@
 class PlayersController < ApplicationController
+
     before_action(only:[:edit, :update, :destroy]) do
         continue = true
         if !signed_in?
