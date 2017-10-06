@@ -3,19 +3,34 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.opaque-box {
-  content: "";
+.player-info-box {
   background-color: black;
+  float: left;
+  height: 770px;
+  width: 665px;
+  opacity: 0.5;
   position: absolute;
-  opacity: 0.8;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   z-index: -1;
+}
+
+.player-profile-header {
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.player-profile-info {
+  float: left;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.player-info {
+  padding-left: 20px;
+  padding-top: 20px;
 }
 
 .buttonright {
   float: right;
-  padding-right: 10px;
+  padding-right: 20px;
+  padding-top: 20px;
 }
