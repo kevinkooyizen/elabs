@@ -1,7 +1,10 @@
-<% if current_user.id == @team.user_id %>
-  <%= link_to 'Edit Team Details', edit_team_path(@team) %>
+<% if signed_in? %>
+  <% if current_user.id == @team.user_id %>
+    <%= link_to 'Edit Team Details', edit_team_path(@team) %>
+  <% end %>
 <% end %>
 <br>
+<img src = "<%= @team.logo %>" />
 <% if @team.status == false %>
   Team Status: <span class="inactive"> Inactive </span>
 <% else %>
