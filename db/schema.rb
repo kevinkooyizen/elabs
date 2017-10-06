@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171005161636) do
+ActiveRecord::Schema.define(version: 20171006042106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 20171005161636) do
     t.bigint "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "real_name"
+    t.integer "persona_name"
+    t.integer "team_name"
+    t.integer "winrate"
+    t.text "top_heroes", default: [], array: true
+    t.integer "steam_id"
+    t.integer "avatar"
+    t.integer "profile_url"
+    t.integer "last_login"
+    t.integer "country_code"
     t.index ["team_id"], name: "index_players_on_team_id"
     t.index ["user_id"], name: "index_players_on_user_id"
   end
@@ -89,6 +99,8 @@ ActiveRecord::Schema.define(version: 20171005161636) do
     t.boolean "status", default: true
     t.integer "dota2_team_id"
     t.bigint "user_id"
+    t.integer "winrate"
+    t.text "roster", default: [], array: true
     t.index ["user_id"], name: "index_teams_on_user_id"
   end
 
