@@ -9,7 +9,7 @@
 require 'open-uri'
 
 # this is to retain yizen, and kent user, player and team
-# Player.all.destroy_all
+Player.all.destroy_all
 Team.destroy_all
 # User.all.destroy_all
 # Happening.all.destroy_all
