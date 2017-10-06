@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
 	def index
-		@teams = JSON.parse open("https://api.opendota.com/api/teams").read
+		@teams = Team.page params[:page]
+		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 	end
 
 	def show

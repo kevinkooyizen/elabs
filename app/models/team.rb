@@ -1,5 +1,5 @@
 class Team < ApplicationRecord
-
+    paginates_per 5
     has_many :players
     belongs_to :user
     has_many :sponsorships
