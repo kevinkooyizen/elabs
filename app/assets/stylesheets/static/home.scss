@@ -46,11 +46,13 @@ $yellow: #FFCA2A;
 .signin {
   text-align: center;
   margin: auto;
-  width: 300px;
+  width: 200px;
   margin-top: 30px;
   padding: 30px;
   background-color: $light-grey;
   border-radius: 10px;
+  grid-column-start: 1;
+  grid-row-start: 4;
 
   // .button {
   //   background-color: #4CAF50;
@@ -69,8 +71,10 @@ $yellow: #FFCA2A;
   margin: auto;
   padding: 30px;
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 5fr;
   grid-auto-rows: minmax(150px, auto);
+  grid-column-gap: 5px;
+  grid-row-gap: 10px;
   text-align: left;
 
   grid-template-areas:
@@ -94,31 +98,48 @@ $yellow: #FFCA2A;
 .team {
   grid-area: sidebar;
   padding: 10px;
+  grid-column-start: 1;
+  grid-row-start: 1;
 }
 
 .player {
   grid-area: sidebar;
   padding: 10px;
+  grid-column-start: 1;
+  grid-row-start: 2;
 }
 
 .ads {
   grid-area: sidebar;
   padding: 10px;
+  grid-column-start: 1;
+  grid-row-start: 3;
 }
 
 // CONTENT
 
+// .content {
+//   grid-area: content;
+//   padding: 5px;
+// }
+
 .events {
   grid-area: content;
   padding: 5px;
+  grid-column-start: 2;
+  grid-row-start: 1;
 }
 
 .active {
   grid-area: content;
   padding: 5px;
+  grid-column-start: 2;
+  grid-row-start: 2;
 }
 
 .sponsors {
   grid-area: content;
   padding: 5px;
+  grid-column-start: 2;
+  grid-row-start: 3;
 }
