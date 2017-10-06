@@ -32,15 +32,20 @@ class Player < ApplicationRecord
         end
     end
 
+    def self.mmr(mmr_lower_range, mmr_upper_mmr)
+        joins(:user).where('mmr >= ? and mmr <= ?', mmr_lower_range, mmr_upper_mmr)
+    end
+
     def self.player_search(persona_name: nil,
             real_name: nil, state: nil,
             mmr_lower_range: self.min_mmr,
             mmr_upper_range: self.max_mmr)
-        players = self.persona_name(persona_name).real_name(real_name).state(state).includes(:user)
+        players = self.persona_name(persona_name).real_name(real_name).state(state)
+        players = players.mmr(mmr_lower_range, mmr_upper_range).includes(:user)
     end
 
-    def get_player_stats
-        api_result = JSON.parse open("https://api.opendota.com/api/players/#{self.user.uid}").read
+    def get_player_stats(player_uid = self.user.uid)
+        api_result = JSON.parse open("https://api.opendota.com/api/players/#{player_uid}").read
         api_result.deep_symbolize_keys!
 
         # cater for 2 exception:
@@ -51,15 +56,13 @@ class Player < ApplicationRecord
             return false
         end
 
-        player_uid = self.user.uid
-
         api_result_profile = api_result[:profile]
         # validate the date if its empty
         self.team_id = self.get_team_id(player_uid)
         last_login = api_result_profile.dig(:last_login)
         self.last_login = last_login.nil? ? nil : Date.strptime(last_login, '%Y-%m-%dT%H:%M:%S')
         self.mmr = api_result.dig(:solo_competitive_rank)
-        self.winrate = get_player_win_lose
+        self.winrate = get_player_win_lose(player_uid)
         self.top_heroes = get_top_3_heroes(player_uid)
         self.persona_name = api_result_profile.dig(:personaname)
         self.avatar = api_result_profile.dig(:avatar)
@@ -105,8 +108,8 @@ class Player < ApplicationRecord
     end
 
     # get player win lose rate from dota api
-    def get_player_win_lose
-        player_winlose = JSON.parse open("https://api.opendota.com/api/players/#{self.user.uid}/wl").read
+    def get_player_win_lose(player_uid)
+        player_winlose = JSON.parse open("https://api.opendota.com/api/players/#{player_uid}/wl").read
 
         if player_winlose["win"] == 0 && player_winlose["lose"] == 0
             0
