@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 require 'open-uri'
+require 'csv'
 
 # this is to retain yizen, and kent user, player and team
 Player.all.destroy_all
@@ -59,6 +60,9 @@ Team.destroy_all
 # tour = Dota.api
 # league_id = 5364
 # tournaments_collection = tour.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
+# Tournament.transaction do
+#     tournaments_collection["result"]["leagues"].each do |item|
+#         tournament= Tournament.new
 
 # tournaments_collection["result"]["leagues"].each do |item|
 #     tournament= Tournament.new
@@ -102,6 +106,26 @@ Team.destroy_all
 #     happening.save
 # end
 
+heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
+Hero.transaction do
+    heroes_collection.each do |item|
+        counter =0
+        hero = Hero.new
+        hero.api_id = item["id"]
+        hero.api_name = item["localized_name"]
+        hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
+        CSV.foreach(hero_file) do |row|
+            counter+=1
+            if hero.api_name == row[0]
+                next if counter == 1
+                hero.name = row[0]
+                hero.win_rate = row[1]
+                hero.picked = row[2]
+            end
+        end
+        hero.save
+    end
+end
 @teams = JSON.parse open("https://api.opendota.com/api/teams").read
 @pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 @user = User.new
