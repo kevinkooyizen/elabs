@@ -70,12 +70,15 @@ $yellow: #FFCA2A;
   padding: 30px;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  grid-auto-rows: minmax(100px, auto);
+  grid-auto-rows: minmax(150px, auto);
   text-align: left;
-  // background-color: $dark-grey;
-  // opacity: 0.8;
-}
 
+  grid-template-areas:
+    'sidebar content'
+    'sidebar content'
+    'sidebar content';
+
+}
 
 .title-stamp {
   background-color: $yellow;
@@ -84,4 +87,38 @@ $yellow: #FFCA2A;
   text-align: left;
   width: auto;
   display: inline-grid;
+}
+
+// SIDEBAR
+
+.team {
+  grid-area: sidebar;
+  padding: 10px;
+}
+
+.player {
+  grid-area: sidebar;
+  padding: 10px;
+}
+
+.ads {
+  grid-area: sidebar;
+  padding: 10px;
+}
+
+// CONTENT
+
+.events {
+  grid-area: content;
+  padding: 5px;
+}
+
+.active {
+  grid-area: content;
+  padding: 5px;
+}
+
+.sponsors {
+  grid-area: content;
+  padding: 5px;
 }
