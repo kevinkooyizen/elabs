@@ -15,6 +15,25 @@ ActiveRecord::Schema.define(version: 20171006074926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "authentications", force: :cascade do |t|
+    t.string "uid"
+    t.string "token"
+    t.string "provider"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.datetime "time"
+    t.string "location"
+    t.text "detail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "games", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -26,6 +45,16 @@ ActiveRecord::Schema.define(version: 20171006074926) do
     t.datetime "time"
     t.string "location"
     t.text "detail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "heroes", force: :cascade do |t|
+    t.integer "api_id"
+    t.string "api_name"
+    t.string "name"
+    t.decimal "win_rate", precision: 5, scale: 2
+    t.decimal "picked", precision: 5, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -147,6 +176,7 @@ ActiveRecord::Schema.define(version: 20171006074926) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "authentications", "users"
   add_foreign_key "participants", "teams"
   add_foreign_key "participants", "tournaments"
   add_foreign_key "players", "teams"

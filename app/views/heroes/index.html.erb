@@ -1,0 +1,15 @@
+<table>
+<tr>
+	<th>Hero</th>
+	<th>Win Rate (%)</th>
+	<th>Pick Rate (%)</th>
+</tr>
+
+<%  @heroes.each do |hero| %>
+    <tr>
+    	<td><%= link_to hero.name, hero_path(hero.id) %></td>
+    	<td><%= hero.win_rate %></td>
+    	<td><%= hero.picked %></td>
+    </tr>   
+<% end %>
+</table>
