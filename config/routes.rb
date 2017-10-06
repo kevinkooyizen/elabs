@@ -4,8 +4,9 @@ Rails.application.routes.draw do
     resources :sessions
     resources :users
     resources :teams
-    resources :tournaments
+    resources :tournaments, except: :show
     resources :happenings, only: :index
+    resources :heroes, only: [:index, :show]
     # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
     # route to create session after steam authentication
