@@ -13,17 +13,32 @@
       <div class="sidebar">
         <div class="team">
           <h6>Team of the week</h6>
-          <i class="fa fa-magic" aria-hidden="true"></i>
+          <ul>
+            <li>Logo</li>
+            <li><%= @team.name %></li>
+            <li><%= @team.winrate %></li>
+            <li>Top game link</li>
+          </ul>
         </div>
 
         <div class="player">
           <h6>Player of the week</h6>
-          <i class="fa fa-play" aria-hidden="true"></i>
+          <ul>
+            <li>Avatar</li>
+            <li><%= @user.persona_name %></li>
+            <li><%= @user.player.winrate %></li>
+            <li><%= @user.teams.first.name %></li>
+            <li>Top game link</li>
+          </ul>
         </div>
 
         <div class="ads">
           <h6>Advertisements</h6>
-          <i class="fa fa-archive" aria-hidden="true"></i>
+          <ul>
+            <li>Name</li>
+            <li>Thumbnail</li>
+            <li>Ad detail text</li>
+          </ul>
         </div>
 
         <!--testing block for oauth-->
