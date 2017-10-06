@@ -1,11 +1,11 @@
 class StaticController < ApplicationController
 
   def home
-    @user = User.find_by(id: 2)
+    @user = User.first
 
-    @player = Player.find_by(id: 1)
+    @player = Player.first
 
-    @team = Team.find_by(id: 1)
+    @team = Team.first
 
   end
 

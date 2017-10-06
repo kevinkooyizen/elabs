@@ -9,25 +9,21 @@
 <% end %>
 <br>
 Team ID: 
-<% if @teaminfo["team_id"].present? %>
- <%= @teaminfo["team_id"] %>
-<% end %>
+<%= @team.dota2_team_id %>
 <br>
 Name: 
-<% if @teaminfo["name"].present? %>
-  <span class="team_name"> <%= @teaminfo["name"] %> </span>
-<% end %> 
+<span class="team_name"> <%= @team.name %> </span>
 <br>
 Winrate: 
-<% if @team_winrate.present? %>
-  <%= @team_winrate %>%
-<% else %>
-  <span class="no_wins">Play some games to display winrate.</span>
-<% end %>
+<%= @team.winrate %>%
 <br>
 <p>Team's current roster:</p>
-<% @team_roster.each do |item| %>
-  <%= item["name"] %><br>
+<% @team.roster.each do |select| %>
+  <% @pros.select do |item| %>
+    <% if item["account_id"] == select.to_i %>
+      <%= item["name"] %><br>
+    <% end %>
+  <% end %>
 <% end %>
 <p>Tournament history</p>
 <p>Manager: <%= @team.manager %></p>
