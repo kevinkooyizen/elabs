@@ -3,7 +3,7 @@
 @import "bootstrap";
 
 $dark-grey: #333232;
-$light-grey: #363636;
+$light-grey: #808080;
 $white: #ffffff;
 $yellow: #FFCA2A;
 
@@ -12,6 +12,9 @@ body {
   color: $white;
   font-family: 'Roboto', sans-serif;
   margin: 0px;
+  background-position: center;
+  background-size: cover;
+  background-image: url('https://s3-ap-southeast-1.amazonaws.com/elabs-next/background.png');
 }
 
 h1, h2, h3, h4 {
@@ -42,16 +45,20 @@ h1, h2, h3, h4 {
     margin: auto;
   }
 
-  .player {
+  .player-navbar {
     text-align: right;
   }
 
-  .nav-links:before {
-    width: 0px;
-  height: 0px;
-  border-top: 10px solid transparent;
-  border-bottom: 10px solid transparent;
-  border-right: 10px solid blue;
+  .nav-links::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 48px 71px;
+    border-color: transparent transparent #FFCA2A;
+    position: absolute;
+    left: -70px;
+    bottom: -4px;
   }
 
   .nav-links {
