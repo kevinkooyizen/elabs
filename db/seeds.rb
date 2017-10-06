@@ -8,9 +8,10 @@
 
 require 'open-uri'
 require 'csv'
-
+start_time = Time.now
 # this is to retain yizen, and kent user, player and team
-Player.all.destroy_all
+Hero.destroy_all
+Player.destroy_all
 Team.destroy_all
 # User.all.destroy_all
 # Happening.all.destroy_all
@@ -134,7 +135,7 @@ end
 @user.password = 'password'
 @user.save!
 
-@teams.each do |select|
+@teams[0..30].each_with_index do |select, index|
 
     Team.transaction do
         team = Team.new
@@ -144,6 +145,9 @@ end
             team.rating = select["rating"]
         else
             team.rating = 0
+        end
+        if Dota.api.teams(after: @teams[index]["team_id"]).present?
+            team.logo = (JSON.parse open("https://api.steampowered.com/ISteamRemoteStorage/GetUGCFileDetails/v1/?key=#{ENV['STEAM_KEY']}&ugcid=#{Dota.api.teams(after: @teams[index]["team_id"]).first.logo_id}&appid=570").read)["data"]["url"]
         end
         team.status = true
         team.user_id = @user.id
@@ -155,5 +159,14 @@ end
             end
         end
         team.save
+
+        time_taken = Time.now - start_time
+        puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
+        puts "Teams seeded: " + Team.all.count.to_s
+        puts ""
     end
 end
+
+total_time = Time.now - start_time
+puts "Seed complete"
+puts "Total time taken for seed: " + total_time.round(2).to_s + " seconds"
