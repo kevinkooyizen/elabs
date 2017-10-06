@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
     root 'static#home'
+    get '/tournaments/search' => 'tournaments#search', as: :tournament_search
     resources :sessions
     resources :users
     resources :teams
