@@ -1,6 +1,6 @@
 <% @teams.each do |team| %>
-	Team id:<%= team.dota2_team_id %><br>
-	Name: <%= team.name %><br>
+  Team id:<%= team.dota2_team_id %><br>
+	Name: <%= link_to "#{team.name}", team_path(team) %><br>
   Rating: <%= team.rating %><br>
   Winrate: <%= team.winrate %>%<br>
   Roster: <br>
