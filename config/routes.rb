@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :teams
     resources :tournaments
     resources :happenings, only: :index
+    resources :players
     # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
     # route to create session after steam authentication
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
     delete "/sign_out" => "sessions#destroy", as: :sign_out
     post '/sign_up' => "sessions#sign_up_oauth", as: :sign_up
 
+    get '/playeres/search' => 'players#search', as: :player_search
     get '/happenings/search' => 'happenings#search', as: :happening_search
 
     # get '/edit/:id' => "users#edit", as: :edit_user
