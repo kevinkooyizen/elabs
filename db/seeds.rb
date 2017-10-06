@@ -124,6 +124,8 @@ Hero.transaction do
             end
         end
         hero.save
+    end
+end
 @teams = JSON.parse open("https://api.opendota.com/api/teams").read
 @pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 @user = User.new
