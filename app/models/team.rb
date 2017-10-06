@@ -1,5 +1,5 @@
 class Team < ApplicationRecord
-
+    paginates_per 5
     has_many :players
     belongs_to :user
     has_many :sponsorships
@@ -7,6 +7,7 @@ class Team < ApplicationRecord
     has_many :tournaments, through: :participants
 
     has_many :games, through: :titles
+    has_many :titles
 
     def self.team_search(name: nil, country: nil)
         team_name(name).country(country)

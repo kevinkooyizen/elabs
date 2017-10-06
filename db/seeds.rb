@@ -10,8 +10,8 @@ require 'open-uri'
 require 'csv'
 
 # this is to retain yizen, and kent user, player and team
-# Player.all.destroy_all
-# Team.all.destroy_all
+Player.all.destroy_all
+Team.destroy_all
 # User.all.destroy_all
 # Happening.all.destroy_all
 
@@ -63,6 +63,10 @@ require 'csv'
 # Tournament.transaction do
 #     tournaments_collection["result"]["leagues"].each do |item|
 #         tournament= Tournament.new
+
+# tournaments_collection["result"]["leagues"].each do |item|
+#     tournament= Tournament.new
+#     tournament.transaction do
 #         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
 #         tournament.description = item["description"]
 #         tournament.tournament_url = item["tournament_url"]
@@ -120,5 +124,34 @@ Hero.transaction do
             end
         end
         hero.save
+@teams = JSON.parse open("https://api.opendota.com/api/teams").read
+@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
+@user = User.new
+@user.real_name = "fake dummy"
+@user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
+@user.password = 'password'
+@user.save!
+
+@teams.each do |select|
+
+    Team.transaction do
+        team = Team.new
+        team.name = select["name"]
+        team.dota2_team_id = select["team_id"]
+        if !select["rating"].nil?
+            team.rating = select["rating"]
+        else
+            team.rating = 0
+        end
+        team.status = true
+        team.user_id = @user.id
+        team.winrate = (100 * select["wins"].to_f/(select["wins"].to_f + select["losses"].to_f)).round(2)
+        @pros.select do |item|
+            if item["team_name"] == select["name"] && item["locked_until"] != 0 && item["is_locked"] && item["is_pro"]
+                # this stores 32 bit player steam profile id into roster
+                team.roster << item["account_id"]
+            end
+        end
+        team.save
     end
 end

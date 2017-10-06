@@ -1,8 +1,16 @@
 <% @teams.each do |team| %>
-	Team id:<%= team["team_id"] %><br>
-	Name: <%= team["name"] %><br>
-	Rating: <%= team["rating"] %><br>
-	 Wins: <%= team["wins"] %><br>
-	 Tags: <%= team["tag"] %><br>
+  Team id:<%= team.dota2_team_id %><br>
+	Name: <%= link_to "#{team.name}", team_path(team) %><br>
+  Rating: <%= team.rating %><br>
+  Winrate: <%= team.winrate %>%<br>
+  Roster: <br>
+  <% team.roster.each do |roster| %>
+    <% @pros.select do |item| %>
+      <% if item["account_id"] == roster.to_i %>
+        <%= item["name"] %><br>
+      <% end %>
+    <% end %>
+  <% end %>
 	<br>	
 <% end %>
+<%= paginate @teams %>

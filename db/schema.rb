@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171006042811) do
+ActiveRecord::Schema.define(version: 20171006074926) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authentications", force: :cascade do |t|
+    t.string "uid"
+    t.string "token"
+    t.string "provider"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_authentications_on_user_id"
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.datetime "time"
+    t.string "location"
+    t.text "detail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "games", force: :cascade do |t|
     t.string "name"
@@ -54,6 +73,17 @@ ActiveRecord::Schema.define(version: 20171006042811) do
     t.bigint "team_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "real_name"
+    t.string "persona_name"
+    t.string "team_name"
+    t.integer "winrate"
+    t.text "top_heroes", default: [], array: true
+    t.integer "steam_id"
+    t.string "avatar"
+    t.string "profile_url"
+    t.string "last_login"
+    t.string "country_code"
+    t.integer "mmr"
     t.index ["team_id"], name: "index_players_on_team_id"
     t.index ["user_id"], name: "index_players_on_user_id"
   end
@@ -99,6 +129,9 @@ ActiveRecord::Schema.define(version: 20171006042811) do
     t.boolean "status", default: true
     t.integer "dota2_team_id"
     t.bigint "user_id"
+    t.float "winrate"
+    t.text "roster", default: [], array: true
+    t.integer "rating"
     t.index ["user_id"], name: "index_teams_on_user_id"
   end
 
@@ -143,6 +176,7 @@ ActiveRecord::Schema.define(version: 20171006042811) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
+  add_foreign_key "authentications", "users"
   add_foreign_key "participants", "teams"
   add_foreign_key "participants", "tournaments"
   add_foreign_key "players", "teams"
