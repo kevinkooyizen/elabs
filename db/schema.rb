@@ -49,6 +49,16 @@ ActiveRecord::Schema.define(version: 20171006074926) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "heroes", force: :cascade do |t|
+    t.integer "api_id"
+    t.string "api_name"
+    t.string "name"
+    t.decimal "win_rate", precision: 5, scale: 2
+    t.decimal "picked", precision: 5, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "participants", force: :cascade do |t|
     t.bigint "team_id"
     t.bigint "tournament_id"
