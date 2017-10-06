@@ -1,30 +1,29 @@
 class TeamsController < ApplicationController
 	def index
-		@teams = Team.page params[:page]
+		@teams = Team.order(rating: :desc).page params[:page]
 		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 	end
 
 	def show
 		@team = Team.find(params[:id])
-		api = Dota.api
-		@teams = JSON.parse open("https://api.opendota.com/api/teams").read
 		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
-		@teams.select do |item|
-			if item["name"] == @team.name
-				@teaminfo = item
-			end
-		end
-		@team_roster = []
-		@pros.select do |item|
-			if item["team_name"] == @team.name && item["locked_until"] != 0
-				@team_roster << item
-			end
-		end
-		if @teaminfo["wins"] != 0 && @teaminfo["losses"] != 0
-			@team_winrate = 100 * @teaminfo["wins"]/(@teaminfo["wins"] + @teaminfo["losses"])
-		else
-			@team_winrate = nil
-		end
+		# @teams = JSON.parse open("https://api.opendota.com/api/teams").read
+		# @teams.select do |item|
+		# 	if item["name"] == @team.name
+		# 		@teaminfo = item
+		# 	end
+		# end
+		# @team_roster = []
+		# @pros.select do |item|
+		# 	if item["team_name"] == @team.name && item["locked_until"] != 0
+		# 		@team_roster << item
+		# 	end
+		# end
+		# if @teaminfo["wins"] != 0 && @teaminfo["losses"] != 0
+		# 	@team_winrate = 100 * @teaminfo["wins"]/(@teaminfo["wins"] + @teaminfo["losses"])
+		# else
+		# 	@team_winrate = nil
+		# end
 	end
 
 	def new
