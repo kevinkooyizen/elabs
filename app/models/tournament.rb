@@ -19,7 +19,7 @@ class Tournament < ApplicationRecord
 
     def self.start(start)
     	if start.present?
-    		where(["start >=?", "%#{start}%"])
+    		where(["start >=?", start])
     	else	
     		all
     	end
@@ -27,12 +27,23 @@ class Tournament < ApplicationRecord
 
     def self.tournament_end(tournament_end)
     	if tournament_end.present?
-    		where(["end_date >=?", "%#{tournament_end}%"])
+    		where(["end_date >=?", tournament_end])
     	else
     		all
     	end
     end
-	
+
+    def self.game(game)
+    	if game.present?
+    		where(["game LIKE?", "%#{game}%"])
+    	else
+    	end
+    end
+
+    def self.tournament_search(name: nil, description: nil, start: nil, end_date: nil, game: nil)
+    	tournament_name(name).description(description).start(start).tournament_end(end_date).game(game)
+	end
+
 	def self.display_tournaments
 		Tournament.all.order(start: :desc).limit(8)
 	end
