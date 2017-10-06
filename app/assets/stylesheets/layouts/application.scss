@@ -15,6 +15,7 @@ body {
   background-position: center;
   background-size: cover;
   background-image: url('https://s3-ap-southeast-1.amazonaws.com/elabs-next/background.png');
+  height: 100%;
 }
 
 h1, h2, h3, h4 {
@@ -89,6 +90,7 @@ h1, h2, h3, h4 {
   background-color: $dark-grey;
   padding: 10px;
   font-size: 14px;
+  bottom: 0;
 
   ul {
     list-style-type: none;
