@@ -1,4 +1,5 @@
 class TournamentsController < ApplicationController
+	
 	def index
 		@tournaments = Tournament.display_tournaments
 	end	
@@ -46,6 +47,6 @@ class TournamentsController < ApplicationController
 	
 	private
 	def tournament_params
-		params.require(:tournament).permit(:name, :start, :end, :game, :status)
+		params.require(:tournament).permit(:name, :description, :tournament_url, :start, :end_date, :game, :status)
 	end
 end
