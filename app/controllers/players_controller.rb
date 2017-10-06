@@ -24,7 +24,7 @@ class PlayersController < ApplicationController
     end
 
     def search
-
+        @player = Player.player_search()
     end
 
     def edit
@@ -38,7 +38,7 @@ class PlayersController < ApplicationController
     private
 
     def search_params
-        
+        params.require(:search).permit(:persona_name, :real_name, :state, :mmr_lower_range, :mmr_upper_range)
     end
 
 end
