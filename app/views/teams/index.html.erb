@@ -1,6 +1,7 @@
 <% @teams.each do |team| %>
 	Team id:<%= team.dota2_team_id %><br>
 	Name: <%= team.name %><br>
+  Rating: <%= team.rating %><br>
   Winrate: <%= team.winrate %>%<br>
   Roster: <br>
   <% team.roster.each do |roster| %>

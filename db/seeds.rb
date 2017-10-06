@@ -116,6 +116,7 @@ Team.destroy_all
         team = Team.new
         team.name = select["name"]
         team.dota2_team_id = select["team_id"]
+        team.rating = select["rating"]
         team.status = true
         team.user_id = @user.id
         team.winrate = (100 * select["wins"].to_f/(select["wins"].to_f + select["losses"].to_f)).round(2)
