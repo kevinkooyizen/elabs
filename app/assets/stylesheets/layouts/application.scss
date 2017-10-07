@@ -21,7 +21,7 @@ body {
   position: relative;
 }
 
-.opaque-box {
+/*.opaque-box {
   content: "";
   background-color: black;
   position: absolute;
@@ -32,7 +32,7 @@ body {
   right: 0;
   z-index: -2;
   height: inherit;
-}
+}*/
 
 h1, h2, h3, h4 {
   color: $yellow;

@@ -29,6 +29,57 @@
   padding-top: 20px;
 }
 
+.player-hero-box {
+  background-color: black;
+  float: left;
+  height: 770px;
+  width: 1050px;
+  opacity: 0.5;
+  position: absolute;
+  z-index: -1;
+}
+
+.player-hero-info {
+  float: left;
+  padding-left: 40px;
+  padding-top: 20px;
+}
+
+.hero-avatar {
+  width: 300px;
+  height: 340px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #FFCA2A;
+  border-radius: 8px;
+  float: left;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#hero-gif {
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.hero-stats {
+  position: relative;
+  float: left;
+  padding-left: 20px;
+}
+
+.player-hero {
+  position: relative;
+  float: left;
+  padding-left: 20px;
+  padding-top: 20px;
+  height: 770px;
+  width: 1050px;
+}
+
 .buttonright {
   float: right;
   padding-right: 20px;
