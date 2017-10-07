@@ -103,8 +103,13 @@ class UsersController < ApplicationController
                 @top_hero_deaths += x["deaths"].to_f/top_heroes[-1]["games"].to_f
                 @top_hero_assists += x["assists"].to_f/top_heroes[-1]["games"].to_f
             end
+            Hero.all.each do |item|
+                if @top_hero["hero_id"].to_i == item.api_id
+                    @top_hero_name = item.name
+                end
+            end
+            @won = JSON.parse open("https://api.opendota.com/api/players/100893614/matches/?win=1").read
         end
-        # For finding top user matches
     end
 
     private

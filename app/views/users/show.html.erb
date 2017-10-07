@@ -36,10 +36,10 @@
     <main>
       <section class="player-hero">
         <div class="hero-avatar">
-          <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/Heroes/antimage.gif" id="hero-gif" >
+          <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/Heroes/<%= @top_hero_name.downcase %>.gif" id="hero-gif" >
         </div>
         <div class="hero-stats">
-        <h1>Anti-Mage</h1>
+        <h1><%= @top_hero_name %></h1>
 
         <br>
 
@@ -53,6 +53,28 @@
 
         <p><strong><font color="#FFCA2A"> Hero K.D.A: <%= @top_hero_kills.to_i %>/<%= @top_hero_assists.to_i %>/<%= @top_hero_deaths.to_i %> </font></strong></p>
         </div>
+        <!-- This is all of the top heroes matches -->
+        <% @user_matches[0..4].each do |item| %>
+          <% win = false %>
+          <% @won.select do |select| %>
+            <% if item["match_id"] == select["match_id"] %>
+              <% win = true %>
+            <% end %>
+          <% end %>
+          <% if win == true %>
+            Won
+          <% else %>
+            Lost
+          <% end %>
+          <br>
+          Kills: <%= item["kills"] %>
+          <br>
+          Deaths: <%= item["deaths"] %>
+          <br>
+          Assists: <%= item["assists"] %>
+          <br>
+          <br>
+        <% end %>
       </section>
     </main>
 </div>
