@@ -15,7 +15,6 @@
         </div>
           <p>Team if present?</p>
           <p>Account ID: <%= @user["profile"]["account_id"] %></p>
-          <p>Profile URL: <a href ="<%= @user["profile"]["profileurl"] %>"><%= @user["profile"]["profileurl"] %></a></p>
           <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
           <p>Country: <%= @user["profile"]["loccountrycode"] %></p>
           <p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
