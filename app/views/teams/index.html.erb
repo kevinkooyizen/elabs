@@ -1,17 +1,25 @@
+<%= paginate @teams %>
 <% @teams.each do |team| %>
   Team id:<%= team.dota2_team_id %><br>
-	Name: <%= link_to "#{team.name}", team_path(team) %><br>
+  Name: <%= link_to "#{team.name}", team_path(team) %><br>
   Rating: <%= team.rating %><br>
-  Winrate: <%= team.winrate %>%<br>
+  Winrate: 
+  <% if !team.winrate.nil? %>
+    <%= team.winrate %>%
+  <% else %>
+    Insufficient data.
+  <% end %>
+  <br>
   Roster: <br>
   <% team.roster.each do |roster| %>
-    <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"].nil? %>
-      <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"] %>
-    <% else %>
-      <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["personaname"] %>
+    <% if roster.present? %>
+      <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"].nil? %>
+        <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"] %>
+      <% else %>
+        <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["personaname"] %>
+      <% end %>
+      <br>
     <% end %>
-    <br>
   <% end %>
-	<br>	
+  <br>  
 <% end %>
-<%= paginate @teams %>

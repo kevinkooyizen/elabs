@@ -13,23 +13,27 @@
       <div class="sidebar">
         <div class="team">
           <h6>Team of the week</h6>
-          <ul>
-            <li>Logo</li>
-            <li><%= @team.name %></li>
-            <li>Winrate: <%= @team.winrate %>%</li>
-            <li>Top game link</li>
-          </ul>
+          <% if @team.present? %>
+            <ul>
+              <li>Logo</li>
+              <li><%= @team.name %></li>
+              <li>Winrate: <%= @team.winrate %>%</li>
+              <li>Top game link</li>
+            </ul>
+          <% end %>
         </div>
 
         <div class="player">
           <h6>Player of the week</h6>
-          <ul>
-            <li>Avatar</li>
-            <li><%= @user.persona_name %></li>
-            <li><%= @user.player.winrate %></li>
-            <li><%= @user.teams.first.name %></li>
-            <li>Top game link</li>
-          </ul>
+          <% if @user.player.present? %>
+            <ul>
+              <li>Avatar</li>
+              <li><%= @user.persona_name %></li>
+              <li><%= @user.player.winrate %></li>
+              <li><%= @user.teams.first.name %></li>
+              <li>Top game link</li>
+            </ul>
+          <% end %>
         </div>
 
         <div class="ads">
