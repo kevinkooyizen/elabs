@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
     root 'static#home'
 
+    get '/tournaments/search' => 'tournaments#search', as: :tournament_search
+    get '/playeres/search' => 'players#search', as: :player_search
+
     resources :sessions
 
     resources :users
@@ -18,7 +21,7 @@ Rails.application.routes.draw do
     resources :heroes, only: [:index, :show]
 
     resources :players
-    get '/players/search' => 'players#search', as: :player_search
+
     # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
     # route to create session after steam authentication
