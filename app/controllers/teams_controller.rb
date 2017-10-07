@@ -67,7 +67,28 @@ class TeamsController < ApplicationController
 			flash[:failure] = "You have failed to remove your account from elabs. Please try again."
 			redirect_to edit_path #can be change
 		end
-	end
+    end
+
+    def players_recommendation
+        if !signed_in?
+            flash[:notice] = 'Please sign in to perform to this action'
+            return redirect_to teams_path
+        end
+
+        team = Team.find(params[:id])
+
+        if !team.present?
+            flash[:notice] = 'Please select one of your team to get the players recommendation. Players are sorted by MMR for now.'
+            # this is a activerecord::relation object
+            @players = Player.all.order('mmr desc')
+        else
+            # this is an array of activerecord, use the [0...N] method to get the topN players by similarity
+            @players = team.players_sorted_by_similarity
+        end
+
+    #     choose a view file to render the players
+
+    end
 
 	def join
 		byebug
