@@ -43,15 +43,15 @@
 
         <br>
 
-        <p><strong><font color="#FFCA2A">Times played </font></strong></p>
+        <p><strong><font color="#FFCA2A">Times played: <%= @top_hero["games"] %></font></strong></p>
 
         <br>
 
-        <p><strong><font color="#FFCA2A"> Hero Winrate </font></strong></p>
+        <p><strong><font color="#FFCA2A"> Hero Winrate: <%= @top_hero_winrate %>%</font></strong></p>
 
         <br>
 
-        <p><strong><font color="#FFCA2A"> Hero K.D.A </font></strong></p>
+        <p><strong><font color="#FFCA2A"> Hero K.D.A: <%= @top_hero_kills.to_i %>/<%= @top_hero_assists.to_i %>/<%= @top_hero_deaths.to_i %> </font></strong></p>
         </div>
       </section>
     </main>

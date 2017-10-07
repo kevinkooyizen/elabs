@@ -85,8 +85,26 @@ class UsersController < ApplicationController
                     @top_heroes_names << info["name"].match(/npc_dota_hero_(\w+)/)[1]
                 end
             end
+            # sorting top heroes in ascending order winrate
+            top_heroes.sort_by! do |current|
+                current["win"]*1000000/current["games"].to_i
+            end
+            @top_hero = top_heroes[-1]
+            @top_hero_winrate = (100*top_heroes[-1]["win"].to_f/top_heroes[-1]["games"].to_f).round(2)
+            @user_matches = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}/matches").read
+            @user_matches.select! do |item|
+                item["hero_id"] == top_heroes[-1]["hero_id"].to_i
+            end
+            @top_hero_kills = 0
+            @top_hero_deaths = 0
+            @top_hero_assists = 0
+            @user_matches.each do |x|
+                @top_hero_kills += x["kills"].to_f/top_heroes[-1]["games"].to_f
+                @top_hero_deaths += x["deaths"].to_f/top_heroes[-1]["games"].to_f
+                @top_hero_assists += x["assists"].to_f/top_heroes[-1]["games"].to_f
+            end
         end
-        @user_matches = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}/matches").read
+        # For finding top user matches
     end
 
     private
