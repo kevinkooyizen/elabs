@@ -17,8 +17,8 @@ class PlayersController < ApplicationController
     def index
         if !signed_in?
             @players = Player.all.order('mmr desc')
-        elsif current_user.teams?
-            @players = Player.all.order('mmr desc')
+        elsif current_user.occupation == 'player'
+        #     recommendation here
         else
             @players = Player.all.order('mmr desc')
         end
