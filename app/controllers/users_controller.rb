@@ -48,7 +48,7 @@ class UsersController < ApplicationController
         if !@user["profile"].nil?
             @user_winlose = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}/wl").read
             if @user_winlose["win"] != 0 || @user_winlose["lose"] != 0
-                @user_winrate = 100 * @user_winlose["win"]/(@user_winlose["win"] + @user_winlose["lose"])
+                @user_winrate = (100 * @user_winlose["win"].to_f/(@user_winlose["win"].to_f + @user_winlose["lose"].to_f)).round(2)
             else
                 @user_winrate = 0
             end
