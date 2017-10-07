@@ -49,10 +49,17 @@ players_collection.each do |player|
 
         new_player = Player.new
         new_player.user_id = user.id
+        team.roster << player["account_id"]
+        team.save
         new_player.team_id=team.id
 
-        new_player.save!
-
+        if new_player.get_player_stats && team.present?
+            new_player.save!
+        end
+        time_taken = Time.now - start_time
+        puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
+        puts "Players seeded: " + Player.all.count.to_s
+        puts ""
     end
     seed_counter+=1
 end
