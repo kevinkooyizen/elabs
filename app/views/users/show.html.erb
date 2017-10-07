@@ -1,20 +1,20 @@
-<h1>Player profile</h1> <span class="buttonright"> <%= link_to "Create Team", new_team_path %> </span>
-<main>
-<div class="opaque-box"></div>
-  <section class="box" id="profile">
-    <div class="box-info">
-      <a href="<%= @user["profile"]["profileurl"] %>">
-        <img src="<%= @user["profile"]["avatarfull"] %>" id="avatar">
-      </a>
-      <div>
-        <% if !@user["profile"].nil? %>
+<div class="player-profile-info">
+<div class="player-info-box"></div>
+  <h1 class="player-profile-header">Player profile</h1> 
+    <main>
+      <section class="player-info" id="profile">
+        <div class="player-avatar">
           <a href="<%= @user["profile"]["profileurl"] %>">
-            <h3> <%= @user["profile"]["personaname"] %></h3>
+            <img src="<%= @user["profile"]["avatarfull"] %>" id="avatar">
           </a>
-      </div>
+        <div>
+          <% if !@user["profile"].nil? %>
+            <a href="<%= @user["profile"]["profileurl"] %>">
+              <h3> <%= @user["profile"]["personaname"] %></h3>
+            </a>
+        </div>
           <p>Team if present?</p>
           <p>Account ID: <%= @user["profile"]["account_id"] %></p>
-          <p>Profile URL: <a href ="<%= @user["profile"]["profileurl"] %>"><%= @user["profile"]["profileurl"] %></a></p>
           <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
           <p>Country: <%= @user["profile"]["loccountrycode"] %></p>
           <p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
@@ -27,9 +27,11 @@
         <% else %>
           <p>User does not have dota game history</p>
         <% end %>
-    </div>
-  </section>
-</main> 
+        </div>
+      </section>
+    </main>
+</div>
+<span class="buttonright"> <%= link_to "Create Team", new_team_path %> </span>
 
 
 <!-- Missing:  

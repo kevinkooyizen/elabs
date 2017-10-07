@@ -32,12 +32,13 @@ class TeamsController < ApplicationController
 
 	def create
 		@team = Team.new(team_params)
+		@team.roster = params["team"]["roster"]
 		if @team.save
-			flash[:successfull] = "Congratulations, you have created a team. Enjoy your game..."
-			redirect_to edit_team_path	
+			flash[:success] = "Congratulations, you have created a team. Enjoy your game..."
+			redirect_to team_path(@team)	
 		else
 			flash[:failure]= "You have failed to create a team. Please try again."
-			redirect_to @team
+			redirect_to edit_path(@team)
 		end
 	end
 
@@ -68,9 +69,13 @@ class TeamsController < ApplicationController
 		end
 	end
 
+	def join
+		byebug
+	end
+
  	private
 
  	def team_params
- 		params.require(:team).permit(:name, :sponsor, :coach, :manager, :country, :status, :dota2_team_id)
+ 		params.require(:team).permit(:name, :sponsor, :coach, :manager, :country, :status, :dota2_team_id, :user_id)
  	end
 end
