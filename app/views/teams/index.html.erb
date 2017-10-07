@@ -13,10 +13,12 @@
   Roster: <br>
   <% team.roster.each do |roster| %>
     <% if roster.present? %>
-      <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"].nil? %>
-        <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"] %>
-      <% else %>
-        <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["personaname"] %>
+      <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"].nil? %>
+        <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"].nil? %>
+          <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"] %>
+        <% else %>
+          <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["personaname"] %>
+        <% end %>
       <% end %>
       <br>
     <% end %>
