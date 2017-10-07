@@ -73,6 +73,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     crass (1.0.2)
+    descriptive_statistics (2.4.0)
     dota (0.0.21)
       facets (~> 3.0)
       faraday (~> 0.9.1)
@@ -239,6 +240,7 @@ DEPENDENCIES
   capybara (~> 2.13)
   clearance
   coffee-rails (~> 4.2)
+  descriptive_statistics (~> 2.4.0)
   dota (~> 0.0.21)
   faker
   figaro

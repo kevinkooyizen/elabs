@@ -1,4 +1,6 @@
 class Player < ApplicationRecord
+    include RankingExtension::CosineDistance
+
     belongs_to :user
     belongs_to :team
     attr_reader :stats
@@ -83,6 +85,7 @@ class Player < ApplicationRecord
         self.persona_name = api_result_profile.dig(:personaname)
         self.avatar = api_result_profile.dig(:avatar)
         self.profile_url = api_result_profile.dig(:profileurl)
+        self.steam_id = player_uid.to_i
 
         @is_player = true
         return true
