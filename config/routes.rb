@@ -2,7 +2,7 @@ Rails.application.routes.draw do
     root 'static#home'
 
     get '/tournaments/search' => 'tournaments#search', as: :tournament_search
-    get '/playeres/search' => 'players#search', as: :player_search
+    get '/players/search' => 'players#search', as: :player_search
 
     resources :sessions
 
