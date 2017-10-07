@@ -1,4 +1,5 @@
 class PlayersController < ApplicationController
+    include SearchHelper
 
     before_action(only:[:edit, :update, :destroy]) do
         continue = true
@@ -14,17 +15,26 @@ class PlayersController < ApplicationController
     end
 
     def index
-        @players = Player.all
+        @players = Player.all.order('mmr desc')
         render 'index'
     end
 
     def show
         @player = Player.find(params[:id])
-        render 'player'
+        render 'show'
     end
 
     def search
-        @player = Player.player_search()
+        # return the params that user searched for back to view
+        @params = search_params.to_h
+
+        @players = Player.player_search(persona_name:search_params[:persona_name],
+                                        real_name: search_params[:real_name],
+                                        state: search_params[:state],
+                                        mmr_lower_range: search_params[:mmr_lower_range],
+                                        mmr_upper_range: search_params[:mmr_upper_range]).order('mmr desc')
+
+        return render 'index'
     end
 
     def edit
@@ -38,7 +48,10 @@ class PlayersController < ApplicationController
     private
 
     def search_params
-        params.require(:search).permit(:persona_name, :real_name, :state, :mmr_lower_range, :mmr_upper_range)
+        params.require(:search).permit(:persona_name,
+                                       :real_name, :state,
+                                       :mmr_lower_range,
+                                       :mmr_upper_range)
     end
 
 end

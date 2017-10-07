@@ -26,5 +26,9 @@ module SearchHelper
         end
     end
 
+    def can_string_to_number?(string)
+        string.match?(/^\d+(\.\d+)?$/)
+    end
+
 
 end
