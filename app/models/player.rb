@@ -1,4 +1,6 @@
 class Player < ApplicationRecord
+    include RankingExtension::CosineDistance
+
     belongs_to :user
     belongs_to :team
     attr_reader :stats
@@ -52,26 +54,6 @@ class Player < ApplicationRecord
         players = self.persona_name(persona_name).real_name(real_name).state(state).mmr(mmr_lower_range, mmr_upper_range).includes(:user)
     end
 
-    # calculate cosine distance
-    def dot_product(v1, v2)
-        result = 0
-        (0...v1.length).each do |i|
-            result+= v1[i] * v2[i]
-        end
-        result
-    end
-
-    def norm(v)
-        # result = 0
-        # (0...v.length).each do |i|
-        #     result+=v[i] ** 2
-        # end
-
-        result = v.reduce(0) {|sum, ele|
-            sum+=ele ** 2}
-        result ** 0.5
-    end
-
     # should return the active relation object of Hero
     def get_heroes
         heroes = self.top_heroes
@@ -103,6 +85,7 @@ class Player < ApplicationRecord
         self.persona_name = api_result_profile.dig(:personaname)
         self.avatar = api_result_profile.dig(:avatar)
         self.profile_url = api_result_profile.dig(:profileurl)
+        self.steam_id = player_uid.to_i
 
         @is_player = true
         return true

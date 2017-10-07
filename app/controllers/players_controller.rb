@@ -15,8 +15,15 @@ class PlayersController < ApplicationController
     end
 
     def index
-        @players = Player.all.order('mmr desc')
-        render 'index'
+        if !signed_in?
+            @players = Player.all.order('mmr desc')
+        elsif current_user.teams?
+            @players = Player.all.order('mmr desc')
+        else
+            @players = Player.all.order('mmr desc')
+        end
+
+        return render 'index'
     end
 
     def show
