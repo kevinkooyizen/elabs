@@ -10,38 +10,54 @@ class Player < ApplicationRecord
 
     def self.persona_name(persona_name=nil)
         if persona_name.present?
-            joins(:user).where('users.persona_name ilike ?', "%#{persona_name}%")
+            self.joins(:user).where('users.persona_name ilike ?', "%#{persona_name}%")
         else
-            all
+            self.all
         end
     end
 
     def self.real_name(real_name=nil)
         if persona_name.present?
-            joins(:user).where('users.real_name ilike ?', "%#{real_name}%")
+            self.joins(:user).where('users.real_name ilike ?', "%#{real_name}%")
         else
-            all
+            self.all
         end
     end
 
     def self.state(state=nil)
         if state.present?
-            joins(:user).where("state ilike ?", "%#{state}%")
+            self.where("state ilike ?", "%#{state}%")
         else
-            all
+            self.all
         end
     end
 
-    def self.mmr(mmr_lower_range, mmr_upper_mmr)
-        joins(:user).where('mmr >= ? and mmr <= ?', mmr_lower_range, mmr_upper_mmr)
+    def self.mmr(mmr_lower_range, mmr_upper_range)
+        if !mmr_lower_range.present?
+            mmr_lower_range = self.min_mmr
+        end
+
+        if !mmr_upper_range.present?
+            mmr_upper_range = self.max_mmr
+        end
+
+        self.where('mmr >= ? and mmr <= ?', mmr_lower_range.to_i, mmr_upper_range.to_i)
     end
 
     def self.player_search(persona_name: nil,
             real_name: nil, state: nil,
             mmr_lower_range: self.min_mmr,
             mmr_upper_range: self.max_mmr)
-        players = self.persona_name(persona_name).real_name(real_name).state(state)
-        players = players.mmr(mmr_lower_range, mmr_upper_range).includes(:user)
+
+        players = self.persona_name(persona_name).real_name(real_name).state(state).mmr(mmr_lower_range, mmr_upper_range).includes(:user)
+    end
+
+    # should return the active relation object of Hero
+    def get_heroes
+        heroes = self.top_heroes
+        heroes.map! {|id| id.to_i}
+
+        Hero.where('id in (?)', heroes)
     end
 
     def get_player_stats(player_uid = self.user.uid)
@@ -61,8 +77,8 @@ class Player < ApplicationRecord
         self.team_id = self.get_team_id(player_uid)
         last_login = api_result_profile.dig(:last_login)
         self.last_login = last_login.nil? ? nil : Date.strptime(last_login, '%Y-%m-%dT%H:%M:%S')
-        self.mmr = api_result.dig(:solo_competitive_rank)
-        self.winrate = get_player_win_lose(player_uid)
+        self.mmr = api_result.dig(:solo_competitive_rank)||0
+        self.winrate = get_player_win_lose(player_uid)||0
         self.top_heroes = get_top_3_heroes(player_uid)
         self.persona_name = api_result_profile.dig(:personaname)
         self.avatar = api_result_profile.dig(:avatar)
@@ -92,7 +108,7 @@ class Player < ApplicationRecord
             end
         end
 
-        heroes[0..9].sort_by! do |hero|
+        heroes[0...default_heroes_count].sort_by! do |hero|
             if hero["games"].to_i == 0 || hero["win"].to_i == 0
                 0
             else
