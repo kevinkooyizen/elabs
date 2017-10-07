@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171007023014) do
+ActiveRecord::Schema.define(version: 20171007064740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,14 +57,14 @@ ActiveRecord::Schema.define(version: 20171007023014) do
     t.string "real_name"
     t.string "persona_name"
     t.string "team_name"
-    t.integer "winrate"
+    t.integer "winrate", default: 0
     t.text "top_heroes", default: [], array: true
     t.integer "steam_id"
     t.string "avatar"
     t.string "profile_url"
     t.string "last_login"
     t.string "country_code"
-    t.integer "mmr"
+    t.integer "mmr", default: 0
     t.index ["team_id"], name: "index_players_on_team_id"
     t.index ["user_id"], name: "index_players_on_user_id"
   end
