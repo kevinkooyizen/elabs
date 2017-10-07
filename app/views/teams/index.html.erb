@@ -1,3 +1,14 @@
+<% @params||={} %>
+<%= form_for :teams_search, url: teams_search_path, method: :get do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name, value: @params.dig(:name) %>
+
+    <%= f.label :country %>
+    <%= f.text_field :country, value: @params.dig(:country) %>
+
+    <%= f.submit 'Search' %>
+<% end %>
+
 <%= paginate @teams %>
 <% @teams.each do |team| %>
   Team id:<%= team.dota2_team_id %><br>

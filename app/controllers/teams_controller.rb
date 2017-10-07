@@ -2,7 +2,14 @@ class TeamsController < ApplicationController
 	def index
 		@teams = Team.order(rating: :desc).page params[:page]
 		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
-	end
+    end
+
+    def search
+        @params = search_params.to_h
+        @teams = Team.team_search(name: search_params[:name], country: search_params[:country]).order('name').page params[:page]
+
+        render 'index'
+    end
 
 	def show
 		@team = Team.find(params[:id])
@@ -98,5 +105,9 @@ class TeamsController < ApplicationController
 
  	def team_params
  		params.require(:team).permit(:name, :sponsor, :coach, :manager, :country, :status, :dota2_team_id, :user_id)
- 	end
+    end
+
+    def search_params
+        params.require(:teams_search).permit(:name, :country)
+    end
 end
