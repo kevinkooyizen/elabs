@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     get '/players/search' => 'players#search', as: :player_search
     get '/players/recommendation' => 'teams#players_recommendation', as: :players_recommendation
 
+    get 'teams/search' => 'teams#search', as: :teams_search
+
     resources :sessions
 
     resources :users
