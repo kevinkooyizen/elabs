@@ -29,6 +29,12 @@
   padding-top: 20px;
 }
 
+.player-name {
+  color: #FFCA2A;
+  font-weight: bold;
+  clear: left;
+}
+
 .player-hero-box {
   background-color: black;
   float: left;
@@ -78,6 +84,10 @@ img {
   padding-top: 20px;
   height: 770px;
   width: 1050px;
+}
+
+.hero-match {
+  float: left;
 }
 
 .buttonright {

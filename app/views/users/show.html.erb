@@ -10,7 +10,7 @@
         <div>
           <% if !@user["profile"].nil? %>
             <a href="<%= @user["profile"]["profileurl"] %>">
-              <h3> <%= @user["profile"]["personaname"] %></h3>
+              <h3 class="player-name"> <%= @user["profile"]["personaname"] %></h3>
             </a>
         </div>
           <p>Team if present?</p>
@@ -51,34 +51,37 @@
 
         <br>
 
-        <p><strong><font color="#FFCA2A"> Hero K.D.A: <%= @top_hero_kills.to_i %>/<%= @top_hero_assists.to_i %>/<%= @top_hero_deaths.to_i %> </font></strong></p>
+        <p><strong><font color="#FFCA2A"> Hero Average K.D.A: <%= @top_hero_kills.to_i %>/<%= @top_hero_assists.to_i %>/<%= @top_hero_deaths.to_i %> </font></strong></p>
         </div>
+        <div class="hero-match">
         <!-- This is all of the top heroes matches -->
-        <% @user_matches[0..4].each do |item| %>
-          <% win = false %>
-          <% @won.select do |select| %>
-            <% if item["match_id"] == select["match_id"] %>
-              <% win = true %>
+          
+            <% @user_matches[0..4].each do |item| %>
+              <% win = false %>
+              <% @won.select do |select| %>
+                <% if item["match_id"] == select["match_id"] %>
+                  <% win = true %>
+                <% end %>
+              <% end %>
+              <% if win == true %>
+                Won
+              <% else %>
+                Lost
+              <% end %>
+              <br>
+              Kills: <%= item["kills"] %>
+              <br>
+              Deaths: <%= item["deaths"] %>
+              <br>
+              Assists: <%= item["assists"] %>
+              <br>
+              <br>
             <% end %>
-          <% end %>
-          <% if win == true %>
-            Won
-          <% else %>
-            Lost
-          <% end %>
-          <br>
-          Kills: <%= item["kills"] %>
-          <br>
-          Deaths: <%= item["deaths"] %>
-          <br>
-          Assists: <%= item["assists"] %>
-          <br>
-          <br>
-        <% end %>
+        </div>
       </section>
     </main>
 </div>
-<span class="buttonright"> <%= link_to "Create Team", new_team_path %> </span>
+<span class="buttonright", id="create-team"> <%= link_to "Create Team", new_team_path %> </span>
 
 
 <!-- Missing:  

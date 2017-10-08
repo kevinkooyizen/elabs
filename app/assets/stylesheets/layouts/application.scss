@@ -18,6 +18,7 @@ body {
   background-attachment: fixed;
   height: 100%;
   min-height: 1100px;
+  min-width: auto;
   position: relative;
 }
 
@@ -33,6 +34,16 @@ body {
   z-index: -2;
   height: inherit;
 }*/
+
+#avatar {
+  width: 184px;
+  height: 184px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #FFCA2A;
+  border-radius: 8px;
+  float: left;
+}
 
 h1, h2, h3, h4 {
   color: $yellow;
