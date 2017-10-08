@@ -1,15 +1,14 @@
 class TournamentsController < ApplicationController
 	include SearchHelper
 	def index
-		@tournaments = Tournament.display_tournaments
+		@tournaments = Tournament.display_tournaments.page(params[:page]).per(8) 
 	end	
 
 	def search
-		@tournaments = Tournament.display_tournaments
+		@tournaments = Tournament.display_tournaments.page(params[:page]).per(8)
 		params_valid = true
 		start_date = PseudoDate.new(search_params[:"start(1i)"],search_params[:"start(2i)"],search_params[:"start(3i)"])
         end_date = PseudoDate.new(search_params[:"end(1i)"],search_params[:"end(2i)"],search_params[:"end(3i)"])
-        byebug
         if !start_date.valid?
             flash[:error] = 'Invalid date!'
             params_valid = false
@@ -25,7 +24,7 @@ class TournamentsController < ApplicationController
                                                      description: search_params[:description],
                                                      start: start_date.to_string,
                                                      end_date: end_date.to_string,
-                                                     game: search_params[:game])
+                                                     game: search_params[:game]).page(params[:page]).per(8)
         end
 
         # this is to return the params keyed in by user when the page is refreshed
