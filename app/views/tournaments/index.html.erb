@@ -1,28 +1,39 @@
-<!-- 
+<!--
 	for more information, you can go to the below link.
 	http://sharonkuo.me/dota2/tournament.html
  -->
-<div class="container">
+<div class="tournaments-container">
+
+  <div class=tournaments-search>
+    <h5>SEARCH TOURNAMENTS</h5>
     <% @params||={} %>
     <%= form_for :search, url: tournament_search_path, method: :get do |f| %>
-        <%= f.label :name, "NAME: " %>
+        <%= f.label :name, "Name: " %>
         <%= f.text_field :name, value: @params.fetch(:name, nil) %>
-
-        <%= f.label :description, "DESCRIPTION: " %>
+        <br>
+        <br>
+        <%= f.label :description, "Description: " %>
+        <br>
         <%= f.text_field :description, value: @params.fetch(:description, nil), class: "form-text" %>
-
-        <%= f.label :game, "GAME: " %>
+        <br>
+        <br>
+        <%= f.label :game, "Game: " %>
         <%= f.text_field :game, selected: @params.fetch(:game, nil) %>
     <div class= "date-container">
-        <%= f.label :start, "START DATE: " %>
+        <%= f.label :start, "Start Date: " %>
+        <br>
         <%= f.date_select :start, selected: @params.fetch(:start, Date.today)%>
-
-        <%= f.label :end, "END DATE: " %>
+        <br>
+        <%= f.label :end, "End Date: " %>
+        <br>
         <%= f.date_select :end, selected: @params.fetch(:end, Date.today) %>
-            
+        <br>
+        <br>
         <%= f.submit 'Search', class: "search-btn" %>
     </div>
     <% end %>
+  </div>
+
 
         <!-- for more attribute, please refer to schema -->
     <div class="site-wrapper">
@@ -37,6 +48,7 @@
         </div>
         <% end %>
         <%= paginate @tournaments %>
+        <br>
+        <br>
     </div>
 </div>
-

@@ -3,7 +3,7 @@ $light-grey: #808080;
 $white: #ffffff;
 $yellow: #FFCA2A;
 
-.players-container {
+.tournaments-container {
   margin:auto;
   padding: 20px;
   display: grid;
@@ -15,7 +15,7 @@ $yellow: #FFCA2A;
     'sidebar content';
 }
 
-.players-search {
+.tournaments-search {
   margin: 10px;
   grid-column-start: 1;
   grid-row-start: 1;
@@ -33,5 +33,10 @@ $yellow: #FFCA2A;
     background-color: $dark-grey;
     height: 35%;
     padding: 10px;
+  }
+
+  .date-container {
+    font-size: 12px;
+    text-align: left;
   }
 }

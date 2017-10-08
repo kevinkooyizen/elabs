@@ -5,14 +5,16 @@
     <div class="search-form">
       <% @params||={} %>
       <%= form_for :teams_search, url: teams_search_path, method: :get do |f| %>
+          <br>
           <%= f.label :name %>
           <%= f.text_field :name, value: @params.dig(:name) %>
+          <br>
           <br>
           <%= f.label :country %>
           <%= f.text_field :country, value: @params.dig(:country) %>
           <br>
           <br>
-          <%= f.submit 'Search', class: 'btn btn-default' %>
+          <%= f.submit 'Search', class: 'search-btn' %>
       <% end %>
     </div>
   </div>
