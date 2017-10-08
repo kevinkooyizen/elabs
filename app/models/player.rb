@@ -186,7 +186,7 @@ class Player < ApplicationRecord
 
     end
 
-    def get_teams_sorted_by_similarity
+    def teams_sorted_by_similarity
         teams_scoring = get_all_cosine_distance
 
         if !teams_scoring.present?
