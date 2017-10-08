@@ -137,6 +137,71 @@ class Player < ApplicationRecord
         end
     end
 
+
+    def get_player_vector
+        [self.mmr, self.winrate]
+    end
+
+    def get_all_cosine_distance
+        teams_vector = Team.all.map { |team|
+            [team.id, team.team_mmr_mean, team.winrate]
+        }
+
+
+        if !teams_vector.present?
+            return []
+        end
+
+        teams_vector.map! {|team|
+            team.map! {|ele|
+                if !ele.present?
+                    0
+                else
+                    ele
+                end
+            }
+        }
+
+        v_player = self.get_player_vector
+
+        v_player.map! {|ele|
+            if !ele.present?
+                0
+            else
+                ele
+            end
+        }
+
+        cosine_distance = teams_vector.map {|vector|
+            team_id = vector[0]
+            v_team = [vector[1], vector[2]]
+            [team_id, cosine_distance(v_team, v_player)]
+        }
+
+        cosine_distance.sort! {|first, second|
+            second[1]<=>first[1]
+        }
+
+        return cosine_distance
+
+    end
+
+    def get_teams_sorted_by_similarity
+        teams_scoring = get_all_cosine_distance
+
+        if !teams_scoring.present?
+            return []
+        end
+
+        teams = Team.where('id in (?)', teams_scoring.map {|v| v[0]})
+        teams_scoring = teams_scoring.to_h
+
+        # return an array of sorted players
+        teams.sort {|first, second|
+            teams_scoring[second.id] <=> teams_scoring[first.id]
+        }
+    end
+
     private
 
     def validate_is_player

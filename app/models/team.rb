@@ -127,18 +127,18 @@ class Team < ApplicationRecord
 
     # get the all the players sorted by cosine similarity scoring
     def players_sorted_by_similarity
-        similarities = get_all_cosine_distance
+        players_scoring = get_all_cosine_distance
 
-        if !similarities.present?
+        if !players_scoring.present?
             return []
         end
 
-        players = Player.where('id in (?)', similarities.map {|v| v[0]})
-        similarities = similarities.to_h
+        players = Player.where('id in (?)', players_scoring.map {|v| v[0]})
+        players_scoring = players_scoring.to_h
 
         # return an array of sorted players
         players.sort {|first, second|
-            similarities[second.id] <=> similarities[first.id]
+            players_scoring[second.id] <=> players_scoring[first.id]
         }
     end
 end
