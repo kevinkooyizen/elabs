@@ -26,30 +26,27 @@
   min-width: 100%;
 }
 
-.team-info-box {
-  background-color: black;
-  float: left;
-  height: 770px;
-  width: 665px;
-  opacity: 0.5;
-  position: absolute;
-  z-index: -1;
-}
-
-.team-profile-header {
-  padding-left: 20px;
-  padding-top: 20px;
-}
-
 .team-profile-info {
   float: left;
   padding-left: 20px;
   padding-top: 20px;
 }
 
+.team-info-box {
+  background-color: rgba(0, 0 ,0, 0.5);
+  float: left;
+  width: 665px;
+  height: flex;
+  position: relative;
+}
+
 .team-info {
+  padding-right: 20px;
   padding-left: 20px;
   padding-top: 20px;
+  padding-bottom: 20px;
+  float: left;
+  clear:left;
 }
 
 .team-hero-box {
