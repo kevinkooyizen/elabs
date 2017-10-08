@@ -72,6 +72,15 @@ class User < ApplicationRecord
         names
     end
 
+    def top_heroes_npc_names
+        names = []
+        self.top_heroes.each do |item|
+            hero = Hero.find_by(api_id: item["hero_id"])
+            names << hero.api_npc_name
+        end
+        names
+    end
+
     def top_hero
         self.top_heroes[0]
     end
@@ -88,12 +97,12 @@ class User < ApplicationRecord
         (JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/matches?hero_id=#{self.top_hero["hero_id"].to_i}").read)
     end
 
-    def top_hero_assists
-        assists = 0
+    def top_hero_kills
+        kills = 0
         self.top_hero_matches.each do |x|
-            assists += x["assists"]
+            kills += x["kills"]
         end
-        assists/self.top_hero["games"]
+        kills/self.top_hero["games"]
     end
 
     def top_hero_deaths
