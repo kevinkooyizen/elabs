@@ -3,30 +3,27 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-.player-info-box {
-  background-color: black;
-  float: left;
-  height: 770px;
-  width: 665px;
-  opacity: 0.5;
-  position: absolute;
-  z-index: -1;
-}
-
-.player-profile-header {
-  padding-left: 20px;
-  padding-top: 20px;
-}
-
 .player-profile-info {
   float: left;
   padding-left: 20px;
   padding-top: 20px;
 }
 
+.player-info-box {
+  background-color: rgba(0, 0 ,0, 0.5);
+  float: left;
+  width: 665px;
+  height: flex;
+  position: relative;
+}
+
 .player-info {
+  padding-right: 20px;
   padding-left: 20px;
   padding-top: 20px;
+  padding-bottom: 20px;
+  float: left;
+  clear: left;
 }
 
 .player-name {
@@ -35,20 +32,27 @@
   clear: left;
 }
 
-.player-hero-box {
-  background-color: black;
-  float: left;
-  height: 770px;
-  width: 1050px;
-  opacity: 0.5;
-  position: absolute;
-  z-index: -1;
-}
-
 .player-hero-info {
   float: left;
-  padding-left: 40px;
+  padding-left: 20px;
   padding-top: 20px;
+}
+
+.player-hero-box {
+  background-color: rgba(0, 0, 0, 0.5);
+  float: left;
+  height: flex;
+  width: 1050px;
+  position: relative;
+}
+
+.player-hero {
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  float: left;
+  clear: left;
 }
 
 .hero-avatar {
@@ -77,18 +81,47 @@ img {
   padding-left: 20px;
 }
 
-.player-hero {
-  position: relative;
-  float: left;
-  padding-left: 20px;
-  padding-top: 20px;
-  height: 770px;
-  width: 1050px;
-}
-
 .hero-match {
   float: left;
+  clear: left;
+  position: relative;
+  padding-top: 40px;
 }
+
+.past-stats-table, td, th {
+  border-collapse: collapse;
+  border: 1px solid #FFCA2A;
+  width: 600px;
+  text-align: center;
+}
+
+.lost {
+  color: red;
+}
+
+.won {
+  color: green;
+}
+
+.statname {
+  color: #FFCA2A;
+}
+
+.statnumber {
+
+}
+  
+  #kills {
+    color: green;
+  }
+
+  #deaths {
+    color: red;
+  }
+
+  #assists {
+    color: blue;
+  }
 
 .buttonright {
   float: right;
