@@ -1,40 +1,57 @@
-<% @params||={} %>
-<%= form_for :teams_search, url: teams_search_path, method: :get do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name, value: @params.dig(:name) %>
+<div class="teams-container">
 
-    <%= f.label :country %>
-    <%= f.text_field :country, value: @params.dig(:country) %>
+  <div class="teams-search">
+    <h5>SEARCH TEAMS</h5>
+    <div class="search-form">
+      <% @params||={} %>
+      <%= form_for :teams_search, url: teams_search_path, method: :get do |f| %>
+          <%= f.label :name %>
+          <%= f.text_field :name, value: @params.dig(:name) %>
+          <br>
+          <%= f.label :country %>
+          <%= f.text_field :country, value: @params.dig(:country) %>
+          <br>
+          <br>
+          <%= f.submit 'Search', class: 'btn btn-default' %>
+      <% end %>
+    </div>
+  </div>
 
-    <%= f.submit 'Search' %>
-<% end %>
+  <div class="teams-index">
+    <% @teams.each do |team| %>
 
-<%= paginate @teams %>
-<% @teams.each do |team| %>
-  Team id:<%= team.dota2_team_id %><br>
-  Name: <%= link_to "#{team.name}", team_path(team) %><br>
-  Rating: <%= team.rating %><br>
-  Winrate: 
-  <% if !team.winrate.nil? %>
-    <%= team.winrate %>%
-  <% else %>
-    Insufficient data.
-  <% end %>
-  <br>
-  Roster: <br>
-  <% team.roster.each do |roster| %>
-    <% if roster.present? %>
-      <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"].nil? %>
-        <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"].nil? %>
-          <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"] %>
-        <% else %>
-          <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["personaname"] %>
+      <div class="team-card">
+        <h6 class="team-id">Team id: <%= team.dota2_team_id %> <br></h6>
+        <h6 class="team-name">Name: <%= link_to "#{team.name}", team_path(team) %> <br></h6>
+        <h6 class="team-rating">Rating: <%= team.rating %><br> </h6>
+        <h6 class="team-winrate">
+          Winrate:
+          <% if !team.winrate.nil? %>
+            <%= team.winrate %>%
+          <% else %>
+            Insufficient data.
+          <% end %>
+          <br>
+        </h6>
+        <h6 class="team-roster">Roster: <br></h6>
+        <!-- TEAM ROSTER -->
+        <% team.roster.each do |roster| %>
+          <% if roster.present? %>
+            <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"].nil? %>
+              <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"].nil? %>
+                <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"] %> <br>
+              <% else %>
+                <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["personaname"] %> <br>
+              <% end %>
+            <% end %>
+          <% end %>
         <% end %>
       <% end %>
-      <br>
-    <% end %>
-  <% end %>
-  <br>  
-<% end %>
-<br>
-<br>
+      </div>
+  </div>
+
+</div>
+
+<div class="pagination">
+  <%= paginate @teams, window: 2 %>
+</div>
