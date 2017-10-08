@@ -12,7 +12,8 @@
 .player-info-box {
   background-color: rgba(0, 0 ,0, 0.5);
   float: left;
-  width: 665px;
+  width: flex;
+  max-width: 665px;
   height: flex;
   position: relative;
 }
@@ -42,7 +43,8 @@
   background-color: rgba(0, 0, 0, 0.5);
   float: left;
   height: flex;
-  width: 1050px;
+  width: flex;
+  max-width: 1050px;
   position: relative;
 }
 
@@ -63,6 +65,10 @@
   border-color: #FFCA2A;
   border-radius: 8px;
   float: left;
+}
+
+.hero-name {
+  text-decoration: underline;
 }
 
 img {
