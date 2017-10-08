@@ -25,15 +25,16 @@
 
   </div>
 
+  <div class="players-index">
+    <% @players.each do |player| %>
 
+        <!--populate the player info that are to be shown here-->
+        <p>
+            <%= player.id %>
+        </p>
 
-  <% @players.each do |player| %>
+    <% end %>
+  </div>
 
-      <!--populate the player info that are to be shown here-->
-      <p>
-          <%= player.id %>
-      </p>
-
-  <% end %>
 
 </div>
