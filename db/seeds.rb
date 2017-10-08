@@ -11,7 +11,7 @@ require 'csv'
 start_time = Time.now
 # this is to retain yizen, and kent user, player and team
 # Hero.destroy_all
-Player.destroy_all
+# Player.destroy_all
 # Team.destroy_all
 # User.destroy_all
 # Happening.all.destroy_all
@@ -114,65 +114,65 @@ Player.destroy_all
 #     happening.save
 # end
 
-# heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
-# Hero.transaction do
-#     heroes_collection.each do |item|
-#         counter =0
-#         hero = Hero.new
-#         hero.api_id = item["id"]
-#         hero.api_name = item["localized_name"]
-#         hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
-#         CSV.foreach(hero_file) do |row|
-#             counter+=1
-#             if hero.api_name == row[0]
-#                 next if counter == 1
-#                 hero.name = row[0]
-#                 hero.win_rate = row[1]
-#                 hero.picked = row[2]
-#             end
-#         end
-#         hero.save
-#     end
-# end
+heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
+Hero.transaction do
+    heroes_collection.each do |item|
+        counter =0
+        hero = Hero.new
+        hero.api_id = item["id"]
+        hero.api_name = item["localized_name"]
+        hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
+        CSV.foreach(hero_file) do |row|
+            counter+=1
+            if hero.api_name == row[0]
+                next if counter == 1
+                hero.name = row[0]
+                hero.win_rate = row[1]
+                hero.picked = row[2]
+            end
+        end
+        hero.save
+    end
+end
 @teams = JSON.parse open("https://api.opendota.com/api/teams").read
 @pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 @user = User.new
-# @user.real_name = "fake dummy"
-# @user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
-# @user.password = 'password'
-# @user.save!
+@user.real_name = "fake dummy"
+@user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
+@user.password = 'password'
+@user.save!
 
-# @teams[0..30].each_with_index do |select, index|
+@teams[0..30].each_with_index do |select, index|
 
-#     Team.transaction do
-#         team = Team.new
-#         team.name = select["name"]
-#         team.dota2_team_id = select["team_id"]
-#         if !select["rating"].nil?
-#             team.rating = select["rating"]
-#         else
-#             team.rating = 0
-#         end
-#         if Dota.api.teams(after: @teams[index]["team_id"]).present?
-#             team.logo = (JSON.parse open("https://api.steampowered.com/ISteamRemoteStorage/GetUGCFileDetails/v1/?key=#{ENV['STEAM_KEY']}&ugcid=#{Dota.api.teams(after: @teams[index]["team_id"]).first.logo_id}&appid=570").read)["data"]["url"]
-#         end
-#         team.status = true
-#         team.user_id = @user.id
-#         team.winrate = (100 * select["wins"].to_f/(select["wins"].to_f + select["losses"].to_f)).round(2)
-#         @pros.select do |item|
-#             if item["team_name"] == select["name"] && item["locked_until"] != 0 && item["is_locked"] && item["is_pro"]
-#                 # this stores 32 bit player steam profile id into roster
-#                 team.roster << item["account_id"]
-#             end
-#         end
-#         team.save
+    Team.transaction do
+        team = Team.new
+        team.name = select["name"]
+        team.dota2_team_id = select["team_id"]
+        if !select["rating"].nil?
+            team.rating = select["rating"]
+        else
+            team.rating = 0
+        end
+        if Dota.api.teams(after: @teams[index]["team_id"]).present?
+            team.logo = (JSON.parse open("https://api.steampowered.com/ISteamRemoteStorage/GetUGCFileDetails/v1/?key=#{ENV['STEAM_KEY']}&ugcid=#{Dota.api.teams(after: @teams[index]["team_id"]).first.logo_id}&appid=570").read)["data"]["url"]
+        end
+        team.status = true
+        team.user_id = @user.id
+        team.winrate = (100 * select["wins"].to_f/(select["wins"].to_f + select["losses"].to_f)).round(2)
+        @pros.select do |item|
+            if item["team_name"] == select["name"] && item["locked_until"] != 0 && item["is_locked"] && item["is_pro"]
+                # this stores 32 bit player steam profile id into roster
+                team.roster << item["account_id"]
+            end
+        end
+        team.save
 
-#         time_taken = Time.now - start_time
-#         puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
-#         puts "Teams seeded: " + Team.all.count.to_s
-#         puts ""
-#     end
-# end
+        time_taken = Time.now - start_time
+        puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
+        puts "Teams seeded: " + Team.all.count.to_s
+        puts ""
+    end
+end
 
 Tournament.transaction do
     Tournament.all.each do |tournament|

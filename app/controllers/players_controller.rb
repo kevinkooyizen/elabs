@@ -15,8 +15,15 @@ class PlayersController < ApplicationController
     end
 
     def index
-        @players = Player.all.order('mmr desc')
-        render 'index'
+        if !signed_in?
+            @players = Player.all.order('mmr desc')
+        elsif current_user.occupation == 'player'
+        #     recommendation here
+        else
+            @players = Player.all.order('mmr desc')
+        end
+
+        return render 'index'
     end
 
     def show
@@ -35,6 +42,26 @@ class PlayersController < ApplicationController
                                         mmr_upper_range: search_params[:mmr_upper_range]).order('mmr desc')
 
         return render 'index'
+    end
+
+    def teams_recommendation
+        if !signed_in?
+            flash[:notice] = 'Please sign in to perform to this action'
+            return redirect_to players_path
+        end
+
+        player = Player.find(params[:id])
+
+        if !player.present?
+            flash[:error] = 'Player does not exist!'
+            return redirect_to players_path
+        end
+
+        # this is an array of activerecord, use the [0...N] method to get the topN players by similarity
+        @players = player.teams_sorted_by_similarity
+
+        #     choose a view file to render the players
+
     end
 
     def edit

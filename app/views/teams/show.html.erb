@@ -1,47 +1,71 @@
-<% if signed_in? %>
-  <% if current_user.id == @team.user_id %>
-    <%= link_to 'Edit Team Details', edit_team_path(@team) %>
-  <% end %>
-<% end %>
-<br>
-<img src = "<%= @team.logo %>" />
-<br>
-<% if @team.status == false %>
-  Team Status: <span class="inactive"> Inactive </span>
-<% else %>
-  Team Status: <span class="active"> Active </span>
-<% end %>
-<br>
-Team ID: 
-<%= @team.dota2_team_id %>
-<br>
-Name: 
-<span class="team_name"> <%= @team.name %> </span>
-<br>
-Winrate: 
-<% if !@team.winrate.nil? %>
-  <%= @team.winrate %>%
-<% else %>
-  Insufficient data. Please play more games for us to calibrate your team's winrate.
-<% end %>
-<br>
-<p>Team's current roster:</p>
-<% @team.roster.each do |select| %>
-  <% if select.present? %>
-    <% if !(JSON.parse open("https://api.opendota.com/api/players/#{select}").read)["profile"]["name"].nil? %>
-      <%= (JSON.parse open("https://api.opendota.com/api/players/#{select}").read)["profile"]["name"] %>
-    <% else %>
-      <%= (JSON.parse open("https://api.opendota.com/api/players/#{select}").read)["profile"]["personaname"] %>
-    <% end %>
-    <br>
-  <% end %>
-<% end %>
-<br>
-<p>Tournament history</p>
-<p>Manager: <%= @team.manager %></p>
-<p>Sponsor: <%= @team.sponsor %></p>
-<p>Coach: <%= @team.coach %></p>
-<p>link to form to join team</p>
-<!-- This may not be necessary for now since it's only one game.<p>Games team is affiliated with: Dota 2</p> -->
-<p>If present, looking for player(with position)?</p>
-<!-- Contact us option -->
+<div class="team-profile-info">
+  <div class="team-info-box">
+    <div  class="team-info">
+      <h1 class="team-profile-header">Team Profile</h1>
+        <main>
+          <section>
+            <div class="team-avatar">
+              <img src="<%= @team.logo %>" id="avatar">
+            </div>
+            <div>
+              <h3 class="team-name"> <%= @team.name %> </h3>
+              <% if @team.status == false %>
+                Team Status: <span class="inactive"> Inactive </span>
+              <% else %>
+                Team Status: <span class="active"> Active </span>
+              <% end %>
+
+              <br>
+          
+              <br>
+          
+              <p> Team ID: <%= @team.dota2_team_id %> </p>
+          
+              <p> Winrate:
+                <% if !@team.winrate.nil? %>
+                  <%= @team.winrate %>%
+                <% else %>
+                  Insufficient data. Please play more games for us to calibrate your team's winrate.
+                <% end %>
+              </p>
+          
+              <p>Team's current roster:</p>
+                <% @team.roster.each do |select| %>
+                  <% if select.present? %>
+                    <% if !(JSON.parse open("https://api.opendota.com/api/players/#{select}").read)["profile"]["name"].nil? %>
+                      <%= (JSON.parse open("https://api.opendota.com/api/players/#{select}").read)["profile"]["name"] %>
+                    <% else %>
+                      <%= (JSON.parse open("https://api.opendota.com/api/players/#{select}").read)["profile"]["personaname"] %>
+                    <% end %>
+                    <br>
+                  <% end %>
+                <% end %>
+              <br>
+              <p>Tournament history</p>
+              <p>Manager: <%= @team.manager %></p>
+              <p>Sponsor: <%= @team.sponsor %></p>
+              <p>Coach: <%= @team.coach %></p>
+              <p>link to form to join team</p>
+              <!-- This may not be necessary for now since it's only one game.<p>Games team is affiliated with: Dota 2</p> -->
+              <p>If present, looking for player(with position)?</p>
+              <!-- Contact us option -->
+            </div>
+          </section>
+        </main>
+    </div>  
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+          <% if signed_in? %>
+            <% if current_user.id == @team.user_id %>
+              <span class="buttonright", id="edit-team"> <%= link_to 'Edit Team Details', edit_team_path(@team) %> </span>
+            <% end %>
+          <% end %>

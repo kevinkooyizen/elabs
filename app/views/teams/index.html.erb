@@ -1,3 +1,14 @@
+<% @params||={} %>
+<%= form_for :teams_search, url: teams_search_path, method: :get do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name, value: @params.dig(:name) %>
+
+    <%= f.label :country %>
+    <%= f.text_field :country, value: @params.dig(:country) %>
+
+    <%= f.submit 'Search' %>
+<% end %>
+
 <%= paginate @teams %>
 <% @teams.each do |team| %>
   Team id:<%= team.dota2_team_id %><br>
@@ -13,10 +24,12 @@
   Roster: <br>
   <% team.roster.each do |roster| %>
     <% if roster.present? %>
-      <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"].nil? %>
-        <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"] %>
-      <% else %>
-        <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["personaname"] %>
+      <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"].nil? %>
+        <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"].nil? %>
+          <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"] %>
+        <% else %>
+          <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["personaname"] %>
+        <% end %>
       <% end %>
       <br>
     <% end %>
