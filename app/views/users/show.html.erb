@@ -1,7 +1,7 @@
 <div class="player-profile-info">
   <div class="player-info-box">
     <div  class="player-info" id="profile">
-      <h1 class="player-profile-header">Player profile</h1> 
+      <h1 class="player-profile-header">Player Profile</h1> 
         <main>
           <section>
             <div class="player-avatar">
@@ -37,73 +37,74 @@
 <div class="player-hero-info">
   <div class="player-hero-box">
     <div class="player-hero">
-      <main>
-        <section>
-          <div class="hero-avatar">
-            <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/Heroes/<%= @top_hero_name.downcase %>.gif" id="hero-gif" >
-          </div>
-          <div class="hero-stats">
-          <h1><%= @top_hero_name %></h1>
+      <h1 class="player-hero-header"> Top Hero Stats </h1>
+        <main>
+          <section>
+            <div class="hero-avatar">
+              <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/Heroes/<%= @top_hero_name.downcase %>.gif" id="hero-gif" >
+            </div>
+            <div class="hero-stats">
+            <h1 class="hero-name"><%= @top_hero_name %></h1>
 
-          <br>
+            <br>
 
-          <p><strong><font color="#FFCA2A">Times played: <%= @top_hero["games"] %></font></strong></p>
+            <p><strong><font color="#FFCA2A">Times played: <%= @top_hero["games"] %></font></strong></p>
 
-          <br>
+            <br>
 
-          <p><strong><font color="#FFCA2A"> Hero Winrate: <%= @top_hero_winrate %>%</font></strong></p>
+            <p><strong><font color="#FFCA2A"> Hero Winrate: <%= @top_hero_winrate %>%</font></strong></p>
 
-          <br>
+            <br>
 
-          <p><strong><font color="#FFCA2A"> Hero Average K.D.A: <%= @top_hero_kills.to_i %>/<%= @top_hero_assists.to_i %>/<%= @top_hero_deaths.to_i %> </font></strong></p>
-          </div>
-          <div class="hero-match">
-          <!-- This is all of the top heroes matches -->
-            <table class="past-stats-table">
-              <tr>    
-                <th><span class="statname">  </span></th>
+            <p><strong><font color="#FFCA2A"> Hero Average K.D.A: <%= @top_hero_kills.to_i %>/<%= @top_hero_assists.to_i %>/<%= @top_hero_deaths.to_i %> </font></strong></p>
+            </div>
+            <div class="hero-match">
+            <!-- This is all of the top heroes matches -->
+              <table class="past-stats-table">
+                <tr>    
+                  <th><span class="statname">  </span></th>
 
-                <th><span class="statname"> Kills </span></th>
+                  <th><span class="statname"> Kills </span></th>
 
-                <th><span class="statname"> Deaths </span></th>
+                  <th><span class="statname"> Deaths </span></th>
 
-                <th><span class="statname"> Assists </span></th>
+                  <th><span class="statname"> Assists </span></th>
 
-                <th><span class="statname"> GPM </span></th>
+                  <th><span class="statname"> GPM </span></th>
 
-                <th><span class="statname"> XPM </span></th>
+                  <th><span class="statname"> XPM </span></th>
 
-              </tr>
-              <% @user_matches[0..4].each do |item| %>
-                <% win = false %>
-                <% @won.select do |select| %>
-                  <% if item["match_id"] == select["match_id"] %>
-                    <% win = true %>
+                </tr>
+                <% @user_matches[0..4].each do |item| %>
+                  <% win = false %>
+                  <% @won.select do |select| %>
+                    <% if item["match_id"] == select["match_id"] %>
+                      <% win = true %>
+                    <% end %>
                   <% end %>
-                <% end %>
-              <tr>
-                <% if win == true %>
-                  <td><span class="won"> Won </span></td>
-                <% else %>
-                  <td><span class="lost"> Lost </span></td>
-                <% end %>
+                <tr>
+                  <% if win == true %>
+                    <td><span class="won"> Won </span></td>
+                  <% else %>
+                    <td><span class="lost"> Lost </span></td>
+                  <% end %>
              
-                <td><span class="statnumber", id="kills"> <%= item["kills"] %></span></td>
+                  <td><span class="statnumber", id="kills"> <%= item["kills"] %></span></td>
 
-                <td><span class="statnumber", id="deaths"> <%= item["deaths"] %></span></td>
+                  <td><span class="statnumber", id="deaths"> <%= item["deaths"] %></span></td>
 
-                <td><span class="statnumber", id="assists"> <%= item["assists"] %></span></td>
+                  <td><span class="statnumber", id="assists"> <%= item["assists"] %></span></td>
 
-                <td><span class="statnumber", id="gpm">  </span></td>
+                  <td><span class="statnumber", id="gpm">  </span></td>
 
-                <td><span class="statnumber", id="xpm">  </span></td>
+                  <td><span class="statnumber", id="xpm">  </span></td>
             
-              <% end %>
-              </tr>
-            </table>
-          </div>
-        </section>
-      </main>
+                <% end %>
+                </tr>
+              </table>
+            </div>
+          </section>
+        </main>
     </div>
   </div>  
 </div>
