@@ -36,10 +36,97 @@ class User < ApplicationRecord
       (uid_32_bit.to_i + self.bit_conversion).to_s
     end
 
-    private
+    def profile_exist?
+        user = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}").read
+        if !user["profile"].nil?
+            return true
+        else
+            return false
+        end
+    end
 
+    def winrate
+        user_winlose = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/wl").read
+        if user_winlose["win"] != 0 || user_winlose["lose"] != 0
+            return (100 * user_winlose["win"].to_f/(user_winlose["win"].to_f + user_winlose["lose"].to_f)).round(2)
+        else
+            return 0
+        end
+    end
+
+    def top_heroes
+        user_heroes = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/heroes").read
+        top = user_heroes[0..9]
+        top.sort_by! do |item|
+            100* item["win"]/item["games"]
+        end
+        top.reverse!
+    end
+
+    def top_heroes_names
+        names = []
+        self.top_heroes.each do |item|
+            hero = Hero.find_by(api_id: item["hero_id"])
+            names << hero.name
+        end
+        names
+    end
+
+    def top_hero
+        self.top_heroes[0]
+    end
+
+    def top_hero_name
+        Hero.find_by(api_id: self.top_hero["hero_id"]).name
+    end
+
+    def top_hero_winrate
+        (100*self.top_hero["win"].to_f/self.top_hero["games"].to_f).round(2)
+    end
+
+    def top_hero_matches
+        (JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/matches?hero_id=#{self.top_hero["hero_id"].to_i}").read)
+    end
+
+    def top_hero_assists
+        assists = 0
+        self.top_hero_matches.each do |x|
+            assists += x["assists"]
+        end
+        assists/self.top_hero["games"]
+    end
+
+    def top_hero_deaths
+        deaths = 0
+        self.top_hero_matches.each do |x|
+            deaths += x["deaths"]
+        end
+        deaths/self.top_hero["games"]
+    end
+
+    def top_hero_assists
+        assists = 0
+        self.top_hero_matches.each do |x|
+            assists += x["assists"]
+        end
+        assists/self.top_hero["games"]
+    end
+
+    def match_win?(match)
+        win = false
+        won = JSON.parse open("https://api.opendota.com/api/players/100893614/matches/?win=1&hero_id=#{self.top_hero["hero_id"].to_i}").read
+        won.each do |item|
+            if item["match_id"] == match["match_id"]
+                win = true
+            end
+        end
+        win
+    end
+
+    private
 
     def self.bit_conversion
         BIT_CONVERSION
     end
+
 end
