@@ -16,53 +16,53 @@ Player.destroy_all
 # User.destroy_all
 # Happening.all.destroy_all
 
-players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
-seed_counter = 1
-max_counter = 20
-players_collection.each do |player|
-    # seed only 20 players
-    break if seed_counter > max_counter
+# players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
+# seed_counter = 1
+# max_counter = 20
+# players_collection.each do |player|
+#     # seed only 20 players
+#     break if seed_counter > max_counter
 
-    User.transaction do
-        user = User.new
-        user.real_name=Faker::Name.name + ((1..1000).to_a).sample.to_s
-        user.persona_name=player['personaname']
-        user.uid = player["account_id"].to_s
-        user.country = player["loccountrycode"]
-        user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
-        user.password = 'password'
-        user.save!
+#     User.transaction do
+#         user = User.new
+#         user.real_name=Faker::Name.name + ((1..1000).to_a).sample.to_s
+#         user.persona_name=player['personaname']
+#         user.uid = player["account_id"].to_s
+#         user.country = player["loccountrycode"]
+#         user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
+#         user.password = 'password'
+#         user.save!
 
-        if !player['team_id'].present?
-            player['team_id']=rand(50000)
-        end
+#         if !player['team_id'].present?
+#             player['team_id']=rand(50000)
+#         end
 
-        team = Team.find_by_dota2_team_id(player['team_id'].to_i)
-        if !team.present?
-            team = Team.new
-            team.name=Faker::Team.name
-            team.dota2_team_id = player['team_id']
-            team.user_id = user.id
-            team.save!
-        end
+#         team = Team.find_by_dota2_team_id(player['team_id'].to_i)
+#         if !team.present?
+#             team = Team.new
+#             team.name=Faker::Team.name
+#             team.dota2_team_id = player['team_id']
+#             team.user_id = user.id
+#             team.save!
+#         end
 
 
-        new_player = Player.new
-        new_player.user_id = user.id
-        team.roster << player["account_id"]
-        team.save
-        new_player.team_id=team.id
+#         new_player = Player.new
+#         new_player.user_id = user.id
+#         team.roster << player["account_id"]
+#         team.save
+#         new_player.team_id=team.id
 
-        if new_player.get_player_stats && team.present?
-            new_player.save!
-        end
-        time_taken = Time.now - start_time
-        puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
-        puts "Players seeded: " + Player.all.count.to_s
-        puts ""
-    end
-    seed_counter+=1
-end
+#         if new_player.get_player_stats && team.present?
+#             new_player.save!
+#         end
+#         time_taken = Time.now - start_time
+#         puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
+#         puts "Players seeded: " + Player.all.count.to_s
+#         puts ""
+#     end
+#     seed_counter+=1
+# end
 
 # # The upcoming event is on the bottom because we will treat it as a pass event and will only show the 4 latest event
 # tour = Dota.api
@@ -74,7 +74,7 @@ end
 
 # tournaments_collection["result"]["leagues"].each do |item|
 #     tournament= Tournament.new
-#     tournament.transaction do
+#      
 #         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
 #         tournament.description = item["description"]
 #         tournament.tournament_url = item["tournament_url"]
@@ -174,6 +174,22 @@ end
 #     end
 # end
 
+Tournament.transaction do
+    Tournament.all.each do |tournament|
+        tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
+    end
+end
+
+Tournament.find_by(name: "Prodota Cup #10 SEA").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Prodota+Cup.jpeg")
+Tournament.find_by(name: "King’s Cup: America").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/King's+Cup.jpeg")
+Tournament.find_by(name: "ROG MASTERS 2017: APAC Qualifier - Singapore").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Rog+Masters.jpeg")
+Tournament.find_by(name: "The Frankfurt Major 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Frankfurt+Major+Banner.png")
+Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
+Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
+Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
+Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+
 total_time = Time.now - start_time
 puts "Seed complete"
 puts "Total time taken for seed: " + total_time.round(2).to_s + " seconds"
+

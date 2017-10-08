@@ -46,6 +46,6 @@ class Tournament < ApplicationRecord
 	end
 
 	def self.display_tournaments
-		Tournament.all.order(start: :desc).limit(8)
+		Tournament.all.order(start: :desc)
 	end
 end

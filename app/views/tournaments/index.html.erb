@@ -2,32 +2,41 @@
 	for more information, you can go to the below link.
 	http://sharonkuo.me/dota2/tournament.html
  -->
- <br>
- <br>	
-<% @params||={} %>
-<%= form_for :search, url: tournament_search_path, method: :get do |f| %>
-    <%= f.label :name %>
-    <%= f.text_field :name, value: @params.fetch(:name, nil) %>
+<div class="container">
+    <% @params||={} %>
+    <%= form_for :search, url: tournament_search_path, method: :get do |f| %>
+        <%= f.label :name, "NAME: " %>
+        <%= f.text_field :name, value: @params.fetch(:name, nil) %>
 
-    <%= f.label :description %>
-    <%= f.text_field :description, value: @params.fetch(:description, nil) %>
+        <%= f.label :description, "DESCRIPTION: " %>
+        <%= f.text_field :description, value: @params.fetch(:description, nil), class: "form-text" %>
 
-    <%= f.label :start %>
-    <%= f.date_select :start, selected: @params.fetch(:start, Date.today) %>
+        <%= f.label :game, "GAME: " %>
+        <%= f.text_field :game, selected: @params.fetch(:game, nil) %>
+    <div class= "date-container">
+        <%= f.label :start, "START DATE: " %>
+        <%= f.date_select :start, selected: @params.fetch(:start, Date.today)%>
 
-    <%= f.label :end %>
-    <%= f.date_select :end, selected: @params.fetch(:end, Date.today) %>
-    
-    <%= f.label :game %>
-    <%= f.text_field :game, selected: @params.fetch(:game, nil) %>
+        <%= f.label :end, "END DATE: " %>
+        <%= f.date_select :end, selected: @params.fetch(:end, Date.today) %>
+            
+        <%= f.submit 'Search', class: "search-btn" %>
+    </div>
+    <% end %>
 
-    <%= f.submit 'Search' %>
-<% end %>
-################## Upcoming Event ##################<br>
-<!-- for more attribute, please refer to schema -->
-<% @tournaments.each do |tournament|  %>
-	<a href=<%= tournament.tournament_url%> target="_blank"> <%= tournament.name %></a> <br>
-	<%= tournament.start.to_date %><br>
-	<%= tournament.game %><br>
-<% end %>
-####################################################<br>
+        <!-- for more attribute, please refer to schema -->
+    <div class="site-wrapper">
+        <% @tournaments.each do |tournament|  %>
+        <div class= "inline-site-wrapper" >
+            <img src= <%= tournament.image %> />
+            <div class="inline-site-wrapper-p">
+                <p><a href=<%= tournament.tournament_url%> target="_blank"> <%= tournament.name %></a></p>
+                <p><%= tournament.start.to_date %></p>
+                <p><%= tournament.game %></p>
+            </div>
+        </div>
+        <% end %>
+        <%= paginate @tournaments %>
+    </div>
+</div>
+
