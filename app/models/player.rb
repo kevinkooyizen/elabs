@@ -78,9 +78,9 @@ class Player < ApplicationRecord
 
         api_result_profile = api_result[:profile]
         # validate the date if its empty
-        self.team_id = self.get_team_id(player_uid)
+        # self.team_id = self.get_team_id(player_uid)
         last_login = api_result_profile.dig(:last_login)
-        self.last_login = last_login.nil? ? nil : Date.strptime(last_login, '%Y-%m-%dT%H:%M:%S')
+        # self.last_login = last_login.nil? ? nil : Date.strptime(last_login, '%Y-%m-%dT%H:%M:%S')
         self.mmr = api_result.dig(:solo_competitive_rank)||0
         self.winrate = get_player_win_lose(player_uid)||0
         self.top_heroes = get_top_3_heroes(player_uid)
@@ -88,7 +88,7 @@ class Player < ApplicationRecord
         self.avatar = api_result_profile.dig(:avatar)
         self.profile_url = api_result_profile.dig(:profileurl)
         self.steam_id = player_uid.to_i
-        self.country = api_result_profile[:loccountrycode]
+        self.country_code = api_result_profile[:loccountrycode]
 
         @is_player = true
         return true

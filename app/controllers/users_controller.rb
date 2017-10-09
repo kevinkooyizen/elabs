@@ -52,9 +52,15 @@ class UsersController < ApplicationController
         end
 
         @user = ApiExtension::OpenDota.get_player_profile(uid: user.uid)
+        if @user["profile"]["last_login"].nil?
+            @user["profile"]["last_login"] = "2017-10-04T15:38:36.695Z"
+        end
         @var = user
         @var.store
         @team = Team.find_by(user_id: User.find(params[:id]).id)
+        if @team.nil?
+            @team = Team.find(Player.find_by(user_id: User.find(params[:id]).id).team_id)
+        end
         @heroes = @var.top_heroes[0..2].map {|x| HeroApi.new(@var.uid, x)}
     end
 
