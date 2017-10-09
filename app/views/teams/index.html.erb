@@ -38,11 +38,13 @@
         <h6 class="team-roster">Roster: <br></h6>
         <!-- TEAM ROSTER -->
         <% team.get_roster_players.each do |player| %>
-          <% if player.real_name.present? %>
-            <%= player.real_name %> <br>
-          <% else %>
-            <%= player.persona_name %> <br>
-          <% end %>
+          <a href="<%= player_path(player) %>">
+              <% if player.real_name.present? %>
+                <%= player.real_name %> <br>
+              <% else %>
+                <%= player.persona_name %> <br>
+              <% end %>
+          </a>
         <% end %>
         <hr>
       </div>
