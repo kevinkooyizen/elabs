@@ -74,7 +74,7 @@ start_time = Time.now
 
 # tournaments_collection["result"]["leagues"].each do |item|
 #     tournament= Tournament.new
-#      
+#
 #         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
 #         tournament.description = item["description"]
 #         tournament.tournament_url = item["tournament_url"]
@@ -113,6 +113,39 @@ start_time = Time.now
 #     happening.time = date_range.sample
 #     happening.save
 # end
+
+@teams = JSON.parse open("https://api.opendota.com/api/teams").read
+@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
+@user = User.new
+@user.real_name = "fake dummy"
+@user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
+@user.password = 'password'
+@user.save!
+
+@teams[0..30].each_with_index do |select, index|
+
+    Team.transaction do
+        team = Team.new
+        team.name = select["name"]
+        team.dota2_team_id = select["team_id"]
+        if !select["rating"].nil?
+            team.rating = select["rating"]
+        else
+            team.rating = 0
+        end
+        if Dota.api.teams(after: @teams[index]["team_id"]).present?
+            team.logo = (JSON.parse open("https://api.steampowered.com/ISteamRemoteStorage/GetUGCFileDetails/v1/?key=#{ENV['STEAM_KEY']}&ugcid=#{Dota.api.teams(after: @teams[index]["team_id"]).first.logo_id}&appid=570").read)["data"]["url"]
+        end
+        team.status = true
+        team.user_id = @user.id
+        team.winrate = (100 * select["wins"].to_f/(select["wins"].to_f + select["losses"].to_f)).round(2)
+        @pros.select do |item|
+            if item["team_name"] == select["name"] && item["locked_until"] != 0 && item["is_locked"] && item["is_pro"]
+                # this stores 32 bit player steam profile id into roster
+                team.roster << item["account_id"]
+            end
+        end
+        team.save
 
 heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
 Hero.transaction do
@@ -190,9 +223,8 @@ end
 # Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
 # Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
 # Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
-Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+# Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
 
 total_time = Time.now - start_time
 puts "Seed complete"
 puts "Total time taken for seed: " + total_time.round(2).to_s + " seconds"
-
