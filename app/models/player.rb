@@ -161,6 +161,11 @@ class Player < ApplicationRecord
         [self.mmr, self.winrate]
     end
 
+    def get_teams_players
+        # todo optimized the teams mmr aggregation
+        Player.joins("inner join teams on cast(players.steam_id as text) = ANY(teams.roster)")
+    end
+
     def get_all_cosine_distance
         teams_vector = Team.all.map { |team|
             [team.id, team.team_mmr_mean, team.winrate]

@@ -27,10 +27,19 @@ class PlayersController < ApplicationController
     end
 
     def show
-        @player = Player.find(params[:id])
-        @user = @player.user
-        @user.store
-        render 'show'
+        # @player = Player.find(params[:id])
+        # @user = @player.user
+        # @user.store
+        # render 'show'
+
+        player = Player.find(params[:id])
+        if player.present?
+            # redirect to user show because both view should display the content
+            return redirect_to user_path(player.user.id)
+        else
+            flash[:error] = 'Player not exists.'
+            return redirect_to :back
+        end
     end
 
     def search
