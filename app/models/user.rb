@@ -12,6 +12,9 @@ class User < ApplicationRecord
     attr_accessor :user_heroes
     attr_accessor :top_heroes
     attr_accessor :top_hero_matches
+    attr_accessor :top_heroes_gpm
+    attr_accessor :top_heroes_xpm
+    attr_accessor :top_heroes_items
 
     BIT_CONVERSION = 76561197960265728
 
@@ -52,10 +55,34 @@ class User < ApplicationRecord
         end
         @top_heroes = top.reverse!
         @top_hero_matches = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/matches?hero_id=#{self.top_heroes[0]["hero_id"].to_i}").read
+        # self.uid = 100893614
+        @top_heroes_gpm = []
+        @top_heroes_xpm = []
+        @top_heroes_items = []
+        @top_hero_matches[0..4].each_with_index do |item, index|
+            match_data = JSON.parse open("https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id=#{item["match_id"]}&key=#{ENV["STEAM_KEY"]}").read
+            match_data["result"]["players"].each do |data|
+                if data["account_id"] == self.uid.to_i
+                    @top_heroes_gpm << data["gold_per_min"]
+                    @top_heroes_xpm << data["xp_per_min"]
+                    @top_heroes_items << [data["item_0"],data["item_1"],data["item_2"],data["item_3"],data["item_4"],data["item_5"]]
+                end
+            end
+        end
+        @top_heroes_items.map! do |data|
+            data.map! do |item|
+                if item != 0
+                    Item.find_by(api_id: item).api_name
+                end
+            end
+        end
     end
 
     def profile_exist?
-        self.store
+        if @called.nil?
+            self.store
+        end
+        @called = true
         user = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}").read
         if !user["profile"].nil?
             return true
