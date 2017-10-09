@@ -16,6 +16,8 @@ start_time = Time.now
 # User.destroy_all
 # Happening.all.destroy_all
 
+
+# ~~~~~~ SEED PLAYERS HERE ~~~~~~
 # players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 # seed_counter = 1
 # max_counter = 20
@@ -64,6 +66,8 @@ start_time = Time.now
 #     seed_counter+=1
 # end
 
+
+# ~~~~~~ SEED TOURNAMENTS HERE ~~~~~~
 # # The upcoming event is on the bottom because we will treat it as a pass event and will only show the 4 latest event
 # tour = Dota.api
 # league_id = 5364
@@ -100,6 +104,21 @@ start_time = Time.now
 # tournament2.save
 # tournament3.save
 
+# Tournament.transaction do
+#     Tournament.all.each do |tournament|
+#         tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
+#     end
+# end
+
+# Tournament.find_by(name: "Prodota Cup #10 SEA").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Prodota+Cup.jpeg")
+# Tournament.find_by(name: "King’s Cup: America").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/King's+Cup.jpeg")
+# Tournament.find_by(name: "ROG MASTERS 2017: APAC Qualifier - Singapore").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Rog+Masters.jpeg")
+# Tournament.find_by(name: "The Frankfurt Major 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Frankfurt+Major+Banner.png")
+# Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
+# Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
+# Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
+# Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+
 # Happening.all.destroy_all
 # # seed events data, no dependency
 # max_counter = 20
@@ -114,60 +133,30 @@ start_time = Time.now
 #     happening.save
 # end
 
-@teams = JSON.parse open("https://api.opendota.com/api/teams").read
-@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
-@user = User.new
-@user.real_name = "fake dummy"
-@user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
-@user.password = 'password'
-@user.save!
 
-@teams[0..30].each_with_index do |select, index|
+# ~~~~~~ SEED HEROES HERE ~~~~~~
+# heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
+# Hero.transaction do
+#     heroes_collection.each do |item|
+#         counter =0
+#         hero = Hero.new
+#         hero.api_id = item["id"]
+#         hero.api_name = item["localized_name"]
+#         hero.api_npc_name = item["name"].match(/npc_dota_hero_(\w+)/)[1]
+#         hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
+#         CSV.foreach(hero_file) do |row|
+#             counter+=1
+#             if hero.api_name == row[0]
+#                 next if counter == 1
+#                 hero.name = row[0]
+#                 hero.win_rate = row[1]
+#                 hero.picked = row[2]
+#             end
+#         end
+#         hero.save
+#     end
+# end
 
-    Team.transaction do
-        team = Team.new
-        team.name = select["name"]
-        team.dota2_team_id = select["team_id"]
-        if !select["rating"].nil?
-            team.rating = select["rating"]
-        else
-            team.rating = 0
-        end
-        if Dota.api.teams(after: @teams[index]["team_id"]).present?
-            team.logo = (JSON.parse open("https://api.steampowered.com/ISteamRemoteStorage/GetUGCFileDetails/v1/?key=#{ENV['STEAM_KEY']}&ugcid=#{Dota.api.teams(after: @teams[index]["team_id"]).first.logo_id}&appid=570").read)["data"]["url"]
-        end
-        team.status = true
-        team.user_id = @user.id
-        team.winrate = (100 * select["wins"].to_f/(select["wins"].to_f + select["losses"].to_f)).round(2)
-        @pros.select do |item|
-            if item["team_name"] == select["name"] && item["locked_until"] != 0 && item["is_locked"] && item["is_pro"]
-                # this stores 32 bit player steam profile id into roster
-                team.roster << item["account_id"]
-            end
-        end
-        team.save
-
-heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
-Hero.transaction do
-    heroes_collection.each do |item|
-        counter =0
-        hero = Hero.new
-        hero.api_id = item["id"]
-        hero.api_name = item["localized_name"]
-        hero.api_npc_name = item["name"].match(/npc_dota_hero_(\w+)/)[1]
-        hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
-        CSV.foreach(hero_file) do |row|
-            counter+=1
-            if hero.api_name == row[0]
-                next if counter == 1
-                hero.name = row[0]
-                hero.win_rate = row[1]
-                hero.picked = row[2]
-            end
-        end
-        hero.save
-    end
-end
 
 # ~~~ SEED TEAMS HERE~~~
 # @teams = JSON.parse open("https://api.opendota.com/api/teams").read
@@ -210,20 +199,20 @@ end
 #     end
 # end
 
-# Tournament.transaction do
-#     Tournament.all.each do |tournament|
-#         tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
-#     end
-# end
 
-# Tournament.find_by(name: "Prodota Cup #10 SEA").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Prodota+Cup.jpeg")
-# Tournament.find_by(name: "King’s Cup: America").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/King's+Cup.jpeg")
-# Tournament.find_by(name: "ROG MASTERS 2017: APAC Qualifier - Singapore").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Rog+Masters.jpeg")
-# Tournament.find_by(name: "The Frankfurt Major 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Frankfurt+Major+Banner.png")
-# Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
-# Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
-# Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
-# Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+
+# ~~~~~~SEED ITEMS HERE~~~~~~
+items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
+Item.transaction do
+    items["result"]["items"].each do |data|
+        item = Item.new
+        item.api_id = data["id"]
+        item.api_name = data["name"].match(/item_(\w+)/)[1]
+        item.save
+    end
+end
+
+
 
 total_time = Time.now - start_time
 puts "Seed complete"
