@@ -6,7 +6,6 @@ class StaticController < ApplicationController
     @player = Player.first
 
     @team = Team.first
-
   end
 
 end

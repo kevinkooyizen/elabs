@@ -1,7 +1,6 @@
 class TeamsController < ApplicationController
 	def index
 		@teams = Team.order(rating: :desc).page params[:page]
-		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
     end
 
     def search
@@ -32,6 +31,7 @@ class TeamsController < ApplicationController
 		# else
 		# 	@team_winrate = nil
 		# end
+		@team_players = @team.get_roster_players
 	end
 
 	def new

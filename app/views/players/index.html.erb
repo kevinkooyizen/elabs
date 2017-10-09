@@ -1,31 +1,46 @@
-<% @params||={} %>
+<div class="players-container">
+  <div class="players-search">
+    <h5>SEARCH PLAYERS</h5>
+    <% @params||={} %>
 
-<%= form_for :search, url: player_search_path, method: :get do |f| %>
+    <%= form_for :search, url: player_search_path, method: :get do |f| %>
+        <br>
+        <%= f.label :persona_name %>
+        <%= f.text_field :persona_name, value: @params.dig(:persona_name) %>
+        <br>
+        <br>
+        <%= f.label :real_name %>
+        <%= f.text_field :real_name, value: @params.dig(:real_name) %>
+        <br>
+        <br>
+        <%= f.label :state %>
+        <%= f.text_field :state, value: @params.dig(:state) %>
+        <br>
+        <br>
+        <%= f.label :mmr_lower_range %>
+        <%= f.number_field :mmr_lower_range, value: @params.dig(:mmr_lower_range) %>
+        <br>
+        <br>
+        <%= f.label :mmr_upper_range %>
+        <%= f.number_field :mmr_upper_range, value: @params.dig(:mmr_upper_range) %>
+        <br>
+        <br>
+        <%= f.submit 'Search', class: 'search-btn' %>
+    <% end %>
 
-    <%= f.label :persona_name %>
-    <%= f.text_field :persona_name, value: @params.dig(:persona_name) %>
 
-    <%= f.label :real_name %>
-    <%= f.text_field :real_name, value: @params.dig(:real_name) %>
+  </div>
 
-    <%= f.label :state %>
-    <%= f.text_field :state, value: @params.dig(:state) %>
+  <div class="players-index">
+    <% @players.each do |player| %>
 
-    <%= f.label :mmr_lower_range %>
-    <%= f.number_field :mmr_lower_range, value: @params.dig(:mmr_lower_range) %>
+        <!--populate the player info that are to be shown here-->
+        <p>
+            <%= player.id %>
+        </p>
 
-    <%= f.label :mmr_upper_range %>
-    <%= f.number_field :mmr_upper_range, value: @params.dig(:mmr_upper_range) %>
-    
-    <%= f.submit 'Search' %>
-<% end %>
+    <% end %>
+  </div>
 
 
-<% @players.each do |player| %>
-
-    <!--populate the player info that are to be shown here-->
-    <p>
-        <%= player.id %>
-    </p>
-
-<% end %>
+</div>

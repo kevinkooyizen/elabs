@@ -37,15 +37,13 @@
               </p>
           
               <p>Team's current roster:</p>
-                <% @team.roster.each do |select| %>
-                  <% if select.present? %>
-                    <% if !(JSON.parse open("https://api.opendota.com/api/players/#{select}").read)["profile"]["name"].nil? %>
-                      <%= (JSON.parse open("https://api.opendota.com/api/players/#{select}").read)["profile"]["name"] %>
+                <% @team_players.each do |player| %>
+                    <% if player.real_name.present? %>
+                      <%= player.real_name %>
                     <% else %>
-                      <%= (JSON.parse open("https://api.opendota.com/api/players/#{select}").read)["profile"]["personaname"] %>
+                      <%= player.persona_name %>
                     <% end %>
                     <br>
-                  <% end %>
                 <% end %>
               <br>
               <p>Tournament history</p>

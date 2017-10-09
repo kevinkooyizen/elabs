@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20171008143113) do
     t.decimal "picked", precision: 5, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "api_npc_name"
   end
 
   create_table "participants", force: :cascade do |t|

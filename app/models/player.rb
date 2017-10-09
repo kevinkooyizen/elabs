@@ -1,9 +1,9 @@
 class Player < ApplicationRecord
     include RankingExtension::CosineDistance
+    include ApiExtension
 
     belongs_to :user
     belongs_to :team
-    attr_reader :stats
     before_validation :get_player_stats
     validates :user_id, presence: true, uniqueness: true
     validate :validate_is_player
@@ -63,7 +63,8 @@ class Player < ApplicationRecord
     end
 
     def get_player_stats(player_uid = self.user.uid)
-        api_result = JSON.parse open("https://api.opendota.com/api/players/#{player_uid}").read
+        # api_result = JSON.parse open("https://api.opendota.com/api/players/#{player_uid}").read
+        api_result = OpenDota.get_player_profile(uid: player_uid)
         api_result.deep_symbolize_keys!
 
         # cater for 2 exception:
@@ -102,7 +103,8 @@ class Player < ApplicationRecord
 
     def get_top_3_heroes(player_uid)
         # the api will return an array of all the heroes and the corresponding stats
-        heroes = JSON.parse open("https://api.opendota.com/api/players/#{player_uid}/heroes").read
+        # heroes = JSON.parse open("https://api.opendota.com/api/players/#{player_uid}/heroes").read
+        heroes = OpenDota.get_player_heroes(uid: player_uid)
 
         # api will return a hash if there is any error
         if heroes.is_a? Hash
@@ -128,7 +130,8 @@ class Player < ApplicationRecord
 
     # get player win lose rate from dota api
     def get_player_win_lose(player_uid)
-        player_winlose = JSON.parse open("https://api.opendota.com/api/players/#{player_uid}/wl").read
+        # player_winlose = JSON.parse open("https://api.opendota.com/api/players/#{player_uid}/wl").read
+        player_winlose = OpenDota.get_player_winlose(uid: player_uid)
 
         if player_winlose["win"] == 0 && player_winlose["lose"] == 0
             0
