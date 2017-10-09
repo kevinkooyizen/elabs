@@ -16,13 +16,13 @@
                         </div>
                         <p>Team if present?</p>
                         <p>Account ID: <%= @player.steam_id %></p>
-                        <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
+                        <p>Last Login: <%= @player.last_login.try(:strftime,'%a %d %b %Y') %></p>
                         <p>Country: <%= @player.country_code %></p>
                         <p>Solo MMR: <%= @player.mmr %></p>
                         <p>Winrate: <%= @player.winrate %>%</p>
                         <p>Top Heroes: </p>
 
-                        <% @var.top_heroes_npc_names[0..2].each_with_index do |name, index| %>
+                        <% @user.top_heroes_npc_names[0..2].each_with_index do |name, index| %>
                             <div id="top-hero-image-<%= index+1 %>">
                                 <img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_lg.png" />
                             </div>
@@ -32,76 +32,75 @@
         </div>
     </div>
 </div>
-<% if @var.profile_exist? %>
-    <div class="player-hero-info">
-        <div class="player-hero-box">
-            <div class="player-hero">
-                <h1 class="player-hero-header"> Top Hero Stats </h1>
-                <main>
-                    <section>
-                        <div class="hero-avatar">
-                            <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/Heroes/<%= @var.top_hero_name.downcase %>.gif" id="hero-gif" >
-                        </div>
-                        <div class="hero-stats">
-                            <h1 class="hero-name"><%= @var.top_hero_name %></h1>
 
-                            <br>
+<div class="player-hero-info">
+    <div class="player-hero-box">
+        <div class="player-hero">
+            <h1 class="player-hero-header"> Top Hero Stats </h1>
+            <main>
+                <section>
+                    <div class="hero-avatar">
+                        <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/Heroes/<%= @user.top_hero_name.downcase %>.gif" id="hero-gif" >
+                    </div>
+                    <div class="hero-stats">
+                        <h1 class="hero-name"><%= @user.top_hero_name %></h1>
 
-                            <p><strong><font color="#FFCA2A">Times played: <%= @var.top_hero["games"] %></font></strong></p>
+                        <br>
 
-                            <br>
+                        <p><strong><font color="#FFCA2A">Times played: <%= @user.top_hero["games"] %></font></strong></p>
 
-                            <p><strong><font color="#FFCA2A"> Hero Winrate: <%= @var.top_hero_winrate %>%</font></strong></p>
+                        <br>
 
-                            <br>
+                        <p><strong><font color="#FFCA2A"> Hero Winrate: <%= @user.top_hero_winrate %>%</font></strong></p>
 
-                            <p><strong><font color="#FFCA2A"> Hero Average K.D.A: <%= @var.top_hero_kills.to_i %>/<%= @var.top_hero_assists.to_i %>/<%= @var.top_hero_deaths.to_i %> </font></strong></p>
-                        </div>
-                        <div class="hero-match">
-                            <!-- This is all of the top heroes matches -->
-                            <table class="past-stats-table">
+                        <br>
+
+                        <p><strong><font color="#FFCA2A"> Hero Average K.D.A: <%= @user.top_hero_kills.to_i %>/<%= @user.top_hero_assists.to_i %>/<%= @user.top_hero_deaths.to_i %> </font></strong></p>
+                    </div>
+                    <div class="hero-match">
+                        <!-- This is all of the top heroes matches -->
+                        <table class="past-stats-table">
+                            <tr>
+                                <th><span class="statname">  </span></th>
+
+                                <th><span class="statname"> Kills </span></th>
+
+                                <th><span class="statname"> Deaths </span></th>
+
+                                <th><span class="statname"> Assists </span></th>
+
+                                <th><span class="statname"> GPM </span></th>
+
+                                <th><span class="statname"> XPM </span></th>
+
+                            </tr>
+                            <% @user.top_hero_matches[0..4].each do |item| %>
                                 <tr>
-                                    <th><span class="statname">  </span></th>
+                                    <% if @user.match_win?(item) == true %>
+                                        <td><span class="won"> Won </span></td>
+                                    <% else %>
+                                        <td><span class="lost"> Lost </span></td>
+                                    <% end %>
 
-                                    <th><span class="statname"> Kills </span></th>
+                                    <td><span class="statnumber", id="kills"> <%= item["kills"] %></span></td>
 
-                                    <th><span class="statname"> Deaths </span></th>
+                                    <td><span class="statnumber", id="deaths"> <%= item["deaths"] %></span></td>
 
-                                    <th><span class="statname"> Assists </span></th>
+                                    <td><span class="statnumber", id="assists"> <%= item["assists"] %></span></td>
 
-                                    <th><span class="statname"> GPM </span></th>
+                                    <td><span class="statnumber", id="gpm">  </span></td>
 
-                                    <th><span class="statname"> XPM </span></th>
+                                    <td><span class="statnumber", id="xpm">  </span></td>
 
-                                </tr>
-                                <% @var.top_hero_matches[0..4].each do |item| %>
-                                    <tr>
-                                        <% if @var.match_win?(item) == true %>
-                                            <td><span class="won"> Won </span></td>
-                                        <% else %>
-                                            <td><span class="lost"> Lost </span></td>
-                                        <% end %>
-
-                                        <td><span class="statnumber", id="kills"> <%= item["kills"] %></span></td>
-
-                                        <td><span class="statnumber", id="deaths"> <%= item["deaths"] %></span></td>
-
-                                        <td><span class="statnumber", id="assists"> <%= item["assists"] %></span></td>
-
-                                        <td><span class="statnumber", id="gpm">  </span></td>
-
-                                        <td><span class="statnumber", id="xpm">  </span></td>
-
-                                <% end %>
-                                </tr>
-                            </table>
-                        </div>
-                    </section>
-                </main>
-            </div>
+                            <% end %>
+                            </tr>
+                        </table>
+                    </div>
+                </section>
+            </main>
         </div>
     </div>
-<% end %>
+</div>
 <span class="buttonright", id="create-team"> <%= link_to "Create Team", new_team_path %> </span>
 
 
