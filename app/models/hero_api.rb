@@ -20,7 +20,6 @@ class HeroApi
     @heroes_avg_xpm = 0
     
     calculate_hero_kda
-    calculate_hero_gpm_xpm
   end
 
   def winrate
