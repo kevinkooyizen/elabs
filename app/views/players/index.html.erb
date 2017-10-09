@@ -1,54 +1,53 @@
 <div class="players-container">
-  <div class="players-search">
-    <h5>SEARCH PLAYERS</h5>
-    <% @params||={} %>
+    <div class="players-search">
+        <h5>SEARCH PLAYERS</h5>
+        <% @params||={} %>
 
-    <%= form_for :search, url: player_search_path, method: :get do |f| %>
-        <br>
-        <%= f.label :persona_name, "Persona Name" %>
-        <%= f.text_field :persona_name, value: @params.dig(:persona_name) %>
-        <br>
-        <br>
-        <%= f.label :real_name, "Real Name" %>
-        <%= f.text_field :real_name, value: @params.dig(:real_name) %>
-        <br>
-        <br>
-        <%= f.label :state, "State" %>
-        <%= f.text_field :state, value: @params.dig(:state) %>
-        <br>
-        <br>
-        <%= f.label :mmr_lower_range, "MMR Lower Range" %>
-        <%= f.number_field :mmr_lower_range, value: @params.dig(:mmr_lower_range) %>
-        <br>
-        <br>
-        <%= f.label :mmr_upper_range, "MMR Upper Range" %>
-        <%= f.number_field :mmr_upper_range, value: @params.dig(:mmr_upper_range) %>
-        <br>
-        <br>
-        <%= f.submit 'Search', class: 'search-btn' %>
-    <% end %>
+        <%= form_for :search, url: player_search_path, method: :get do |f| %>
+            <br>
+            <%= f.label :persona_name, "Persona Name" %>
+            <%= f.text_field :persona_name, value: @params.dig(:persona_name) %>
+            <br>
+            <br>
+            <%= f.label :real_name, "Real Name" %>
+            <%= f.text_field :real_name, value: @params.dig(:real_name) %>
+            <br>
+            <br>
+            <%= f.label :state, "State" %>
+            <%= f.text_field :state, value: @params.dig(:state) %>
+            <br>
+            <br>
+            <%= f.label :mmr_lower_range, "MMR Lower Range" %>
+            <%= f.number_field :mmr_lower_range, value: @params.dig(:mmr_lower_range) %>
+            <br>
+            <br>
+            <%= f.label :mmr_upper_range, "MMR Upper Range" %>
+            <%= f.number_field :mmr_upper_range, value: @params.dig(:mmr_upper_range) %>
+            <br>
+            <br>
+            <%= f.submit 'Search', class: 'search-btn' %>
+        <% end %>
 
 
-  </div>
+    </div>
 
-  <div class="players-index">
-    <% @players.each do |player| %>
-        <!--populate the player info that are to be shown here-->
-        <p>
-          <%= player.id %>
-          <%= player.steam_id %>
-          <%= player.persona_name %>
-          <%= player.real_name %>
-          <%= player.winrate %>
-          <%= player.top_heroes %>
-        </p>
+    <div class="players-index">
 
-    <% end %>
-  </div>
+        <% @players.each do |player| %>
+            <!--the requirement is to display 4 players per row, total 2 rows-->
+            <div>
+                <p><%= player.real_name %></p>
+                <img class="player-avatar" src="<%= player.avatar %>" alt="">
+                <p><%= player.real_name %></p>
+                <p><%= player.get_player_games_played(player.steam_id).to_s + ' Games played' %></p>
+                <p><%= player.winrate.to_i.to_s + '% Winrate' %></p>
+            </div>
+        <% end %>
+    </div>
 
-  <div class="pagination">
-    <%=  %>
-  </div>
+    <div class="pagination">
+        <%= paginate @players, window: 2 %>
+    </div>
 
 
 </div>
