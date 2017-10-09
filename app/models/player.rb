@@ -2,6 +2,7 @@ class Player < ApplicationRecord
     include RankingExtension::CosineDistance
     include ApiExtension
 
+    paginates_per 5
     belongs_to :user
     belongs_to :team
     before_validation :get_player_stats

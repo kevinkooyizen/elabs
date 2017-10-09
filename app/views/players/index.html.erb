@@ -5,23 +5,23 @@
 
     <%= form_for :search, url: player_search_path, method: :get do |f| %>
         <br>
-        <%= f.label :persona_name %>
+        <%= f.label :persona_name, "Persona Name" %>
         <%= f.text_field :persona_name, value: @params.dig(:persona_name) %>
         <br>
         <br>
-        <%= f.label :real_name %>
+        <%= f.label :real_name, "Real Name" %>
         <%= f.text_field :real_name, value: @params.dig(:real_name) %>
         <br>
         <br>
-        <%= f.label :state %>
+        <%= f.label :state, "State" %>
         <%= f.text_field :state, value: @params.dig(:state) %>
         <br>
         <br>
-        <%= f.label :mmr_lower_range %>
+        <%= f.label :mmr_lower_range, "MMR Lower Range" %>
         <%= f.number_field :mmr_lower_range, value: @params.dig(:mmr_lower_range) %>
         <br>
         <br>
-        <%= f.label :mmr_upper_range %>
+        <%= f.label :mmr_upper_range, "MMR Upper Range" %>
         <%= f.number_field :mmr_upper_range, value: @params.dig(:mmr_upper_range) %>
         <br>
         <br>
@@ -33,13 +33,21 @@
 
   <div class="players-index">
     <% @players.each do |player| %>
-
         <!--populate the player info that are to be shown here-->
         <p>
-            <%= player.id %>
+          <%= player.id %>
+          <%= player.steam_id %>
+          <%= player.persona_name %>
+          <%= player.real_name %>
+          <%= player.winrate %>
+          <%= player.top_heroes %>
         </p>
 
     <% end %>
+  </div>
+
+  <div class="pagination">
+    <%=  %>
   </div>
 
 
