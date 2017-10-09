@@ -17,20 +17,6 @@ $yellow: #FFCA2A;
   align-items: center;
 }
 
-
-//.overlay {
-  // position: absolute; /* Sit on top of the page content */
-  //display: fixed; /* Hidden by default */
-  // width: 100vw; /* Full width (cover the whole page) */
-  // height: 100vh; /* Full height (cover the whole page) */
-  //top: 0;
-  //left: 0;
-  //right: 0;
-  //bottom: 0;
-  //background-color: rgba(0,0,0,0.5);
-  //z-index: 10;
-//}
-
 // BODY
 .sections {
   width: 90%;
@@ -71,6 +57,12 @@ $yellow: #FFCA2A;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   margin: 5px;
+
+
+  #avatar {
+    width: 125px;
+    height: auto;
+  }
 }
 
 .player {
@@ -111,6 +103,7 @@ $yellow: #FFCA2A;
 }
 
 .events {
+  padding-top: 10px;
   grid-area: content;
   padding: 5px;
   grid-column-start: 2;
@@ -119,9 +112,17 @@ $yellow: #FFCA2A;
   .tournament-list {
     display: inline-block;
     padding-right: 20px;
+    padding-left: 20px;
+    margin-right: 10px;
     text-align: center;
     align-items: center;
     justify-content: center;
+    background-color: $dark-grey;
+
+  .tournament-name {
+    font-size: 1em;
+  }
+
   }
 }
 
@@ -141,4 +142,15 @@ $yellow: #FFCA2A;
   padding: 5px;
   grid-column-start: 2;
   grid-row-start: 3;
+
+  .sponsor-logos {
+
+    img {
+      padding-top: 10px;
+      width: auto;
+      height: 100px;
+      margin: auto;
+      margin-right: 10px;
+    }
+  }
 }
