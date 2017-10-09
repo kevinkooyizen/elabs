@@ -36,30 +36,35 @@
     </div>    
   </div>  
 </div>
+
   <% if @var.profile_exist? %>
-  <div class="player-hero-info">
+  
+
+  <% @var.top_heroes[0..2].each_with_index do |hero, index| %>
+  <% hero = HeroApi.new(@var.uid, hero) %>
+  <div class="player-hero-info <%= "hidden" if index != 0 %>">
     <div class="player-hero-box">
       <div class="player-hero">
         <h1 class="player-hero-header"> Top Hero Stats </h1>
           <main>
             <section>
               <div class="hero-avatar">
-                <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/Heroes/<%= @var.top_hero_name.downcase %>.gif" id="hero-gif" >
+                <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/Heroes/<%= hero.hero_name.downcase %>.gif" id="hero-gif" >
               </div>
               <div class="hero-stats">
-              <h1 class="hero-name"><%= @var.top_hero_name %></h1>
+              <h1 class="hero-name"><%= hero.hero_name %></h1>
 
               <br>
 
-              <p><strong><font color="#FFCA2A">Times played: <%= @var.top_hero["games"] %></font></strong></p>
+              <p><strong><font color="#FFCA2A">Times played: <%= hero.games %></font></strong></p>
 
               <br>
 
-              <p><strong><font color="#FFCA2A"> Hero Winrate: <%= @var.top_hero_winrate %>%</font></strong></p>
+              <p><strong><font color="#FFCA2A"> Hero Winrate: <%= hero.winrate %>%</font></strong></p>
 
               <br>
 
-              <p><strong><font color="#FFCA2A"> Hero Average K.D.A: <%= @var.top_hero_kills.to_i %>/<%= @var.top_hero_assists.to_i %>/<%= @var.top_hero_deaths.to_i %> </font></strong></p>
+              <p><strong><font color="#FFCA2A"> Hero Average K.D.A: <%= hero.kills_rate %>/<%= hero.deaths_rate %>/<%= hero.assists_rate %> </font></strong></p>
               </div>
               <div class="hero-match">
               <!-- This is all of the top heroes matches -->
@@ -78,26 +83,26 @@
                     <th><span class="statname"> XPM </span></th>
 
                   </tr>
-                  <% @var.top_hero_matches[0..4].each_with_index do |item, index| %>
+                  <% hero.matches.each do |match| %>
                   <tr>
-                    <% if @var.match_win?(item) == true %>
+                    <% if match["user_win"] %>
                       <td><span class="won"> Won </span></td>
                     <% else %>
                       <td><span class="lost"> Lost </span></td>
                     <% end %>
                
-                    <td><span class="statnumber", id="kills"> <%= item["kills"] %></span></td>
+                    <td><span class="statnumber", id="kills"> <%= match["kills"] %></span></td>
 
-                    <td><span class="statnumber", id="deaths"> <%= item["deaths"] %></span></td>
+                    <td><span class="statnumber", id="deaths"> <%= match["deaths"] %></span></td>
 
-                    <td><span class="statnumber", id="assists"> <%= item["assists"] %></span></td>
+                    <td><span class="statnumber", id="assists"> <%= match["assists"] %></span></td>
 
-                    <td><span class="statnumber", id="gpm"> <%= @var.top_heroes_gpm[index] %> </span></td>
+                    <td><span class="statnumber", id="gpm"> <%= match["gold_per_min"] %> </span></td>
 
-                    <td><span class="statnumber", id="xpm"> <%= @var.top_heroes_xpm[index] %> </span></td>
+                    <td><span class="statnumber", id="xpm"> <%= match["xp_per_min"] %> </span></td>
 
                     <td><span class="statnumber", id="items"> 
-                      <% @var.top_heroes_items[index].each do |item| %> 
+                      <% match["player_match_items"].each do |item| %> 
                         <div>
                           <img src = "http://cdn.dota2.com/apps/dota2/images/items/<%= item %>_lg.png" >
                         </div>
@@ -113,7 +118,10 @@
       </div>
     </div>  
   </div>
+  <% end %>
+
 <% end %>
+
 <span class="buttonright", id="create-team"> <%= link_to "Create Team", new_team_path %> </span>
 
 
