@@ -78,7 +78,7 @@
                     <th><span class="statname"> XPM </span></th>
 
                   </tr>
-                  <% @var.top_hero_matches[0..4].each do |item| %>
+                  <% @var.top_hero_matches[0..4].each_with_index do |item, index| %>
                   <tr>
                     <% if @var.match_win?(item) == true %>
                       <td><span class="won"> Won </span></td>
@@ -92,9 +92,11 @@
 
                     <td><span class="statnumber", id="assists"> <%= item["assists"] %></span></td>
 
-                    <td><span class="statnumber", id="gpm">  </span></td>
+                    <td><span class="statnumber", id="gpm"> <%= @var.top_heroes_gpm[index] %> </span></td>
 
-                    <td><span class="statnumber", id="xpm">  </span></td>
+                    <td><span class="statnumber", id="xpm"> <%= @var.top_heroes_xpm[index] %> </span></td>
+
+                    <td><span class="statnumber", id="items"> <%= @var.top_heroes_items[index] %> </span></td>
               
                   <% end %>
                   </tr>
