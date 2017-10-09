@@ -44,7 +44,8 @@ class UsersController < ApplicationController
 
 
     def show
-        @user = User.find(params[:id])
+        # @user = User.find(params[:id])
+        @user = ApiExtension::OpenDota.get_player_profile(current_user.uid)
         @var = current_user
     end
 

@@ -27,7 +27,8 @@ class PlayersController < ApplicationController
     end
 
     def show
-        @player = Player.find(params[:id])
+        @player = Player.find(params[:id]).includes(:user)
+        @player_last_login = ApiExtension::OpenDota.get_player_profile(@player.steam_id)
         render 'show'
     end
 
