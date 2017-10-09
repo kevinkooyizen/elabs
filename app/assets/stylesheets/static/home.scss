@@ -33,8 +33,8 @@ $yellow: #FFCA2A;
 
 // BODY
 .sections {
-  width: 80%;
-  height: 100vh;
+  width: 90%;
+  // height: 100vh;
   margin: auto;
   padding: 30px;
   display: grid;
@@ -68,7 +68,7 @@ $yellow: #FFCA2A;
   padding: 10px;
   grid-column-start: 1;
   grid-row-start: 1;
-  background-color: $dark-grey;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   margin: 5px;
 }
@@ -78,7 +78,7 @@ $yellow: #FFCA2A;
   padding: 10px;
   grid-column-start: 1;
   grid-row-start: 2;
-  background-color: $dark-grey;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   margin: 5px;
 }
@@ -88,7 +88,7 @@ $yellow: #FFCA2A;
   padding: 10px;
   grid-column-start: 1;
   grid-row-start: 3;
-  background-color: $dark-grey;
+  background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   margin: 5px;
 }
@@ -97,18 +97,32 @@ $yellow: #FFCA2A;
   font-size: 10px;
   padding: 10px;
   margin: 5px;
-  background-color: $dark-grey;
+  background-color: rgba(0, 0, 0, 0.5);
   grid-column-start: 1;
   grid-row-start: 4;
 }
 
 // CONTENT
 
+.content{
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  margin-left: 5px;
+}
+
 .events {
   grid-area: content;
   padding: 5px;
   grid-column-start: 2;
   grid-row-start: 1;
+
+  .tournament-list {
+    display: inline-block;
+    padding-right: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .active {
@@ -116,6 +130,10 @@ $yellow: #FFCA2A;
   padding: 5px;
   grid-column-start: 2;
   grid-row-start: 2;
+
+  .video-stream {
+    padding-top: 10px;
+  }
 }
 
 .sponsors {

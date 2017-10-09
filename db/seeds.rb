@@ -10,7 +10,8 @@ require 'open-uri'
 require 'csv'
 start_time = Time.now
 # this is to retain yizen, and kent user, player and team
-# Hero.destroy_all
+Item.destroy_all
+Hero.destroy_all
 # Player.destroy_all
 # Team.destroy_all
 # User.destroy_all
