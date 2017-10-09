@@ -71,11 +71,26 @@
     <div class="content">
       <div class="events">
         <h3 class="title-stamp">EVENTS</h3>
-        <p>insert thumbnails of tournaments</p>
+        <div class="events-list">
+          <% @tournaments.each do |tournament|  %>
+          <div class="tournament-list">
+            <img src= <%= tournament.image %> />
+              <p><a href=<%= tournament.tournament_url%> target="_blank"> <%= tournament.name %></a></p>
+              <p><%= tournament.start.to_date %></p>
+          </div>
+          <% end %>
+
+        </div>
+
       </div>
 
       <div class="active">
         <h3 class="title-stamp">STREAMS</h3>
+        <div class="video-stream">
+          <iframe width="280" height="150" src="https://gaming.youtube.com/embed/t2rVTf485m8" frameborder="0" allowfullscreen></iframe>
+          <iframe width="280" height="150" src="https://gaming.youtube.com/embed/WmSO2DC9v8c" frameborder="0" allowfullscreen></iframe>
+          <iframe width="280" height="150" src="https://gaming.youtube.com/embed/t2rVTf485m8" frameborder="0" allowfullscreen></iframe>
+        </div>
       </div>
 
       <div class="sponsors">
