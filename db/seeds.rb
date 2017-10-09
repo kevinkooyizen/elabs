@@ -135,7 +135,7 @@ Hero.destroy_all
 # end
 
 
-~~~~~~ SEED HEROES HERE ~~~~~~
+# ~~~~~~ SEED HEROES HERE ~~~~~~
 heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
 Hero.transaction do
     heroes_collection.each do |item|
