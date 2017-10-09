@@ -67,7 +67,9 @@ class User < ApplicationRecord
         end
         @top_heroes_items.map! do |data|
             data.map! do |item|
-                byebug
+                if item != 0
+                    Item.find_by(api_id: item).api_name
+                end
             end
         end
     end

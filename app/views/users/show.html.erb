@@ -96,7 +96,13 @@
 
                     <td><span class="statnumber", id="xpm"> <%= @var.top_heroes_xpm[index] %> </span></td>
 
-                    <td><span class="statnumber", id="items"> <%= @var.top_heroes_items[index] %> </span></td>
+                    <td><span class="statnumber", id="items"> 
+                      <% @var.top_heroes_items[index].each do |item| %> 
+                        <div>
+                          <img src = "http://cdn.dota2.com/apps/dota2/images/items/<%= item %>_lg.png" >
+                        </div>
+                      <% end %>
+                    </span></td>
               
                   <% end %>
                   </tr>
