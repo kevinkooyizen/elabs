@@ -11,6 +11,7 @@ class Team < ApplicationRecord
     has_many :games, through: :titles
     has_many :titles
 
+    has_many :enquiries
     # combined search scope
     def self.team_search(name: nil, country: nil)
         team_name(name).country(country)
@@ -141,4 +142,11 @@ class Team < ApplicationRecord
             players_scoring[second.id] <=> players_scoring[first.id]
         }
     end
+
+    def get_enquiries_users(team_id = self.id)
+        users_ids = Enquiry.where('team_id = ?', team_id).pluck(:user_id)
+
+        enquired_users = User.where('users.id in (?)', users_ids).includes(:player)
+    end
+    
 end

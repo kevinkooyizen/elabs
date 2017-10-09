@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     include UsersHelper
-    before_action(except: [:new, :create]) do
+    before_action(except: [:new, :create, :show]) do
         continue = true
         if !signed_in?
             flash[:alert] = 'Please sign in to perform this action.'
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
 
 
     def show
-        @user = JSON.parse open("https://api.opendota.com/api/players/#{current_user.uid}").read
+        @user = User.find(params[:id])
         @var = current_user
     end
 

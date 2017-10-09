@@ -5,6 +5,10 @@ class User < ApplicationRecord
     has_one :role
     has_many :sponsors
     has_many :teams
+    has_many :enquiries
+
+    attr_reader :stats
+
     attr_accessor :user_heroes
     attr_accessor :top_heroes
     attr_accessor :top_hero_matches

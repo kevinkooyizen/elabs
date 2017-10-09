@@ -37,17 +37,14 @@
         </h6>
         <h6 class="team-roster">Roster: <br></h6>
         <!-- TEAM ROSTER -->
-        <% team.roster.each do |roster| %>
-          <% if roster.present? %>
-            <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"].nil? %>
-              <% if !(JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"].nil? %>
-                <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["name"] %> <br>
-              <% else %>
-                <%= (JSON.parse open("https://api.opendota.com/api/players/#{roster}").read)["profile"]["personaname"] %> <br>
-              <% end %>
-            <% end %>
+        <% team.get_roster_players.each do |player| %>
+          <% if player.real_name.present? %>
+            <%= player.real_name %> <br>
+          <% else %>
+            <%= player.persona_name %> <br>
           <% end %>
         <% end %>
+        <hr>
       </div>
     <% end %>
 

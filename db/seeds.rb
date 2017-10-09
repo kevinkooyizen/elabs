@@ -78,7 +78,7 @@ start_time = Time.now
 
 # tournaments_collection["result"]["leagues"].each do |item|
 #     tournament= Tournament.new
-#      
+#
 #         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
 #         tournament.description = item["description"]
 #         tournament.tournament_url = item["tournament_url"]
@@ -200,6 +200,7 @@ start_time = Time.now
 # end
 
 
+
 # ~~~~~~SEED ITEMS HERE~~~~~~
 items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
 Item.transaction do
@@ -216,4 +217,3 @@ end
 total_time = Time.now - start_time
 puts "Seed complete"
 puts "Total time taken for seed: " + total_time.round(2).to_s + " seconds"
-
