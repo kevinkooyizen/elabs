@@ -19,8 +19,8 @@ Team.destroy_all
 # User.destroy_all
 # Happening.all.destroy_all
 
-# Destroy all execpt first
-User.all[1..-1].count.destroy_all
+# Destroy all except first
+# User.all[1..-1].count.destroy_all
 
 # ~~~~~~ SEED PLAYERS HERE ~~~~~~
 
