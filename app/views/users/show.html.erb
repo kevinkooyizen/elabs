@@ -22,10 +22,10 @@
               <p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
               <p>Winrate: <%= @var.winrate %>%</p>
               <p>Top Heroes: </p>
+            
               <% if @team.user_id != current_user.id && !@team.nil? %>
                 <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
               <% end %>
-
               <% @var.top_heroes_npc_names[0..2].each_with_index do |name, index| %>
                 <div id="top-hero-image-<%= index+1 %>">
                   <img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_lg.png" />
@@ -73,6 +73,7 @@
               </div>
               <div class="hero-match">
               <!-- This is all of the top heroes matches -->
+              <h3> Recent Matches </h3>
                 <table class="past-stats-table">
                   <tr>    
                     <th><span class="statname">  </span></th>
@@ -86,6 +87,8 @@
                     <th><span class="statname"> GPM </span></th>
 
                     <th><span class="statname"> XPM </span></th>
+
+                    <th><span class="statname", id="items"> Items </span></th>
 
                   </tr>
                   <% hero.matches.each do |match| %>
@@ -106,9 +109,9 @@
 
                     <td><span class="statnumber", id="xpm"> <%= match["xp_per_min"] %> </span></td>
 
-                    <td><span class="statnumber", id="items"> 
-                      <% match["player_match_items"].each do |item| %> 
-                        <div>
+                    <td class="itemtd"><span class="statnumber", id="items"> 
+                      <% match["player_match_items"].each_with_index do |item, index| %> 
+                        <div id="item-<%= index+1 %>">
                           <img src = "http://cdn.dota2.com/apps/dota2/images/items/<%= item %>_lg.png" >
                         </div>
                       <% end %>
