@@ -19,6 +19,10 @@ start_time = Time.now
 
 
 # ~~~~~~ SEED PLAYERS HERE ~~~~~~
+
+# COMMENT/UNCOMMENT AFTER ME
+
+# puts "Seeding Players..."
 # players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 # seed_counter = 1
 # max_counter = 20
@@ -67,8 +71,21 @@ start_time = Time.now
 #     seed_counter+=1
 # end
 
+# puts "Players seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~
+
+
+
+
 
 # ~~~~~~ SEED TOURNAMENTS HERE ~~~~~~
+
+# COMMENT/UNCOMMENT AFTER ME
+
+puts "Seeding tournaments..."
 # The upcoming event is on the bottom because we will treat it as a pass event and will only show the 4 latest event
 tour = Dota.api
 league_id = 5364
@@ -120,9 +137,21 @@ Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-
 Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
 Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
 
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+puts "Tournaments seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~~~~~~~
 
 
+
+
+
+# ~~~~~~ SEED HAPPENINGS HERE ~~~~~~
+
+# COMMENT/UNCOMMENT AFTER ME
+
+# puts "Seeding Happenings..."
 # Happening.all.destroy_all
 # # seed events data, no dependency
 # max_counter = 20
@@ -137,33 +166,58 @@ Tournament.find_by(name: "Korean Elite League  January").update(image: "https://
 #     happening.save
 # end
 
+# puts "Happenings seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~~
+
+
+
+
 
 # ~~~~~~ SEED HEROES HERE ~~~~~~
-heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
-Hero.transaction do
-    heroes_collection.each do |item|
-        counter =0
-        hero = Hero.new
-        hero.api_id = item["id"]
-        hero.api_name = item["localized_name"]
-        hero.api_npc_name = item["name"].match(/npc_dota_hero_(\w+)/)[1]
-        hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
-        CSV.foreach(hero_file) do |row|
-            counter+=1
-            if hero.api_name == row[0]
-                next if counter == 1
-                hero.name = row[0]
-                hero.win_rate = row[1]
-                hero.picked = row[2]
-            end
-        end
-        hero.save
-    end
-end
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# COMMENT/UNCOMMENT AFTER ME
+
+# puts "Seeding Heroes..."
+# heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
+# Hero.transaction do
+#     heroes_collection.each do |item|
+#         counter =0
+#         hero = Hero.new
+#         hero.api_id = item["id"]
+#         hero.api_name = item["localized_name"]
+#         hero.api_npc_name = item["name"].match(/npc_dota_hero_(\w+)/)[1]
+#         hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
+#         CSV.foreach(hero_file) do |row|
+#             counter+=1
+#             if hero.api_name == row[0]
+#                 next if counter == 1
+#                 hero.name = row[0]
+#                 hero.win_rate = row[1]
+#                 hero.picked = row[2]
+#             end
+#         end
+#         hero.save
+#     end
+# end
+
+# puts "Heroes seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~END~~~~~~~~~~~~~~~
+
+
+
 
 
 # ~~~ SEED TEAMS HERE~~~
+
+# COMMENT/UNCOMMENT AFTER ME
+
+# puts "Seeding Teams..."
 # @teams = JSON.parse open("https://api.opendota.com/api/teams").read
 # @pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 # @user = User.new
@@ -204,18 +258,39 @@ end
 #     end
 # end
 
+# puts "Teams seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~END~~~~~~~~~~~~~~~
+
+
+
 
 
 # ~~~~~~SEED ITEMS HERE~~~~~~
-# items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
-# Item.transaction do
-#     items["result"]["items"].each do |data|
-#         item = Item.new
-#         item.api_id = data["id"]
-#         item.api_name = data["name"].match(/item_(\w+)/)[1]
-#         item.save
-#     end
-# end
+
+# COMMENT/UNCOMMENT AFTER ME
+
+puts "Seeding Items..."
+items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
+Item.transaction do
+    items["result"]["items"].each do |data|
+        item = Item.new
+        item.api_id = data["id"]
+        item.api_name = data["name"].match(/item_(\w+)/)[1]
+        item.save
+    end
+end
+
+puts "Items seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~
+
+
+
 
 
 
