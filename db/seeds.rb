@@ -74,7 +74,7 @@ start_time = Time.now
 
 # tournaments_collection["result"]["leagues"].each do |item|
 #     tournament= Tournament.new
-#      
+#
 #         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
 #         tournament.description = item["description"]
 #         tournament.tournament_url = item["tournament_url"]
@@ -203,8 +203,6 @@ end
 #         end
 #         team.save
 
-<<<<<<< HEAD
-=======
 #         time_taken = Time.now - start_time
 #         puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
 #         puts "Teams seeded: " + Team.all.count.to_s
@@ -212,7 +210,6 @@ end
 #     end
 # end
 
->>>>>>> master
 # Tournament.transaction do
 #     Tournament.all.each do |tournament|
 #         tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
@@ -226,13 +223,8 @@ end
 # Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
 # Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
 # Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
-<<<<<<< HEAD
 # Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
-=======
-Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
->>>>>>> master
 
 total_time = Time.now - start_time
 puts "Seed complete"
 puts "Total time taken for seed: " + total_time.round(2).to_s + " seconds"
-
