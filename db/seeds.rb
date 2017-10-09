@@ -74,7 +74,7 @@ start_time = Time.now
 
 # tournaments_collection["result"]["leagues"].each do |item|
 #     tournament= Tournament.new
-#      
+#
 #         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
 #         tournament.description = item["description"]
 #         tournament.tournament_url = item["tournament_url"]
@@ -190,9 +190,8 @@ end
 # Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
 # Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
 # Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
-Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+# Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
 
 total_time = Time.now - start_time
 puts "Seed complete"
 puts "Total time taken for seed: " + total_time.round(2).to_s + " seconds"
-

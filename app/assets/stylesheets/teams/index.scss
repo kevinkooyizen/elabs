@@ -17,9 +17,12 @@ $yellow: #FFCA2A;
 }
 
 .teams-search {
-  margin: 10px;
   grid-column-start: 1;
   grid-row-start: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-right: 10px;
+  padding: 20px;
+  height: 40%;
 
   h5 {
     background-color: $yellow;
@@ -38,13 +41,20 @@ $yellow: #FFCA2A;
 }
 
 .teams-index {
-  margin: 15px;
   grid-column-start: 2;
   grid-row-start: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  height: auto;
 }
 
 .team-card {
   padding-top: 10px;
+  padding-left: 20px;
+}
+
+hr {
+  color: $white;
 }
 
 .pagination {
