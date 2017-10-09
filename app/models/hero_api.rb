@@ -1,7 +1,7 @@
 require 'open-uri'
 
 class HeroApi
-  attr_reader :hero_id, :hero_name, :games, :win, :kills, :deaths, :assists, :heroes_gpm, :heroes_xpm, :heroes_items
+  attr_reader :hero_id, :hero_name, :games, :win, :kills, :deaths, :assists, :heroes_gpm, :heroes_xpm, :heroes_items, :heroes_avg_gpm, :heroes_avg_xpm
   def initialize(uid, hash, matches_load_limit = 5)
     @uid = uid
     
@@ -16,8 +16,11 @@ class HeroApi
     @heroes_gpm = []
     @heroes_xpm = []
     @heroes_items = []
+    @heroes_avg_gpm = 0
+    @heroes_avg_xpm = 0
     
     calculate_hero_kda
+    calculate_hero_gpm_xpm
   end
 
   def winrate
@@ -75,6 +78,20 @@ class HeroApi
       end
       
     end
+  end
+
+  def calculate_hero_gpm_xpm
+    hero_matches.each do |item, index|
+        match_data = JSON.parse open("https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id=#{item["match_id"]}&key=#{ENV["STEAM_KEY"]}").read
+        match_data["result"]["players"].each do |data|
+            if data["account_id"] == @uid.to_i
+                @heroes_avg_gpm += data["gold_per_min"]
+                @heroes_avg_xpm += data["xp_per_min"]
+            end
+        end
+    end
+    @heroes_avg_gpm = @heroes_avg_gpm/(hero_matches.count)
+    @heroes_avg_xpm = @heroes_avg_xpm/(hero_matches.count)
   end
 
 
