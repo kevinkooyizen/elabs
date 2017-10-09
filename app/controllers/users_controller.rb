@@ -44,8 +44,15 @@ class UsersController < ApplicationController
 
 
     def show
-        @user = ApiExtension::OpenDota.get_player_profile(uid: current_user.uid)
-        @var = current_user
+        user = User.find(params[:id])
+
+        if !user.present?
+            flash[:error] = 'User not exists.'
+            return redirect_to :back
+        end
+
+        @user = ApiExtension::OpenDota.get_player_profile(uid: user.uid)
+        @var = user
         @var.store
         @heroes = @var.top_heroes[0..2].map {|x| HeroApi.new(@var.uid, x)}
     end
