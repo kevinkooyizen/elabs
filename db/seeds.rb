@@ -10,8 +10,8 @@ require 'open-uri'
 require 'csv'
 start_time = Time.now
 # this is to retain yizen, and kent user, player and team
-Item.destroy_all
-Hero.destroy_all
+# Item.destroy_all
+# Hero.destroy_all
 # Player.destroy_all
 # Team.destroy_all
 # User.destroy_all
@@ -69,56 +69,59 @@ Hero.destroy_all
 
 
 # ~~~~~~ SEED TOURNAMENTS HERE ~~~~~~
-# # The upcoming event is on the bottom because we will treat it as a pass event and will only show the 4 latest event
-# tour = Dota.api
-# league_id = 5364
-# tournaments_collection = tour.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
-# Tournament.transaction do
-#     tournaments_collection["result"]["leagues"].each do |item|
-#         tournament= Tournament.new
+# The upcoming event is on the bottom because we will treat it as a pass event and will only show the 4 latest event
+tour = Dota.api
+league_id = 5364
+tournaments_collection = tour.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
+Tournament.transaction do
+    tournaments_collection["result"]["leagues"].each do |item|
+        tournament= Tournament.new
 
-# tournaments_collection["result"]["leagues"].each do |item|
-#     tournament= Tournament.new
-#
-#         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
-#         tournament.description = item["description"]
-#         tournament.tournament_url = item["tournament_url"]
-#         # i am not sure what is itemdef is... but Daniel assume it is an id inside the api database
-#         tournament.itemdef = item["itemdef"]
-#         tournament.start = Date.new(2016, rand(1..12), rand(1..28))
-#         tournament.end_date = tournament.start + 7.days
-#         tournament.game = "dota2"
-#         tournament.status = true
-#         tournament.save
-#     end
-# end
+tournaments_collection["result"]["leagues"].each do |item|
+    tournament= Tournament.new
 
-# tournament1 = Tournament.new(name: "ROG MASTERS 2017: APAC Qualifier - Singapore", description: "ROG MASTERS 2017 APAC Qualifier Singapore", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16056-wellplay-invitational-9/4773-main-event/16058-main-event/bracket", itemdef: rand(1800..2000), start: "20170829",
-# end_date: "20170911", game: "dota2")
+        tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
+        tournament.description = item["description"]
+        tournament.tournament_url = item["tournament_url"]
+        # i am not sure what is itemdef is... but Daniel assume it is an id inside the api database
+        tournament.itemdef = item["itemdef"]
+        tournament.start = Date.new(2016, rand(1..12), rand(1..28))
+        tournament.end_date = tournament.start + 7.days
+        tournament.game = "dota2"
+        tournament.status = true
+        tournament.save
+    end
+end
 
-# tournament2 = Tournament.new(name: "King’s Cup: America", description: "King's Cup: America", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16290-king-s-cup-america/4848-playoffs/16292-playoffs/bracket", itemdef: rand(1800..2000), start: "20170906",
-# end_date: "20170920", game: "dota2")
+tournament1 = Tournament.new(name: "ROG MASTERS 2017: APAC Qualifier - Singapore", description: "ROG MASTERS 2017 APAC Qualifier Singapore", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16056-wellplay-invitational-9/4773-main-event/16058-main-event/bracket", itemdef: rand(1800..2000), start: "20170829",
+end_date: "20170911", game: "dota2")
 
-# tournament3 = Tournament.new(name: "Prodota Cup #10 SEA", description: "Prodota Cup #10 SEA", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16241-prodota-cup-10-sea/4833-playoffs/16244-playoffs/bracket", itemdef: rand(1800..2000), start: "20170908",
-# end_date: "20171016", game: "dota2")
-# tournament1.save
-# tournament2.save
-# tournament3.save
+tournament2 = Tournament.new(name: "King’s Cup: America", description: "King's Cup: America", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16290-king-s-cup-america/4848-playoffs/16292-playoffs/bracket", itemdef: rand(1800..2000), start: "20170906",
+end_date: "20170920", game: "dota2")
 
-# Tournament.transaction do
-#     Tournament.all.each do |tournament|
-#         tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
-#     end
-# end
+tournament3 = Tournament.new(name: "Prodota Cup #10 SEA", description: "Prodota Cup #10 SEA", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16241-prodota-cup-10-sea/4833-playoffs/16244-playoffs/bracket", itemdef: rand(1800..2000), start: "20170908",
+end_date: "20171016", game: "dota2")
+tournament1.save
+tournament2.save
+tournament3.save
 
-# Tournament.find_by(name: "Prodota Cup #10 SEA").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Prodota+Cup.jpeg")
-# Tournament.find_by(name: "King’s Cup: America").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/King's+Cup.jpeg")
-# Tournament.find_by(name: "ROG MASTERS 2017: APAC Qualifier - Singapore").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Rog+Masters.jpeg")
-# Tournament.find_by(name: "The Frankfurt Major 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Frankfurt+Major+Banner.png")
-# Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
-# Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
-# Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
-# Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+Tournament.transaction do
+    Tournament.all.each do |tournament|
+        tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
+    end
+end
+
+Tournament.find_by(name: "Prodota Cup #10 SEA").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Prodota+Cup.jpeg")
+Tournament.find_by(name: "King’s Cup: America").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/King's+Cup.jpeg")
+Tournament.find_by(name: "ROG MASTERS 2017: APAC Qualifier - Singapore").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Rog+Masters.jpeg")
+Tournament.find_by(name: "The Frankfurt Major 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Frankfurt+Major+Banner.png")
+Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
+Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
+Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
+Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 # Happening.all.destroy_all
 # # seed events data, no dependency
@@ -157,6 +160,7 @@ Hero.transaction do
         hero.save
     end
 end
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 # ~~~ SEED TEAMS HERE~~~
