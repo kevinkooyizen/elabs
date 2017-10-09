@@ -5,6 +5,7 @@ class User < ApplicationRecord
     has_one :role
     has_many :sponsors
     has_many :teams
+    has_many :enquiries
     attr_reader :stats
 
     BIT_CONVERSION = 76561197960265728

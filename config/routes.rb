@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
     get 'teams/search' => 'teams#search', as: :teams_search
 
+    get '/teams/:id/enquiries' => 'enquiries#enquiries', as: :enquiries
+    
     resources :sessions
 
     resources :users

@@ -1,3 +1,4 @@
+<% @enquiries_users ||= [] %>
 <div class="team-profile-info">
   <div class="team-info-box">
     <div  class="team-info">
@@ -6,6 +7,12 @@
           <section>
             <div class="team-avatar">
               <img src="<%= @team.logo %>" id="avatar">
+              <div class="team-enquiry">
+                <h2>Users enquiry</h2>
+                <% @enquiries_users.each do |enquiry| %>
+                  <a href=<%= user_path(enquiry.id) %>><%= enquiry.persona_name %></a><br>
+                <% end %>
+              </div>
             </div>
             <div>
               <h3 class="team-name"> <%= @team.name %> </h3>
@@ -45,7 +52,7 @@
               <p>Manager: <%= @team.manager %></p>
               <p>Sponsor: <%= @team.sponsor %></p>
               <p>Coach: <%= @team.coach %></p>
-              <p>link to form to join team</p>
+              <%= link_to "Join Team", enquiries_path(@team) %>
               <!-- This may not be necessary for now since it's only one game.<p>Games team is affiliated with: Dota 2</p> -->
               <p>If present, looking for player(with position)?</p>
               <!-- Contact us option -->

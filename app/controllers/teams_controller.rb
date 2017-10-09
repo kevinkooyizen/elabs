@@ -14,6 +14,7 @@ class TeamsController < ApplicationController
 	def show
 		@team = Team.find(params[:id])
 		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
+		@enquiries_users = @team.get_enquiries_users.order('players.mmr desc')
 		# @teams = JSON.parse open("https://api.opendota.com/api/teams").read
 		# @teams.select do |item|
 		# 	if item["name"] == @team.name

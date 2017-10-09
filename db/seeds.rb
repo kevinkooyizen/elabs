@@ -114,26 +114,26 @@ start_time = Time.now
 #     happening.save
 # end
 
-heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
-Hero.transaction do
-    heroes_collection.each do |item|
-        counter =0
-        hero = Hero.new
-        hero.api_id = item["id"]
-        hero.api_name = item["localized_name"]
-        hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
-        CSV.foreach(hero_file) do |row|
-            counter+=1
-            if hero.api_name == row[0]
-                next if counter == 1
-                hero.name = row[0]
-                hero.win_rate = row[1]
-                hero.picked = row[2]
-            end
-        end
-        hero.save
-    end
-end
+# heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
+# Hero.transaction do
+#     heroes_collection.each do |item|
+#         counter =0
+#         hero = Hero.new
+#         hero.api_id = item["id"]
+#         hero.api_name = item["localized_name"]
+#         hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
+#         CSV.foreach(hero_file) do |row|
+#             counter+=1
+#             if hero.api_name == row[0]
+#                 next if counter == 1
+#                 hero.name = row[0]
+#                 hero.win_rate = row[1]
+#                 hero.picked = row[2]
+#             end
+#         end
+#         hero.save
+#     end
+# end
 @teams = JSON.parse open("https://api.opendota.com/api/teams").read
 @pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 @user = User.new
@@ -174,20 +174,20 @@ end
     end
 end
 
-Tournament.transaction do
-    Tournament.all.each do |tournament|
-        tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
-    end
-end
+# Tournament.transaction do
+#     Tournament.all.each do |tournament|
+#         tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
+#     end
+# end
 
-Tournament.find_by(name: "Prodota Cup #10 SEA").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Prodota+Cup.jpeg")
-Tournament.find_by(name: "King’s Cup: America").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/King's+Cup.jpeg")
-Tournament.find_by(name: "ROG MASTERS 2017: APAC Qualifier - Singapore").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Rog+Masters.jpeg")
-Tournament.find_by(name: "The Frankfurt Major 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Frankfurt+Major+Banner.png")
-Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
-Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
-Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
-Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+# Tournament.find_by(name: "Prodota Cup #10 SEA").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Prodota+Cup.jpeg")
+# Tournament.find_by(name: "King’s Cup: America").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/King's+Cup.jpeg")
+# Tournament.find_by(name: "ROG MASTERS 2017: APAC Qualifier - Singapore").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Rog+Masters.jpeg")
+# Tournament.find_by(name: "The Frankfurt Major 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Frankfurt+Major+Banner.png")
+# Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
+# Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
+# Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
+# Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
 
 total_time = Time.now - start_time
 puts "Seed complete"
