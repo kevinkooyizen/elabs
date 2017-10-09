@@ -88,6 +88,7 @@ class Player < ApplicationRecord
         self.avatar = api_result_profile.dig(:avatar)
         self.profile_url = api_result_profile.dig(:profileurl)
         self.steam_id = player_uid.to_i
+        self.country = api_result_profile[:loccountrycode]
 
         @is_player = true
         return true
@@ -139,6 +140,20 @@ class Player < ApplicationRecord
         else
             100 * player_winlose["win"]/(player_winlose["win"] + player_winlose["lose"])
         end
+    end
+
+    def get_player_games_played(player_uid)
+        player_winlose = OpenDota.get_player_winlose(uid: player_uid)
+
+        if player_winlose['error'].present?
+            return nil
+        end
+
+        win = player_winlose['win'].nil? ? 0 : player_winlose['win']
+        lose = player_winlose['lose'].nil? ? 0 : player_winlose['lose']
+
+        win + lose
+
     end
 
 
@@ -204,6 +219,21 @@ class Player < ApplicationRecord
         teams.sort {|first, second|
             teams_scoring[second.id] <=> teams_scoring[first.id]
         }
+    end
+
+    def last_login(uid: self.steam_id)
+        api_result = OpenDota.get_player_profile(uid: uid)
+        if api_result['profile'].present?
+            login_date = api_result['profile']['last_login']
+
+            if login_date.present?
+                return Date.strptime(login_date, '%Y-%m-%dT%H:%M:%S')
+            else
+                return nil
+            end
+        else
+            nil
+        end
     end
 
     private

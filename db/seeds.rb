@@ -203,15 +203,15 @@ start_time = Time.now
 
 
 # ~~~~~~SEED ITEMS HERE~~~~~~
-items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
-Item.transaction do
-    items["result"]["items"].each do |data|
-        item = Item.new
-        item.api_id = data["id"]
-        item.api_name = data["name"].match(/item_(\w+)/)[1]
-        item.save
-    end
-end
+# items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
+# Item.transaction do
+#     items["result"]["items"].each do |data|
+#         item = Item.new
+#         item.api_id = data["id"]
+#         item.api_name = data["name"].match(/item_(\w+)/)[1]
+#         item.save
+#     end
+# end
 
 
 

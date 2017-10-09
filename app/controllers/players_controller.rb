@@ -16,19 +16,20 @@ class PlayersController < ApplicationController
 
     def index
         if !signed_in?
-            @players = Player.all.order('mmr desc')
+            @players = Player.all.order('mmr desc').page params[:page]
         elsif current_user.occupation == 'player'
         #     recommendation here
         else
-            @players = Player.all.order('mmr desc')
+            @players = Player.all.order('mmr desc').page params[:page]
         end
 
         return render 'index'
     end
 
     def show
-        @player = Player.find(params[:id]).includes(:user)
-        @player_last_login = ApiExtension::OpenDota.get_player_profile(@player.steam_id)
+        @player = Player.find(params[:id])
+        @user = @player.user
+        @user.store
         render 'show'
     end
 
@@ -40,7 +41,7 @@ class PlayersController < ApplicationController
                                         real_name: search_params[:real_name],
                                         state: search_params[:state],
                                         mmr_lower_range: search_params[:mmr_lower_range],
-                                        mmr_upper_range: search_params[:mmr_upper_range]).order('mmr desc')
+                                        mmr_upper_range: search_params[:mmr_upper_range]).order('mmr desc').page params[:page]
 
         return render 'index'
     end
