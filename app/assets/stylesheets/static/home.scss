@@ -71,6 +71,12 @@ $yellow: #FFCA2A;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   margin: 5px;
+
+
+  #avatar {
+    width: 125px;
+    height: auto;
+  }
 }
 
 .player {
@@ -111,6 +117,7 @@ $yellow: #FFCA2A;
 }
 
 .events {
+  padding-top: 10px;
   grid-area: content;
   padding: 5px;
   grid-column-start: 2;
@@ -119,9 +126,17 @@ $yellow: #FFCA2A;
   .tournament-list {
     display: inline-block;
     padding-right: 20px;
+    padding-left: 20px;
+    margin-right: 10px;
     text-align: center;
     align-items: center;
     justify-content: center;
+    background-color: $dark-grey;
+
+  .tournament-name {
+    font-size: 1em;
+  }
+
   }
 }
 
@@ -141,4 +156,15 @@ $yellow: #FFCA2A;
   padding: 5px;
   grid-column-start: 2;
   grid-row-start: 3;
+
+  .sponsor-logos {
+
+    img {
+      padding-top: 10px;
+      width: auto;
+      height: 100px;
+      margin: auto;
+      margin-right: 10px;
+    }
+  }
 }
