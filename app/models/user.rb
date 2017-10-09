@@ -5,7 +5,9 @@ class User < ApplicationRecord
     has_one :role
     has_many :sponsors
     has_many :teams
-    attr_reader :stats
+    attr_accessor :user_heroes
+    attr_accessor :top_heroes
+    attr_accessor :top_hero_matches
 
     BIT_CONVERSION = 76561197960265728
 
@@ -36,7 +38,20 @@ class User < ApplicationRecord
       (uid_32_bit.to_i + self.bit_conversion).to_s
     end
 
+    def store
+        @user_heroes = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/heroes").read
+        top = @user_heroes[0..9]
+        if self.winrate != 0
+            top.sort_by! do |item|
+                100* item["win"]/item["games"]
+            end
+        end
+        @top_heroes = top.reverse!
+        @top_hero_matches = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/matches?hero_id=#{self.top_heroes[0]["hero_id"].to_i}").read
+    end
+
     def profile_exist?
+        self.store
         user = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}").read
         if !user["profile"].nil?
             return true
@@ -52,17 +67,6 @@ class User < ApplicationRecord
         else
             return 0
         end
-    end
-
-    def top_heroes
-        user_heroes = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/heroes").read
-        top = user_heroes[0..9]
-        if self.winrate != 0
-            top.sort_by! do |item|
-                100* item["win"]/item["games"]
-            end
-        end
-        top.reverse!
     end
 
     def top_heroes_names
@@ -88,15 +92,11 @@ class User < ApplicationRecord
     end
 
     def top_hero_name
-        Hero.find_by(api_id: self.top_hero["hero_id"]).name
+        Hero.find_by(api_id: self.top_heroes[0]["hero_id"]).name
     end
 
     def top_hero_winrate
-        (100*self.top_hero["win"].to_f/self.top_hero["games"].to_f).round(2)
-    end
-
-    def top_hero_matches
-        (JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/matches?hero_id=#{self.top_hero["hero_id"].to_i}").read)
+        (100*self.top_heroes[0]["win"].to_f/self.top_heroes[0]["games"].to_f).round(2)
     end
 
     def top_hero_kills
