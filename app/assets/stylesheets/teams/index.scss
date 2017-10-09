@@ -46,11 +46,16 @@ $yellow: #FFCA2A;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
   height: auto;
+
 }
 
 .team-card {
   padding-top: 10px;
-  padding-left: 20px;
+  padding-left: 10px;
+  margin: 10px;
+  display: inline-block;
+  width: 20%;
+
 }
 
 hr {

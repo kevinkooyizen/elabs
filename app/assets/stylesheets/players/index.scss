@@ -44,5 +44,13 @@ $yellow: #FFCA2A;
   grid-row-start: 1;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
-  height: auto;
+  height: 80%;
+}
+
+.player-card {
+  padding-top: 10px;
+  padding-left: 10px;
+  margin: 10px;
+  display: inline-block;
+  width: 20%;
 }
