@@ -1,3 +1,73 @@
-// // Place all the styles related to the teams controller here.
-// // They will automatically be included in application.css.
-// // You can use Sass (SCSS) here: http://sass-lang.com/
+// Place all the styles related to the teams controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.inactive {
+  color: red;
+}
+
+.active {
+  color: green;
+}
+
+.team-name {
+  color: #FFCA2A;
+  font-weight: bold;
+  clear: left;
+}
+
+.no-wins {
+  color: red;
+  font-weight: bold;
+}
+
+.team-avatar {
+  min-height: 100%;
+  min-width: 100%;
+}
+
+.team-profile-info {
+  float: left;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.team-info-box {
+  background-color: rgba(0, 0 ,0, 0.5);
+  float: left;
+  width: 665px;
+  height: flex;
+  position: relative;
+}
+
+.team-info {
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  float: left;
+  clear:left;
+}
+
+.team-hero-box {
+  background-color: black;
+  float: left;
+  height: 770px;
+  width: 1050px;
+  opacity: 0.5;
+  position: absolute;
+  z-index: -1;
+}
+
+.buttonright {
+  float: right;
+  padding-right: 20px;
+  padding-top: 20px;
+}
+
+.team-enquiry {
+  margin-left: 200px;
+  overflow: scroll;
+  height: 190px;
+}
+

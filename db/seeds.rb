@@ -114,6 +114,39 @@ start_time = Time.now
 #     happening.save
 # end
 
+@teams = JSON.parse open("https://api.opendota.com/api/teams").read
+@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
+@user = User.new
+@user.real_name = "fake dummy"
+@user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
+@user.password = 'password'
+@user.save!
+
+@teams[0..30].each_with_index do |select, index|
+
+    Team.transaction do
+        team = Team.new
+        team.name = select["name"]
+        team.dota2_team_id = select["team_id"]
+        if !select["rating"].nil?
+            team.rating = select["rating"]
+        else
+            team.rating = 0
+        end
+        if Dota.api.teams(after: @teams[index]["team_id"]).present?
+            team.logo = (JSON.parse open("https://api.steampowered.com/ISteamRemoteStorage/GetUGCFileDetails/v1/?key=#{ENV['STEAM_KEY']}&ugcid=#{Dota.api.teams(after: @teams[index]["team_id"]).first.logo_id}&appid=570").read)["data"]["url"]
+        end
+        team.status = true
+        team.user_id = @user.id
+        team.winrate = (100 * select["wins"].to_f/(select["wins"].to_f + select["losses"].to_f)).round(2)
+        @pros.select do |item|
+            if item["team_name"] == select["name"] && item["locked_until"] != 0 && item["is_locked"] && item["is_pro"]
+                # this stores 32 bit player steam profile id into roster
+                team.roster << item["account_id"]
+            end
+        end
+        team.save
+
 heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
 Hero.transaction do
     heroes_collection.each do |item|
