@@ -46,6 +46,8 @@ class UsersController < ApplicationController
     def show
         @user = ApiExtension::OpenDota.get_player_profile(uid: current_user.uid)
         @var = current_user
+        @var.store
+        @heroes = @var.top_heroes[0..2].map {|x| HeroApi.new(@var.uid, x)}
     end
 
     private
