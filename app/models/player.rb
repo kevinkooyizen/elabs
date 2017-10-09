@@ -142,6 +142,20 @@ class Player < ApplicationRecord
         end
     end
 
+    def get_player_games_played(player_uid)
+        player_winlose = OpenDota.get_player_winlose(uid: player_uid)
+
+        if player_winlose['error'].present?
+            return nil
+        end
+
+        win = player_winlose['win'].nil? ? 0 : player_winlose['win']
+        lose = player_winlose['lose'].nil? ? 0 : player_winlose['lose']
+
+        win + lose
+
+    end
+
 
     def get_player_vector
         [self.mmr, self.winrate]
