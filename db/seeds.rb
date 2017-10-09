@@ -12,6 +12,7 @@ start_time = Time.now
 # this is to retain yizen, and kent user, player and team
 # Item.destroy_all
 # Hero.destroy_all
+# Tournament.destroy_all
 # Player.destroy_all
 # Team.destroy_all
 # User.destroy_all
@@ -91,11 +92,9 @@ tour = Dota.api
 league_id = 5364
 tournaments_collection = tour.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
 Tournament.transaction do
+
     tournaments_collection["result"]["leagues"].each do |item|
         tournament= Tournament.new
-
-tournaments_collection["result"]["leagues"].each do |item|
-    tournament= Tournament.new
 
         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
         tournament.description = item["description"]
@@ -107,6 +106,7 @@ tournaments_collection["result"]["leagues"].each do |item|
         tournament.game = "dota2"
         tournament.status = true
         tournament.save
+        
     end
 end
 
