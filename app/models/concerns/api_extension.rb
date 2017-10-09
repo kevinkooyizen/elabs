@@ -1,3 +1,4 @@
+require 'open-uri'
 module ApiExtension
     class OpenDota
         def self.get_player_profile(uid:nil)
