@@ -57,8 +57,10 @@ class User < ApplicationRecord
     def top_heroes
         user_heroes = JSON.parse open("https://api.opendota.com/api/players/#{self.uid}/heroes").read
         top = user_heroes[0..9]
-        top.sort_by! do |item|
-            100* item["win"]/item["games"]
+        if self.winrate != 0
+            top.sort_by! do |item|
+                100* item["win"]/item["games"]
+            end
         end
         top.reverse!
     end
@@ -102,7 +104,9 @@ class User < ApplicationRecord
         self.top_hero_matches.each do |x|
             kills += x["kills"]
         end
-        kills/self.top_hero["games"]
+        if kills != 0
+            kills/self.top_hero["games"]
+        end
     end
 
     def top_hero_deaths
@@ -110,7 +114,9 @@ class User < ApplicationRecord
         self.top_hero_matches.each do |x|
             deaths += x["deaths"]
         end
-        deaths/self.top_hero["games"]
+        if deaths != 0
+            deaths/self.top_hero["games"]
+        end
     end
 
     def top_hero_assists
@@ -118,7 +124,9 @@ class User < ApplicationRecord
         self.top_hero_matches.each do |x|
             assists += x["assists"]
         end
-        assists/self.top_hero["games"]
+        if assists != 0
+            assists/self.top_hero["games"]
+        end
     end
 
     def match_win?(match)
