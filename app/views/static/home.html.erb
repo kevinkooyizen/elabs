@@ -14,12 +14,10 @@
         <div class="team">
           <h6>Team of the week</h6>
           <% if @team.present? %>
-            <ul>
-              <li>Logo</li>
-              <li><%= @team.name %></li>
-              <li>Winrate: <%= @team.winrate %>%</li>
-              <li>Top game link</li>
-            </ul>
+            <img src="<%= @team.logo %>" id="avatar">
+            <br>
+            <p><%= link_to "#{@team.name}", team_path(@team) %></p>
+            <p>Winrate: <%= @team.winrate %>%</p>
           <% end %>
         </div>
 
@@ -48,7 +46,7 @@
         <!--testing block for oauth-->
         <div class="signin">
           <% if current_user %>
-              <h6>Signed in as <%= current_user.real_name %></h6>
+              <h6>Signed in as <br><%= current_user.real_name %></h6>
               <%= link_to 'Sign out', sign_out_path, method: :delete %>
           <% else %>
               <h6>First time sign in</h6>
@@ -75,14 +73,14 @@
           <% @tournaments.each do |tournament|  %>
           <div class="tournament-list">
             <img src= <%= tournament.image %> />
-              <p><a href=<%= tournament.tournament_url%> target="_blank"> <%= tournament.name %></a></p>
+              <p class="tournament-name"><a href=<%= tournament.tournament_url%> target="_blank"> <%= tournament.name %></a></p>
               <p><%= tournament.start.to_date %></p>
           </div>
           <% end %>
-
         </div>
-
       </div>
+
+      <br>
 
       <div class="active">
         <h3 class="title-stamp">STREAMS</h3>
@@ -93,8 +91,25 @@
         </div>
       </div>
 
+      <br>
+
       <div class="sponsors">
         <h3 class="title-stamp">SPONSORS</h3>
+        <div class="sponsor-logos">
+          <a href="http://falloutgaming.co/">
+            <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/fallout.png" alt="fallout gaming">
+          </a>
+          <a href="https://gaming.logitech.com/en-us">
+              <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/logitech.gif" alt="logitech">
+          </a>
+          <a href="https://www.razerzone.com/">
+            <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/razer.png" alt="razer">
+          </a>
+          <a href="http://www.coolermaster.com/">
+            <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/coolermaster.png" alt="coolermaster">
+          </a>
+        </div>
+        <br>
         <p>Want to become a sponsor? Find out how.</p>
       </div>
     </div>

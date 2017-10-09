@@ -10,8 +10,9 @@ require 'open-uri'
 require 'csv'
 start_time = Time.now
 # this is to retain yizen, and kent user, player and team
-Item.destroy_all
-Hero.destroy_all
+# Item.destroy_all
+# Hero.destroy_all
+# Tournament.destroy_all
 # Player.destroy_all
 # Team.destroy_all
 # User.destroy_all
@@ -19,6 +20,10 @@ Hero.destroy_all
 
 
 # ~~~~~~ SEED PLAYERS HERE ~~~~~~
+
+# COMMENT/UNCOMMENT AFTER ME
+
+# puts "Seeding Players..."
 # players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 # seed_counter = 1
 # max_counter = 20
@@ -67,59 +72,86 @@ Hero.destroy_all
 #     seed_counter+=1
 # end
 
+# puts "Players seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~
+
+
+
+
 
 # ~~~~~~ SEED TOURNAMENTS HERE ~~~~~~
-# # The upcoming event is on the bottom because we will treat it as a pass event and will only show the 4 latest event
-# tour = Dota.api
-# league_id = 5364
-# tournaments_collection = tour.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
-# Tournament.transaction do
-#     tournaments_collection["result"]["leagues"].each do |item|
-#         tournament= Tournament.new
 
-# tournaments_collection["result"]["leagues"].each do |item|
-#     tournament= Tournament.new
-#
-#         tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
-#         tournament.description = item["description"]
-#         tournament.tournament_url = item["tournament_url"]
-#         # i am not sure what is itemdef is... but Daniel assume it is an id inside the api database
-#         tournament.itemdef = item["itemdef"]
-#         tournament.start = Date.new(2016, rand(1..12), rand(1..28))
-#         tournament.end_date = tournament.start + 7.days
-#         tournament.game = "dota2"
-#         tournament.status = true
-#         tournament.save
-#     end
-# end
+# COMMENT/UNCOMMENT AFTER ME
 
-# tournament1 = Tournament.new(name: "ROG MASTERS 2017: APAC Qualifier - Singapore", description: "ROG MASTERS 2017 APAC Qualifier Singapore", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16056-wellplay-invitational-9/4773-main-event/16058-main-event/bracket", itemdef: rand(1800..2000), start: "20170829",
-# end_date: "20170911", game: "dota2")
+puts "Seeding tournaments..."
+# The upcoming event is on the bottom because we will treat it as a pass event and will only show the 4 latest event
+tour = Dota.api
+league_id = 5364
+tournaments_collection = tour.get("IDOTA2Match_570", "GetLeagueListing", league_id: league_id )
+Tournament.transaction do
 
-# tournament2 = Tournament.new(name: "King’s Cup: America", description: "King's Cup: America", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16290-king-s-cup-america/4848-playoffs/16292-playoffs/bracket", itemdef: rand(1800..2000), start: "20170906",
-# end_date: "20170920", game: "dota2")
+    tournaments_collection["result"]["leagues"].each do |item|
+        tournament= Tournament.new
 
-# tournament3 = Tournament.new(name: "Prodota Cup #10 SEA", description: "Prodota Cup #10 SEA", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16241-prodota-cup-10-sea/4833-playoffs/16244-playoffs/bracket", itemdef: rand(1800..2000), start: "20170908",
-# end_date: "20171016", game: "dota2")
-# tournament1.save
-# tournament2.save
-# tournament3.save
+        tournament.name = item["name"].gsub(/#DOTA_Item_(\w)/, '\1').split(/_/).join(" ")
+        tournament.description = item["description"]
+        tournament.tournament_url = item["tournament_url"]
+        # i am not sure what is itemdef is... but Daniel assume it is an id inside the api database
+        tournament.itemdef = item["itemdef"]
+        tournament.start = Date.new(2016, rand(1..12), rand(1..28))
+        tournament.end_date = tournament.start + 7.days
+        tournament.game = "dota2"
+        tournament.status = true
+        tournament.save
+        
+    end
+end
 
-# Tournament.transaction do
-#     Tournament.all.each do |tournament|
-#         tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
-#     end
-# end
+tournament1 = Tournament.new(name: "ROG MASTERS 2017: APAC Qualifier - Singapore", description: "ROG MASTERS 2017 APAC Qualifier Singapore", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16056-wellplay-invitational-9/4773-main-event/16058-main-event/bracket", itemdef: rand(1800..2000), start: "20170829",
+end_date: "20170911", game: "dota2")
 
-# Tournament.find_by(name: "Prodota Cup #10 SEA").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Prodota+Cup.jpeg")
-# Tournament.find_by(name: "King’s Cup: America").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/King's+Cup.jpeg")
-# Tournament.find_by(name: "ROG MASTERS 2017: APAC Qualifier - Singapore").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Rog+Masters.jpeg")
-# Tournament.find_by(name: "The Frankfurt Major 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Frankfurt+Major+Banner.png")
-# Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
-# Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
-# Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
-# Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+tournament2 = Tournament.new(name: "King’s Cup: America", description: "King's Cup: America", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16290-king-s-cup-america/4848-playoffs/16292-playoffs/bracket", itemdef: rand(1800..2000), start: "20170906",
+end_date: "20170920", game: "dota2")
 
+tournament3 = Tournament.new(name: "Prodota Cup #10 SEA", description: "Prodota Cup #10 SEA", tournament_url: "http://www.gosugamers.net/dota2/tournaments/16241-prodota-cup-10-sea/4833-playoffs/16244-playoffs/bracket", itemdef: rand(1800..2000), start: "20170908",
+end_date: "20171016", game: "dota2")
+tournament1.save
+tournament2.save
+tournament3.save
+
+Tournament.transaction do
+    Tournament.all.each do |tournament|
+        tournament.update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/no+image.png")
+    end
+end
+
+Tournament.find_by(name: "Prodota Cup #10 SEA").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Prodota+Cup.jpeg")
+Tournament.find_by(name: "King’s Cup: America").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/King's+Cup.jpeg")
+Tournament.find_by(name: "ROG MASTERS 2017: APAC Qualifier - Singapore").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Rog+Masters.jpeg")
+Tournament.find_by(name: "The Frankfurt Major 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Frankfurt+Major+Banner.png")
+Tournament.find_by(name: "Meister Series League").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Meister+Series+League.png")
+Tournament.find_by(name: "Gamicon 2015").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Gamicon+2015.jpg")
+Tournament.find_by(name: "Polish DOTA 2 League  Season 2").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Polish+Dota+2+League.png")
+Tournament.find_by(name: "Korean Elite League  January").update(image: "https://s3-ap-southeast-1.amazonaws.com/elabs-next/Tournaments/Korean+Elite+League+January.png")
+
+puts "Tournaments seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+# ~~~~~~ SEED HAPPENINGS HERE ~~~~~~
+
+# COMMENT/UNCOMMENT AFTER ME
+
+# puts "Seeding Happenings..."
 # Happening.all.destroy_all
 # # seed events data, no dependency
 # max_counter = 20
@@ -134,32 +166,59 @@ Hero.destroy_all
 #     happening.save
 # end
 
+# puts "Happenings seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~~
+
+
+
+
 
 # ~~~~~~ SEED HEROES HERE ~~~~~~
-heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
-Hero.transaction do
-    heroes_collection.each do |item|
-        counter =0
-        hero = Hero.new
-        hero.api_id = item["id"]
-        hero.api_name = item["localized_name"]
-        hero.api_npc_name = item["name"].match(/npc_dota_hero_(\w+)/)[1]
-        hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
-        CSV.foreach(hero_file) do |row|
-            counter+=1
-            if hero.api_name == row[0]
-                next if counter == 1
-                hero.name = row[0]
-                hero.win_rate = row[1]
-                hero.picked = row[2]
-            end
-        end
-        hero.save
-    end
-end
+
+
+# COMMENT/UNCOMMENT AFTER ME
+
+# puts "Seeding Heroes..."
+# heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
+# Hero.transaction do
+#     heroes_collection.each do |item|
+#         counter =0
+#         hero = Hero.new
+#         hero.api_id = item["id"]
+#         hero.api_name = item["localized_name"]
+#         hero.api_npc_name = item["name"].match(/npc_dota_hero_(\w+)/)[1]
+#         hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
+#         CSV.foreach(hero_file) do |row|
+#             counter+=1
+#             if hero.api_name == row[0]
+#                 next if counter == 1
+#                 hero.name = row[0]
+#                 hero.win_rate = row[1]
+#                 hero.picked = row[2]
+#             end
+#         end
+#         hero.save
+#     end
+# end
+
+# puts "Heroes seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~END~~~~~~~~~~~~~~~
+
+
+
 
 
 # ~~~ SEED TEAMS HERE~~~
+
+# COMMENT/UNCOMMENT AFTER ME
+
+# puts "Seeding Teams..."
 # @teams = JSON.parse open("https://api.opendota.com/api/teams").read
 # @pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 # @user = User.new
@@ -200,18 +259,39 @@ end
 #     end
 # end
 
+# puts "Teams seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~END~~~~~~~~~~~~~~~
+
+
+
 
 
 # ~~~~~~SEED ITEMS HERE~~~~~~
-# items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
-# Item.transaction do
-#     items["result"]["items"].each do |data|
-#         item = Item.new
-#         item.api_id = data["id"]
-#         item.api_name = data["name"].match(/item_(\w+)/)[1]
-#         item.save
-#     end
-# end
+
+# COMMENT/UNCOMMENT AFTER ME
+
+puts "Seeding Items..."
+items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
+Item.transaction do
+    items["result"]["items"].each do |data|
+        item = Item.new
+        item.api_id = data["id"]
+        item.api_name = data["name"].match(/item_(\w+)/)[1]
+        item.save
+    end
+end
+
+puts "Items seed complete."
+
+# COMMENT/UNCOMMENT BEFORE ME
+
+# ~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~
+
+
+
 
 
 

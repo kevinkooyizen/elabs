@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
     get '/teams/:id/enquiries' => 'enquiries#enquiries', as: :enquiries
     
+    get '/users/:id/enquiries' => 'enquiries#teams_enquiries', as: :teams_enquiries
+
     resources :sessions
 
     resources :users
