@@ -10,7 +10,8 @@ require 'open-uri'
 require 'csv'
 start_time = Time.now
 # this is to retain yizen, and kent user, player and team
-# Hero.destroy_all
+Item.destroy_all
+Hero.destroy_all
 # Player.destroy_all
 # Team.destroy_all
 # User.destroy_all
@@ -135,27 +136,27 @@ start_time = Time.now
 
 
 # ~~~~~~ SEED HEROES HERE ~~~~~~
-# heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
-# Hero.transaction do
-#     heroes_collection.each do |item|
-#         counter =0
-#         hero = Hero.new
-#         hero.api_id = item["id"]
-#         hero.api_name = item["localized_name"]
-#         hero.api_npc_name = item["name"].match(/npc_dota_hero_(\w+)/)[1]
-#         hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
-#         CSV.foreach(hero_file) do |row|
-#             counter+=1
-#             if hero.api_name == row[0]
-#                 next if counter == 1
-#                 hero.name = row[0]
-#                 hero.win_rate = row[1]
-#                 hero.picked = row[2]
-#             end
-#         end
-#         hero.save
-#     end
-# end
+heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
+Hero.transaction do
+    heroes_collection.each do |item|
+        counter =0
+        hero = Hero.new
+        hero.api_id = item["id"]
+        hero.api_name = item["localized_name"]
+        hero.api_npc_name = item["name"].match(/npc_dota_hero_(\w+)/)[1]
+        hero_file =File.join(File.dirname(__FILE__), 'hero_stats.csv')
+        CSV.foreach(hero_file) do |row|
+            counter+=1
+            if hero.api_name == row[0]
+                next if counter == 1
+                hero.name = row[0]
+                hero.win_rate = row[1]
+                hero.picked = row[2]
+            end
+        end
+        hero.save
+    end
+end
 
 
 # ~~~ SEED TEAMS HERE~~~
@@ -202,15 +203,15 @@ start_time = Time.now
 
 
 # ~~~~~~SEED ITEMS HERE~~~~~~
-items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
-Item.transaction do
-    items["result"]["items"].each do |data|
-        item = Item.new
-        item.api_id = data["id"]
-        item.api_name = data["name"].match(/item_(\w+)/)[1]
-        item.save
-    end
-end
+# items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
+# Item.transaction do
+#     items["result"]["items"].each do |data|
+#         item = Item.new
+#         item.api_id = data["id"]
+#         item.api_name = data["name"].match(/item_(\w+)/)[1]
+#         item.save
+#     end
+# end
 
 
 
