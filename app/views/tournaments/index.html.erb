@@ -34,8 +34,7 @@
     <% end %>
   </div>
 
-
-        <!-- for more attribute, please refer to schema -->
+  <div class="tournaments-index">
     <div class="site-wrapper">
         <% @tournaments.each do |tournament|  %>
         <div class= "inline-site-wrapper" >
@@ -47,8 +46,11 @@
             </div>
         </div>
         <% end %>
-        <%= paginate @tournaments %>
         <br>
         <br>
     </div>
+  </div>
+  <div class="pagination">
+    <%= paginate @tournaments, window: 2 %>
+  </div>
 </div>
