@@ -49,6 +49,7 @@ class HeroApi
   end
 
   def calculate_hero_kda
+    count = 0
     hero_matches.each_with_index do |match, index|
       @kills += match["kills"] 
       @deaths += match["deaths"] 
@@ -69,17 +70,21 @@ class HeroApi
             data["account_id"] == @uid.to_i
           end
 
-            
-          match["gold_per_min"] = data["gold_per_min"]
-          match["xp_per_min"] = data["xp_per_min"]
+          if !data.nil?
+            match["gold_per_min"] = data["gold_per_min"]
+            match["xp_per_min"] = data["xp_per_min"]
 
-          match["player_match_items"] = [data["item_0"],data["item_1"],data["item_2"],data["item_3"],data["item_4"],data["item_5"]].reject { |x| x == 0 }.map do |item_id|
-            Item.find_by(api_id: item_id).api_name
+            match["player_match_items"] = [data["item_0"],data["item_1"],data["item_2"],data["item_3"],data["item_4"],data["item_5"]].reject { |x| x == 0 }.map do |item_id|
+              Item.find_by(api_id: item_id).api_name
+            end
+          else
+            count -= 1
           end
         end
         # @heroes_avg_gpm += data["gold_per_min"]
         # @heroes_avg_xpm += data["xp_per_min"]
-      
+      count += 1
+      break if count == 5
     end
     # @heroes_avg_gpm = @heroes_avg_gpm/(hero_matches.count)
     # @heroes_avg_xpm = @heroes_avg_xpm/(hero_matches.count)    

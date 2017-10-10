@@ -42,9 +42,12 @@
                     </p>
                 </a>
                 <img class="player-avatar" src="<%= player.avatar %>" alt="">
-                <p><%= player.real_name %></p>
                 <p><%= player.get_player_games_played(player.steam_id).to_s + ' Games played' %></p>
-                <p><%= player.winrate.to_i.to_s + '% Winrate' %></p>
+                <% if player.mmr != 0 %>
+                    <p><%= player.mmr.to_s + 'MMR' %></p>
+                <% else %>
+                    <p>Currently inactive.</p>
+                <% end %>
             </div>
         <% end %>
     </div>
