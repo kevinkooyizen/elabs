@@ -1,7 +1,7 @@
 require 'open-uri'
 
 class HeroApi
-  attr_reader :hero_id, :hero_name, :games, :win, :kills, :deaths, :assists, :heroes_gpm, :heroes_xpm, :heroes_items, :heroes_avg_gpm, :heroes_avg_xpm
+  attr_reader :hero_id, :hero_name, :games, :win, :kills, :deaths, :assists, :heroes_gpm, :heroes_xpm, :heroes_items, :heroes_avg_gpm, :heroes_avg_xpm, :count, :working
   def initialize(uid, hash, matches_load_limit = 5)
     @uid = uid
     
@@ -18,6 +18,8 @@ class HeroApi
     @heroes_items = []
     @heroes_avg_gpm = 0
     @heroes_avg_xpm = 0
+    @count = 0
+    @working = []
     
     calculate_hero_kda
   end
@@ -49,7 +51,6 @@ class HeroApi
   end
 
   def calculate_hero_kda
-    count = 0
     hero_matches.each_with_index do |match, index|
       @kills += match["kills"] 
       @deaths += match["deaths"] 
@@ -77,14 +78,15 @@ class HeroApi
             match["player_match_items"] = [data["item_0"],data["item_1"],data["item_2"],data["item_3"],data["item_4"],data["item_5"]].reject { |x| x == 0 }.map do |item_id|
               Item.find_by(api_id: item_id).api_name
             end
+            @working << index
           else
-            count -= 1
+            @count -= 1
           end
         end
         # @heroes_avg_gpm += data["gold_per_min"]
         # @heroes_avg_xpm += data["xp_per_min"]
-      count += 1
-      break if count == 5
+      @count += 1
+      break if @count == 5
     end
     # @heroes_avg_gpm = @heroes_avg_gpm/(hero_matches.count)
     # @heroes_avg_xpm = @heroes_avg_xpm/(hero_matches.count)    
