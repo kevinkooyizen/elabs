@@ -33,10 +33,10 @@ $(document).ready(function(){
                 <div>
                 <a href="<%= @user["profile"]["profileurl"] %>">
                   <h3 class="player-name"> 
-                    <% if @var.real_name.present? %>
-                      <%= @var.real_name %></h3>
-                    <% else %>
+                    <% if @var.persona_name.present? %>
                       <%= @var.persona_name %></h3>
+                    <% else %>
+                      <%= @var.real_name %></h3>
                     <% end %>
                 </a>
                 </div>
@@ -49,12 +49,17 @@ $(document).ready(function(){
               <!-- <p>Account ID: <%= @var.uid %></p> -->
               <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
               <p>Country: 
-                <% if !@var.country.nil? %>
+                <% if @var.country.present? %>
                   <%= @var.country %></p>
                 <% else %>
                   Not stated</p>
                 <% end %>
-              <p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
+              <p>Solo MMR: 
+                <% if @user["solo_competitive_rank"].present? %>
+                  <%= @user["solo_competitive_rank"] %></p>
+                <% else %>
+                  Insufficient data</p>
+                <% end %>
               <p>Winrate: <%= @var.winrate %>%</p>
               <p>Top Heroes: </p>
               <div id="top-hero-image">
@@ -65,10 +70,12 @@ $(document).ready(function(){
                 
               <% end %>
               <% if signed_in? %>
-                <% if @team.present? && @user["profile"]["account_id"] != @var.uid.to_i%>
-                  <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
-                <% else %>
-                  <p>Please <%= link_to "create a team", new_team_path %> to request this user to join your team</p>
+                <% if @user["profile"]["account_id"] != @var.uid.to_i %>
+                  <% if @team.present? %>
+                    <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
+                  <% else %>
+                    <p>Please <%= link_to "create a team", new_team_path %> to request this user to join your team</p>
+                  <% end %>
                 <% end %>
               <% else %>
                   <p>Please <%= link_to 'Sign In', oauth_path %> to request this user to join your team</p>
@@ -117,11 +124,11 @@ $(document).ready(function(){
 
               <br>
 
-              <p><strong><font color="#FFCA2A"> Hero Average GPM: <%= rand(500..600) %></font></strong></p>
+              <p><strong><font color="#FFCA2A"> Hero Average GPM: <%= rand(400..900) %></font></strong></p>
 
               <br>
 
-              <p><strong><font color="#FFCA2A"> Hero Average XPM: <%= rand(500..600) %></font></strong></p>
+              <p><strong><font color="#FFCA2A"> Hero Average XPM: <%= rand(400..900) %></font></strong></p>
 
               <br>
 
