@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     
     get '/users/:id/enquiries' => 'enquiries#teams_enquiries', as: :teams_enquiries
 
+    get '/users/:id/player' => 'users#become_player', as: :become_player
+
     resources :sessions
 
     resources :users

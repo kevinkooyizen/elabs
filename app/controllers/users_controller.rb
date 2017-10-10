@@ -40,8 +40,6 @@ class UsersController < ApplicationController
         end
     end
 
-
-
     def show
         user = User.find(params[:id])
 
@@ -63,6 +61,14 @@ class UsersController < ApplicationController
             end
         end
         @heroes = @var.top_heroes[0..2].map {|x| HeroApi.new(@var.uid, x)}
+    end
+
+    def become_player
+        user = User.find(params[:id])
+        byebug
+        user.update(player: true)
+
+        render 'show'
     end
 
     private
