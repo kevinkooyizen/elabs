@@ -55,7 +55,7 @@ class Team < ApplicationRecord
 
     # manual association to players, 1 team has many players
     def players
-        Players.where('team_id = ?', self.id)
+        Player.where('team_id = ?', self.id)
     end
 
     # get the players of this team
