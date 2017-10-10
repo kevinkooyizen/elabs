@@ -1,3 +1,4 @@
+require 'descriptive_statistics'
 class Team < ApplicationRecord
     include RankingExtension::CosineDistance
 
@@ -46,9 +47,8 @@ class Team < ApplicationRecord
     end
 
     # get the players of this team
-    def get_roster_players
-        players_id = self.roster.map {|id| id.to_i}
-        Player.where('steam_id in (?)', players_id).extend(DescriptiveStatistics)
+    def get_team_players
+        Player.where('steam_id in (?)', self.members.pluck(:account_id)).extend(DescriptiveStatistics)
     end
 
     # get the all players for all the teams
@@ -62,7 +62,7 @@ class Team < ApplicationRecord
 
     # compute team mmr mean from the roster players
     def team_mmr_mean(nil_as_zero = true)
-        mean = get_roster_players.mean(&:mmr)
+        mean = self.get_team_players.mean(&:mmr)
 
         if nil_as_zero == true
             if !mean.present?
@@ -75,7 +75,7 @@ class Team < ApplicationRecord
 
     # compute team mmr median from the roster players
     def team_mmr_median(nil_as_zero = true)
-        median = get_roster_players.median(&:mmr)
+        median = self.get_team_players.median(&:mmr)
 
         if nil_as_zero == true
             if !mean.present?

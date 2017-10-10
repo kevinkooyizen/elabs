@@ -1,3 +1,4 @@
+require 'descriptive_statistics'
 class Player < ApplicationRecord
     include RankingExtension::CosineDistance
     include ApiExtension
