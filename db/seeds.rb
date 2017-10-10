@@ -7,21 +7,97 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'open-uri'
 require 'csv'
-start_time = Time.now
-# this is to retain yizen, and kent user, player and team
-# Item.destroy_all
-# Hero.destroy_all
-# Tournament.destroy_all
-# Enquiry.destroy_all
-Player.destroy_all
-Team.destroy_all
-# User.destroy_all
-# Happening.all.destroy_all
+require 'rest-client'
 
+start_time = Time.now
+
+puts "Initializing seed file..."
+
+## ====== ITEMS ======
+
+# puts "Destroying items..."
+# # Item.destroy_all
+
+## ======= END =======
+
+
+
+## ====== HEROES ======
+
+# puts "Destroying heroes..."
+# # Hero.destroy_all
+
+## ======= END =======
+
+
+
+## ====== TOURNAMENTS ======
+
+# puts "Destroying tournaments..."
+# # Tournament.destroy_all
+
+## ======= END =======
+
+
+
+## ====== ENQUIRIES ======
+
+# puts "Destroying enquiries..."
+# # Enquiry.destroy_all
+
+## ======= END =======
+
+
+
+## ====== MEMBERS ======
+
+puts "Destroying members..."
+Member.destroy_all
+
+## ======= END =======
+
+
+
+## ====== PLAYERS ======
+puts "Destroying players..."
+Player.destroy_all
+## ======= END =======
+
+
+
+## ====== TEAMS ======
+puts "Destroying teams..."
+Team.destroy_all
+## ======= END =======
+
+
+
+## ====== USERS ======
+puts "Destroying users..."
+User.destroy_all
+## ======= END =======
+
+
+
+## ====== HAPPENINGS ======
+# puts "Destroying happenings..."
+# # Happening.all.destroy_all
+## ======= END =======
+
+
+
+## ====== FOR ONLY MAINTAINING FIRST USER ======
+# puts "Destroying users except for first user..."
 # Destroy all except first
 # User.all[1..-1].each do |item|
-#     byebug
+#     item.destroy
 # end
+## ==================== END ===================
+
+
+puts "All data destroyed. Seeding files now..."
+
+
 
 # ~~~~~~ SEED PLAYERS HERE ~~~~~~
 
@@ -231,7 +307,9 @@ puts "Seeding Teams..."
 @user.password = 'password'
 @user.save!
 
-@teams[0..29].each_with_index do |select, index|
+# Place number of teams to seed here
+teams_to_seed = 30
+@teams[0..teams_to_seed-1].each_with_index do |select, index|
 
     Team.transaction do
         team = Team.new
@@ -242,8 +320,16 @@ puts "Seeding Teams..."
         else
             team.rating = 0
         end
+        result = 0
+        begin
+            RestClient.get "https://api.steampowered.com/ISteamRemoteStorage/GetUGCFileDetails/v1/?key=#{ENV['STEAM_KEY']}&ugcid=#{Dota.api.teams(after: @teams[index]["team_id"]).first.logo_id}&appid=570"
+        rescue RestClient::ExceptionWithResponse => result
+            result.response
+        end
         if Dota.api.teams(after: @teams[index]["team_id"]).present?
-            team.logo = (JSON.parse open("https://api.steampowered.com/ISteamRemoteStorage/GetUGCFileDetails/v1/?key=#{ENV['STEAM_KEY']}&ugcid=#{Dota.api.teams(after: @teams[index]["team_id"]).first.logo_id}&appid=570").read)["data"]["url"]
+            if result == 0
+                team.logo = (JSON.parse open("https://api.steampowered.com/ISteamRemoteStorage/GetUGCFileDetails/v1/?key=#{ENV['STEAM_KEY']}&ugcid=#{Dota.api.teams(after: @teams[index]["team_id"]).first.logo_id}&appid=570").read)["data"]["url"]
+            end
         end
         team.status = true
         team.user_id = User.first.id
@@ -293,13 +379,20 @@ puts "Seeding Teams..."
                 member.save!
 
                 puts "Member saved!"
+                puts ""
 
                 # this stores 32 bit player steam profile id into roster
             end
         end
 
         time_taken = Time.now - start_time
-        puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
+        minutes = (time_taken/60)
+        seconds = time_taken - (minutes.to_i * 60)
+        if minutes >= 1
+            puts "Time since seed started: " + minutes.to_i.to_s + " min " + seconds.round(2).to_i.to_s + " seconds"
+        else
+            puts "Time since seed started: " + time_taken.round(2).to_f.to_s + " seconds "
+        end
         puts "Teams seeded: " + Team.all.count.to_s
         puts ""
     end
@@ -343,4 +436,9 @@ puts "Teams seed complete."
 
 total_time = Time.now - start_time
 puts "Seed complete"
-puts "Total time taken for seed: " + total_time.round(2).to_s + " seconds"
+
+if minutes >= 1
+    puts "Total time taken for seed: " + minutes.to_i.to_s + " min " + seconds.round(2).to_i.to_s + " seconds"
+else
+    puts "Total time taken for seed: " + time_taken.round(2).to_f.to_s + " seconds "
+end
