@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010111453) do
+ActiveRecord::Schema.define(version: 20171010113247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -184,8 +184,8 @@ ActiveRecord::Schema.define(version: 20171010111453) do
     t.string "uid"
     t.string "state"
     t.string "persona_name"
-    t.boolean "player", default: false
-    t.string "mmr"
+    t.boolean "player_status", default: false
+    t.integer "mmr", default: 0
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
