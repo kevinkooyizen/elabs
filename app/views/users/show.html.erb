@@ -38,20 +38,28 @@ $(document).ready(function(){
               <p>Team if present?</p>
               <p>Account ID: <%= @var.uid %></p>
               <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
-              <p>Country: <%= @var.country %></p>
+              <p>Country: 
+                <% if !@var.country.nil? %>
+                  <%= @var.country %></p>
+                <% else %>
+                  Not stated</p>
+                <% end %>
               <p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
               <p>Winrate: <%= @var.winrate %>%</p>
               <p>Top Heroes: </p>
-            
-              <% if @team.user_id != current_user.id && !@team.nil? %>
-                <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
-              <% end %>
               <div id="top-hero-image">
               <% @var.top_heroes_npc_names[0..2].each_with_index do |name, index| %>
                 
                   <a class="xxx" id="<%= index %>" href="#"><img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_lg.png" />
                   </a>
                 
+              <% end %>
+              <% if signed_in? %>
+                <% if @team.user_id != current_user.id && !@team.nil? %>
+                  <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
+                <% end %>
+              <% else %>
+                  <p>Please <%= link_to 'Sign In', oauth_path %> to request this user to join your team.</p>
               <% end %>
                 </div>
 
