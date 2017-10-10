@@ -49,6 +49,9 @@ gem 'dota', '~> 0.0.21'
 # pagination
 gem 'kaminari'
 
+# rest client for apis
+gem 'rest-client'
+
 # basic statistics computation
 gem 'descriptive_statistics', '~> 2.4.0', :require => 'descriptive_statistics/safe'
 

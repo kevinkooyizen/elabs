@@ -48,7 +48,9 @@
             <% else %>
               <li><%= link_to 'STEAM SIGN-IN', oauth_path %></li>
             <% end %>
+            <% if signed_in? %>
             <li> | <%= link_to "#{current_user.persona_name}", user_path(current_user) %></li>
+            <% end %>
           </ul>
         </div>
       </div>
