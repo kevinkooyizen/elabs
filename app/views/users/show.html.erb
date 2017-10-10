@@ -65,11 +65,13 @@ $(document).ready(function(){
                 
               <% end %>
               <% if signed_in? %>
-                <% if @team.user_id != current_user.id && !@team.nil? %>
+                <% if @team.present? && @user["profile"]["account_id"] != @var.uid.to_i%>
                   <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
+                <% else %>
+                  <p>Please <%= link_to "create a team", new_team_path %> to request this user to join your team</p>
                 <% end %>
               <% else %>
-                  <p>Please <%= link_to 'Sign In', oauth_path %> to request this user to join your team.</p>
+                  <p>Please <%= link_to 'Sign In', oauth_path %> to request this user to join your team</p>
               <% end %>
                 </div>
 
