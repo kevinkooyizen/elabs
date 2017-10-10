@@ -6,8 +6,10 @@ $(document).ready(function(){
     //     event.preventDefault();
     // });
     var currentHero = $("#hero0")
+    currentHero.show()
 
     $("a.xxx").click(function(event){
+      event.preventDefault()
       var heroId = event.currentTarget.id 
       currentHero.hide()
       var newCurrentHero = $("#hero" + heroId)
@@ -16,7 +18,6 @@ $(document).ready(function(){
     })
 })
 </script>
-<div class="statcontainer">
 <div class="player-profile-info">
   <div class="player-info-box">
     <div  class="player-info" id="profile">
@@ -31,26 +32,44 @@ $(document).ready(function(){
                 </div>  
                 <div>
                 <a href="<%= @user["profile"]["profileurl"] %>">
-                  <h3 class="player-name"> <%= @var.persona_name %></h3>
+                  <h3 class="player-name"> 
+                    <% if @var.real_name.present? %>
+                      <%= @var.real_name %></h3>
+                    <% else %>
+                      <%= @var.persona_name %></h3>
+                    <% end %>
                 </a>
                 </div>
-              <p>Team if present?</p>
-              <p>Account ID: <%= @var.uid %></p>
+              <p>Team:
+              <% if Member.find_by(account_id: @var.uid).present? %>
+                <%= link_to "#{Team.find(Member.find_by(account_id: @var.uid).team_id).name}", team_path(Team.find(Member.find_by(account_id: @var.uid).team_id)) %></p>
+              <% else %>
+                No team.</p>
+              <% end %>
+              <!-- <p>Account ID: <%= @var.uid %></p> -->
               <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
-              <p>Country: <%= @var.country %></p>
+              <p>Country: 
+                <% if !@var.country.nil? %>
+                  <%= @var.country %></p>
+                <% else %>
+                  Not stated</p>
+                <% end %>
               <p>Solo MMR: <%= @user["solo_competitive_rank"] %></p>
               <p>Winrate: <%= @var.winrate %>%</p>
               <p>Top Heroes: </p>
-            
-              <% if @team.user_id != current_user.id && !@team.nil? %>
-                <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
-              <% end %>
               <div id="top-hero-image">
               <% @var.top_heroes_npc_names[0..2].each_with_index do |name, index| %>
                 
                   <a class="xxx" id="<%= index %>" href="#"><img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_lg.png" />
                   </a>
                 
+              <% end %>
+              <% if signed_in? %>
+                <% if @team.user_id != current_user.id && !@team.nil? %>
+                  <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
+                <% end %>
+              <% else %>
+                  <p>Please <%= link_to 'Sign In', oauth_path %> to request this user to join your team.</p>
               <% end %>
                 </div>
 
@@ -93,6 +112,8 @@ $(document).ready(function(){
               <br>
 
               <p><strong><font color="#FFCA2A"> Hero Average K.D.A: <%= hero.kills_rate %>/<%= hero.deaths_rate %>/<%= hero.assists_rate %> </font></strong></p>
+
+              <br>
 
               <p><strong><font color="#FFCA2A"> Hero Average GPM: <%= rand(500..600) %></font></strong></p>
 
@@ -161,7 +182,7 @@ $(document).ready(function(){
   <% end %>
 
 <% end %>
-</div>
+
 
 <span class="buttonright", id="create-team"> <%= link_to "Create Team", new_team_path %> </span>
 

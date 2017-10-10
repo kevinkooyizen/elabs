@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009160334) do
+ActiveRecord::Schema.define(version: 20171010064603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "authentications", force: :cascade do |t|
-    t.string "uid"
-    t.string "token"
-    t.string "provider"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_authentications_on_user_id"
-  end
 
   create_table "enquiries", force: :cascade do |t|
     t.bigint "user_id"
@@ -34,15 +24,6 @@ ActiveRecord::Schema.define(version: 20171009160334) do
     t.string "status"
     t.index ["team_id"], name: "index_enquiries_on_team_id"
     t.index ["user_id"], name: "index_enquiries_on_user_id"
-  end
-
-  create_table "events", force: :cascade do |t|
-    t.string "name"
-    t.datetime "time"
-    t.string "location"
-    t.text "detail"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "games", force: :cascade do |t|
@@ -76,6 +57,7 @@ ActiveRecord::Schema.define(version: 20171009160334) do
     t.string "api_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["api_id"], name: "index_items_on_api_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -206,7 +188,6 @@ ActiveRecord::Schema.define(version: 20171009160334) do
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
 
-  add_foreign_key "authentications", "users"
   add_foreign_key "enquiries", "teams"
   add_foreign_key "enquiries", "users"
   add_foreign_key "members", "teams"

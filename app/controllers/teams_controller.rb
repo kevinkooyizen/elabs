@@ -34,7 +34,7 @@ class TeamsController < ApplicationController
 		# else
 		# 	@team_winrate = nil
 		# end
-		@team_players = @team.get_roster_players
+		@team_players = @team.get_team_players
 	end
 
 	def new

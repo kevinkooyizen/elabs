@@ -72,9 +72,8 @@ class HeroApi
           match["gold_per_min"] = data["gold_per_min"]
           match["xp_per_min"] = data["xp_per_min"]
 
-          match["player_match_items"] = [data["item_0"],data["item_1"],data["item_2"],data["item_3"],data["item_4"],data["item_5"]].reject { |x| x == 0 }.map do |item_id|
-            Item.find_by(api_id: item_id).api_name
-          end
+          item_ids = [data["item_0"],data["item_1"],data["item_2"],data["item_3"],data["item_4"],data["item_5"]].reject { |x| x == 0 }
+          match["player_match_items"] = Item.where(api_id: item_ids).pluck(:api_name)  
         end
         # @heroes_avg_gpm += data["gold_per_min"]
         # @heroes_avg_xpm += data["xp_per_min"]

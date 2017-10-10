@@ -6,15 +6,33 @@ $yellow: #FFCA2A;
 // HEADER
 
 .header {
-  padding: 50px;
   text-align: center;
   background-image: url('https://web2.hirez.com/paladins//wp-content/uploads/2017/03/DH_PR_PaldinsGame_Header.png');
   background-position: center;
   background-size: cover;
   font-size: 2em;
-  height: 300px;
+  height: 500px;
   position: relative;
   align-items: center;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.header-title {
+  padding: 157px;
+}
+
+.short-links {
+  background-color: $white;
+  color: $dark-grey;
+  padding: 10px;
+  margin: 20px;
+  width: auto;
+  display: inline;
+  font-size: 22px;
+  font-weight: 400;
 }
 
 // BODY
