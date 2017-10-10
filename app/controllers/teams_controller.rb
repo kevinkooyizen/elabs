@@ -1,14 +1,14 @@
 class TeamsController < ApplicationController
 	def index
 		@teams = Team.order(rating: :desc).page params[:page]
-    end
+  end
 
-    def search
-        @params = search_params.to_h
-        @teams = Team.team_search(name: search_params[:name], country: search_params[:country]).order('name').page params[:page]
+  def search
+    @params = search_params.to_h
+    @teams = Team.team_search(name: search_params[:name], country: search_params[:country]).order('name').page params[:page]
 
-        render 'index'
-    end
+    render 'index'
+  end
 
 	def show
 		@team = Team.find(params[:id])
@@ -77,30 +77,26 @@ class TeamsController < ApplicationController
 		end
     end
 
-    def players_recommendation
-        if !signed_in?
-            flash[:notice] = 'Please sign in to perform to this action'
-            return redirect_to teams_path
-        end
+  def players_recommendation
+      if !signed_in?
+          flash[:notice] = 'Please sign in to perform to this action'
+          return redirect_to teams_path
+      end
 
-        team = Team.find(params[:id])
+      team = Team.find(params[:id])
 
-        if !team.present?
-            flash[:notice] = 'Please select one of your team to get the players recommendation. Players are sorted by MMR for now.'
-            # this is a activerecord::relation object
-            @players = Player.all.order('mmr desc')
-        else
-            # this is an array of activerecord, use the [0...N] method to get the topN players by similarity
-            @players = team.players_sorted_by_similarity
-        end
+      if !team.present?
+          flash[:notice] = 'Please select one of your team to get the players recommendation. Players are sorted by MMR for now.'
+          # this is a activerecord::relation object
+          @players = Player.all.order('mmr desc')
+      else
+          # this is an array of activerecord, use the [0...N] method to get the topN players by similarity
+          @players = team.players_sorted_by_similarity
+      end
 
-    #     choose a view file to render the players
+  #     choose a view file to render the players
 
-    end
-
-	def join
-		byebug
-	end
+  end
 
  	private
 
@@ -108,7 +104,7 @@ class TeamsController < ApplicationController
  		params.require(:team).permit(:name, :sponsor, :coach, :manager, :country, :status, :dota2_team_id, :user_id)
     end
 
-    def search_params
-        params.require(:teams_search).permit(:name, :country)
-    end
+  def search_params
+      params.require(:teams_search).permit(:name, :country)
+  end
 end

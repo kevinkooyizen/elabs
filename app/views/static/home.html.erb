@@ -23,14 +23,16 @@
 
         <div class="player">
           <h6>Player of the week</h6>
-          <% if @user.player.present? %>
-            <ul>
-              <li>Avatar</li>
-              <li><%= @user.persona_name %></li>
-              <li><%= @user.player.winrate %></li>
-              <li><%= @user.teams.first.name %></li>
-              <li>Top game link</li>
-            </ul>
+          <% if @user.present? %>
+            <% if @user.player.present? %>
+              <ul>
+                <li>Avatar</li>
+                <li><%= @user.persona_name %></li>
+                <li><%= @user.player.winrate %></li>
+                <li><%= @user.teams.first.name %></li>
+                <li>Top game link</li>
+              </ul>
+            <% end %>
           <% end %>
         </div>
 
