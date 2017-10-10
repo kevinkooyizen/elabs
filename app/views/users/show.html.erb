@@ -32,11 +32,21 @@ $(document).ready(function(){
                 </div>  
                 <div>
                 <a href="<%= @user["profile"]["profileurl"] %>">
-                  <h3 class="player-name"> <%= @var.persona_name %></h3>
+                  <h3 class="player-name"> 
+                    <% if @var.real_name.present? %>
+                      <%= @var.real_name %></h3>
+                    <% else %>
+                      <%= @var.persona_name %></h3>
+                    <% end %>
                 </a>
                 </div>
-              <p>Team if present?</p>
-              <p>Account ID: <%= @var.uid %></p>
+              <p>Team:
+              <% if Member.find_by(account_id: @var.uid).present? %>
+                <%= link_to "#{Team.find(Member.find_by(account_id: @var.uid).team_id).name}", team_path(Team.find(Member.find_by(account_id: @var.uid).team_id)) %></p>
+              <% else %>
+                No team.</p>
+              <% end %>
+              <!-- <p>Account ID: <%= @var.uid %></p> -->
               <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
               <p>Country: 
                 <% if !@var.country.nil? %>
@@ -102,6 +112,8 @@ $(document).ready(function(){
               <br>
 
               <p><strong><font color="#FFCA2A"> Hero Average K.D.A: <%= hero.kills_rate %>/<%= hero.deaths_rate %>/<%= hero.assists_rate %> </font></strong></p>
+
+              <br>
 
               <p><strong><font color="#FFCA2A"> Hero Average GPM: <%= rand(500..600) %></font></strong></p>
 
