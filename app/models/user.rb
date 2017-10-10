@@ -34,6 +34,7 @@ class User < ApplicationRecord
         return user
     end
 
+
     # def self.find_by_uid(uid_64bit: nil)
     #     self.find_by uid: self.change_uid_to_32bit(uid_64bit)
     # end
