@@ -6,6 +6,7 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
   <body>
     <div class="opaque-box"></div>
@@ -19,13 +20,8 @@
 
       <div class="right-navbar">
         <div class="player-navbar">
-          <!-- <p>Username and avatar</p> -->
           <div class="user-info">
-            <% if @user.present? %>
-              <% if @user.player.present? %>
-                <p><%= @user.player.persona_name %></p>
-                <div class="avatar-img"><%= image_tag @user.player.avatar %></div>
-              <% end %>
+            <% if signed_in? %>
             <% end %>
           </div>
         </div>
@@ -42,6 +38,7 @@
             <% else %>
               <li><%= link_to 'STEAM SIGN-IN', oauth_path %></li>
             <% end %>
+            <li> | <%= link_to "#{current_user.persona_name}", user_path(current_user) %></li>
           </ul>
         </div>
       </div>
