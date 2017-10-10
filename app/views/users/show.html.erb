@@ -1,3 +1,22 @@
+<script>
+$(document).ready(function(){ 
+    // $("div.statcontainer").on("click", "a", function() {
+    //     $("div.player-hero-info").hide();
+    //     $("div" + $(this).attr("#")).show();
+    //     event.preventDefault();
+    // });
+    var currentHero = $("#hero0")
+
+    $("a.xxx").click(function(event){
+      var heroId = event.currentTarget.id 
+      currentHero.hide()
+      var newCurrentHero = $("#hero" + heroId)
+      newCurrentHero.show()
+      currentHero = newCurrentHero
+    })
+})
+</script>
+<div class="statcontainer">
 <div class="player-profile-info">
   <div class="player-info-box">
     <div  class="player-info" id="profile">
@@ -26,11 +45,15 @@
               <% if @team.user_id != current_user.id && !@team.nil? %>
                 <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
               <% end %>
+              <div id="top-hero-image">
               <% @var.top_heroes_npc_names[0..2].each_with_index do |name, index| %>
-                <div id="top-hero-image-<%= index+1 %>">
-                  <img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_lg.png" />
-                </div>
+                
+                  <a class="xxx" id="<%= index %>" href="#"><img src="http://cdn.dota2.com/apps/dota2/images/heroes/<%= name %>_lg.png" />
+                  </a>
+                
               <% end %>
+                </div>
+
             <% else %>
               <p>User does not have dota game history</p>
             <% end %>
@@ -47,7 +70,7 @@
 
   <% @var.top_heroes[0..2].each_with_index do |hero, index| %>
   <% hero = HeroApi.new(@var.uid, hero) %>
-  <div class="player-hero-info <%= "hidden" if index != 0 %>">
+  <div class="player-hero-info" id="hero<%= index %>">
     <div class="player-hero-box">
       <div class="player-hero">
         <h1 class="player-hero-header"> Top Hero Stats </h1>
@@ -138,6 +161,7 @@
   <% end %>
 
 <% end %>
+</div>
 
 <span class="buttonright", id="create-team"> <%= link_to "Create Team", new_team_path %> </span>
 
