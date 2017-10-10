@@ -12,13 +12,17 @@
 
       <div class="sidebar">
         <div class="team">
-          <h6>Team of the week</h6>
-          <% if @team.present? %>
-            <img src="<%= @team.logo %>" id="avatar">
-            <br>
-            <p><%= link_to "#{@team.name}", team_path(@team) %></p>
-            <p>Winrate: <%= @team.winrate %>%</p>
-          <% end %>
+          <h6>Team Of The Week</h6>
+            <div class="team-info">
+              <% if @team.present? %>
+                <img src="<%= @team.logo %>" id="avatar">
+                <br>
+                <br>
+              <br>
+              <p><%= link_to "#{@team.name}", team_path(@team) %></p>
+              <p>Winrate: <%= @team.winrate %>%</p>
+              <% end %>
+            </div>
         </div>
 
         <div class="player">
@@ -38,11 +42,10 @@
 
         <div class="ads">
           <h6>Advertisements</h6>
-          <ul>
-            <li>Name</li>
-            <li>Thumbnail</li>
-            <li>Ad detail text</li>
-          </ul>
+          <div class="ad">
+            <img src="https://s3-ap-southeast-1.amazonaws.com/elabs-next/streamr-logo.png" alt="">
+            <p>Streamr showcases random streams from YouTube to help new streamers gain exposure and new subscribers</p>
+          </div>
         </div>
 
         <!--testing block for oauth-->

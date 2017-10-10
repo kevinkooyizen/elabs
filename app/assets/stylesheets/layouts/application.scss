@@ -53,15 +53,21 @@ h1, h2, h3, h4 {
   background-image: url('https://s3-ap-southeast-1.amazonaws.com/elabs-next/navbar.png');
   height: 140px;
   border-bottom: solid $yellow 10px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: minmax(50px, auto);
+  // grid-column-gap: 5px;
+  // grid-row-gap: 10px;
+  grid-template-areas:
+    'left right';
 
   .left-navbar {
-    flex: 1;
+    grid-column-start: 1;
+    grid-row-start: 1;
     padding-top: 20px;
   }
 
   .right-navbar {
-    flex: 1;
     padding-top: 50px;
   }
 
@@ -74,7 +80,10 @@ h1, h2, h3, h4 {
   }
 
   .player-navbar {
+    grid-column-start: 2;
+    grid-row-start: 1;
     text-align: right;
+    margin-top: 40px;
   }
 
   .nav-links::before {
@@ -90,6 +99,8 @@ h1, h2, h3, h4 {
   }
 
   .nav-links {
+    grid-column-start: 2;
+    grid-row-start: 2;
     width: 57vw;
     float: right;
     text-align: right;
@@ -108,7 +119,13 @@ h1, h2, h3, h4 {
       display: inline-block;
       padding-left: 5px;
       padding-right: 5px;
-      color: $light-grey;
+      color: $white;
+      font-weight: 600;
+    }
+
+    a {
+      color: $white;
+      font-weight: 600;
     }
   }
 }
