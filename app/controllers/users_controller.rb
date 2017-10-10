@@ -65,9 +65,12 @@ class UsersController < ApplicationController
 
     def become_player
         user = User.find(params[:id])
-        byebug
-        user.update(player: true)
-
+        user.update(player_status: true)
+        @var = user
+        @user = ApiExtension::OpenDota.get_player_profile(uid: user.uid)
+        if @user["profile"]["last_login"].nil?
+            @user["profile"]["last_login"] = "2017-10-04T15:38:36.695Z"
+        end
         render 'show'
     end
 
