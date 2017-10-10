@@ -5,7 +5,10 @@ class TeamsController < ApplicationController
 
   def search
     @params = search_params.to_h
-    	@teams = Team.team_search(name: search_params[:name], country: search_params[:country], rating: search_params[:rating]).order('name').page params[:page]
+    	@teams = Team.team_search(name: search_params[:name], 
+    		country: search_params[:country], 
+    		min_rating: search_params[:min_rating], 
+    		max_rating: search_params[:max_rating]).order('name').page params[:page]
    
     render 'index'
   end
@@ -107,6 +110,6 @@ class TeamsController < ApplicationController
     end
 
 	def search_params
-	    params.require(:teams_search).permit(:name, :country, :rating)
+	    params.require(:teams_search).permit(:name, :country, :min_rating, :max_rating)
 	end
 end

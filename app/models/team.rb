@@ -16,8 +16,8 @@ class Team < ApplicationRecord
 
     has_many :members
     # combined search scope
-    def self.team_search(name: nil, country: nil, rating: nil)
-        team_name(name).country(country).rating(rating)
+    def self.team_search(name: nil, country: nil, min_rating: nil, max_rating: nil)
+        team_name(name).country(country).min_rating(min_rating.to_i).max_rating(max_rating.to_i)
     end
 
     # search scope
@@ -38,9 +38,17 @@ class Team < ApplicationRecord
         end
     end
 
-    def self.rating(rating)
+    def self.min_rating(rating)
         if rating.present?
             where('rating > ?', rating)
+        else
+            all
+        end
+    end
+
+    def self.max_rating(rating)
+        if rating.present?
+            where('rating < ?', rating)
         else
             all
         end
