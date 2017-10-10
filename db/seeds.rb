@@ -13,8 +13,8 @@ start_time = Time.now
 # Hero.destroy_all
 # Tournament.destroy_all
 # Enquiry.destroy_all
-# Player.destroy_all
-# Team.destroy_all
+Player.destroy_all
+Team.destroy_all
 # User.destroy_all
 # Happening.all.destroy_all
 
