@@ -44,7 +44,7 @@ $(document).ready(function(){
               <% if Member.find_by(account_id: @var.uid).present? %>
                 <%= link_to "#{Team.find(Member.find_by(account_id: @var.uid).team_id).name}", team_path(Team.find(Member.find_by(account_id: @var.uid).team_id)) %></p>
               <% else %>
-                No team.</p>
+                No team</p>
               <% end %>
               <!-- <p>Account ID: <%= @var.uid %></p> -->
               <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
