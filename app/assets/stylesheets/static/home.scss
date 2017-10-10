@@ -83,6 +83,10 @@ $yellow: #FFCA2A;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   margin: 5px;
+
+  .ad {
+    text-align: center;
+  }
 }
 
 .signin {
@@ -113,11 +117,14 @@ $yellow: #FFCA2A;
     display: inline-block;
     padding-right: 20px;
     padding-left: 20px;
+    padding-top: 20px;
     margin-right: 10px;
     text-align: center;
     align-items: center;
     justify-content: center;
-    background-color: $dark-grey;
+    // background-color: $dark-grey;
+    height: 200px;
+    width: auto;
 
   .tournament-name {
     font-size: 1em;
