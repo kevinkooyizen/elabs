@@ -17,8 +17,11 @@
           <%= f.label :rating, "Rating" %><br>
           <% @params[:rating] = @params.dig(:rating).nil? ? 500 : @params.dig(:rating) %>
           
-          &emsp;<%= range_field_tag 'teams_search[rating]',nil, {min: 500, max: 2000, step: 50, value: @params.dig(:rating)} %><br>
-          500&emsp;&emsp;&emsp;&emsp;&emsp;2000
+          <!-- <= range_field_tag 'teams_search[rating]', nil, {min: 500, max: 2000, step: 50, value: @params.dig(:rating), id: "evalSlider"} ><br>
+ -->
+          <div id="evalSlider"></div><br>
+          <%= f.number_field 'min_rating' %><br><br>
+          <%= f.number_field 'max_rating' %><br>
           <br>
           <%= f.submit 'Search', class: 'search-btn' %>
       <% end %>
@@ -55,7 +58,9 @@
   </div>
 
 </div>
-
 <div class="pagination">
   <%= paginate @teams, window: 2 %>
 </div>
+
+
+
