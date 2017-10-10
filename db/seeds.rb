@@ -19,9 +19,9 @@ start_time = Time.now
 # Happening.all.destroy_all
 
 # Destroy all except first
-User.all[1..-1].each do |item|
-    byebug
-end
+# User.all[1..-1].each do |item|
+#     byebug
+# end
 
 # ~~~~~~ SEED PLAYERS HERE ~~~~~~
 
@@ -231,14 +231,8 @@ puts "Seeding Teams..."
 @user.password = 'password'
 @user.save!
 
-<<<<<<< HEAD
 @teams[0..29].each_with_index do |select, index|
 
-=======
-@teams[0..30].each_with_index do |select, index|
-    puts "seeding team #{index}"
-    sleep 0.3
->>>>>>> d9172ecbfaf67241decf2af1bca3123f020e7b22
     Team.transaction do
         team = Team.new
         team.name = select["name"]
