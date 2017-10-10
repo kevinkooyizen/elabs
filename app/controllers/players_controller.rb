@@ -15,13 +15,16 @@ class PlayersController < ApplicationController
     end
 
     def index
-        if !signed_in?
-            @players = Player.all.order('mmr desc').page params[:page]
-        elsif current_user.occupation == 'player'
-        #     recommendation here
-        else
-            @players = Player.all.order('mmr desc').page params[:page]
-        end
+        # if !signed_in?
+        #     @players = Player.all.order('mmr desc').page params[:page]
+        # elsif current_user.occupation == 'player'
+        # #     recommendation here
+        # else
+        #     @players = Player.all.order('mmr desc').page params[:page]
+        # end
+
+        @players = Player.all.order('mmr desc').page params[:page]
+        
 
         return render 'index'
     end
