@@ -14,6 +14,12 @@
           <%= f.text_field :country, value: @params.dig(:country) %>
           <br>
           <br>
+          <%= f.label :rating, "Rating" %><br>
+          <% @params[:rating] = @params.dig(:rating).nil? ? 500 : @params.dig(:rating) %>
+          
+          &emsp;<%= range_field_tag 'teams_search[rating]',nil, {min: 500, max: 2000, step: 50, value: @params.dig(:rating)} %><br>
+          500&emsp;&emsp;&emsp;&emsp;&emsp;2000
+          <br>
           <%= f.submit 'Search', class: 'search-btn' %>
       <% end %>
     </div>
@@ -37,13 +43,9 @@
         </h6>
         <h6 class="team-roster">Roster: <br></h6>
         <!-- TEAM ROSTER -->
-        <% team.get_roster_players.each do |player| %>
-          <a href="<%= player_path(player) %>">
-              <% if player.real_name.present? %>
-                <%= player.real_name %> <br>
-              <% else %>
-                <%= player.persona_name %> <br>
-              <% end %>
+        <% team.members.each do |player| %>
+          <a href="<%= player_path(Player.find_by(steam_id: player.account_id)) %>">
+                <%= player.name %> <br>
           </a>
         <% end %>
         <hr>

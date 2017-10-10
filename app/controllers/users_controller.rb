@@ -59,11 +59,11 @@ class UsersController < ApplicationController
         @var.store
         @team = Team.find_by(user_id: User.find(params[:id]).id)
         if @team.nil?
-          if !Player.find_by(user_id: User.find(params[:id]).id).nil?
-            @team = Team.find(Player.find_by(user_id: User.find(params[:id]).id).team_id)
-          else
-            @team = Team.first
-          end
+            if !Player.find_by(user_id: User.find(params[:id]).id).nil?
+                @team = Team.find(Player.find_by(user_id: User.find(params[:id]).id).team_id)
+            else
+                @team = Team.first
+            end
         end
         @heroes = @var.top_heroes[0..2].map {|x| HeroApi.new(@var.uid, x)}
     end

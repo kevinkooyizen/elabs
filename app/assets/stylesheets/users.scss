@@ -37,7 +37,17 @@
   float: left;
   padding-left: 20px;
   padding-top: 20px;
+  display: none;
 }
+
+#hero0 {
+  display: block;
+}
+
+/*#hidden {
+  display: none;
+  overflow: hidden;
+}*/
 
 #top-hero-image-1 {
   float: left;
@@ -53,10 +63,6 @@
   overflow: hidden;
   float: left;
   padding-left: 10px;
-}
-
-.hidden {
-  display: none;
 }
 
 .player-hero-box {

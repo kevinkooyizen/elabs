@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009160334) do
+ActiveRecord::Schema.define(version: 20171010064603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20171009160334) do
     t.string "api_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["api_id"], name: "index_items_on_api_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -92,7 +93,7 @@ ActiveRecord::Schema.define(version: 20171009160334) do
     t.string "profile_url"
     t.string "country_code"
     t.integer "mmr", default: 0
-    t.date "last_login", default: "2017-10-10"
+    t.date "last_login", default: "2017-10-09"
     t.index ["team_id"], name: "index_players_on_team_id"
     t.index ["user_id"], name: "index_players_on_user_id"
   end

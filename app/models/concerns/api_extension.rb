@@ -41,6 +41,10 @@ module ApiExtension
             JSON.parse open("https://api.opendota.com/api/heroes").read
         end
 
+        def self.get_all_teams
+            JSON.parse open("https://api.opendota.com/api/teams").read
+        end
+
         def self.missing_params_error
             {'error':'Missing params'}
         end

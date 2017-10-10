@@ -1,12 +1,12 @@
 class TeamsController < ApplicationController
 	def index
 		@teams = Team.order(rating: :desc).page params[:page]
-  end
+  	end
 
   def search
     @params = search_params.to_h
-    @teams = Team.team_search(name: search_params[:name], country: search_params[:country]).order('name').page params[:page]
-
+    	@teams = Team.team_search(name: search_params[:name], country: search_params[:country], rating: search_params[:rating]).order('name').page params[:page]
+   
     render 'index'
   end
 
@@ -31,7 +31,7 @@ class TeamsController < ApplicationController
 		# else
 		# 	@team_winrate = nil
 		# end
-		@team_players = @team.get_roster_players
+		@team_players = @team.get_team_players
 	end
 
 	def new
@@ -85,14 +85,16 @@ class TeamsController < ApplicationController
 
       team = Team.find(params[:id])
 
-      if !team.present?
-          flash[:notice] = 'Please select one of your team to get the players recommendation. Players are sorted by MMR for now.'
-          # this is a activerecord::relation object
-          @players = Player.all.order('mmr desc')
-      else
-          # this is an array of activerecord, use the [0...N] method to get the topN players by similarity
-          @players = team.players_sorted_by_similarity
-      end
+
+        if !team.present?
+            flash[:notice] = 'Please select one of your team to get the players recommendation. Players are sorted by MMR for now.'
+            # this is a activerecord::relation object
+            @players = Player.all.order('mmr desc').page params[:page]
+        else
+            # this is an array of activerecord, use the [0...N] method to get the topN players by similarity
+            @players = Kaminari.paginate_array(team.players_sorted_by_similarity).page(params[:page])
+        end
+
 
   #     choose a view file to render the players
 
@@ -104,7 +106,7 @@ class TeamsController < ApplicationController
  		params.require(:team).permit(:name, :sponsor, :coach, :manager, :country, :status, :dota2_team_id, :user_id)
     end
 
-  def search_params
-      params.require(:teams_search).permit(:name, :country)
-  end
+	def search_params
+	    params.require(:teams_search).permit(:name, :country, :rating)
+	end
 end
