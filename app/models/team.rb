@@ -3,7 +3,6 @@ class Team < ApplicationRecord
     include RankingExtension::CosineDistance
 
     paginates_per 8
-    has_many :players
     belongs_to :user
     has_many :sponsorships
     has_many :sponsors, through: :sponsorships

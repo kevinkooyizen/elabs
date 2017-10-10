@@ -5,7 +5,6 @@ class Player < ApplicationRecord
 
     paginates_per 8
     belongs_to :user
-    belongs_to :team
     before_validation :get_player_stats
     validates :user_id, presence: true, uniqueness: true
     validate :validate_is_player
