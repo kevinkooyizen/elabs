@@ -86,6 +86,21 @@ class PlayersController < ApplicationController
 
     end
 
+    def become_player
+        player = Player.new(user_id: params[:id])
+        user = User.find(params[:id])
+        if user.real_name.present?
+            player.real_name = user.real_name
+        end
+        if user.persona_name.present?
+            player.persona_name = user.persona_name
+        end
+        player.last_login = Date.today
+
+        player.save!
+        return redirect_to user_path(player.user.id)
+    end
+
     private
 
     def search_params
