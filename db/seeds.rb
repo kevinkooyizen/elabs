@@ -20,7 +20,9 @@ Team.destroy_all
 # Happening.all.destroy_all
 
 # Destroy all except first
-# User.all[1..-1].count.destroy_all
+User.all[1..-1].each do |item|
+    byebug
+end
 
 # ~~~~~~ SEED PLAYERS HERE ~~~~~~
 
@@ -230,7 +232,7 @@ puts "Seeding Teams..."
 # @user.password = 'password'
 # @user.save!
 
-@teams[0..30].each_with_index do |select, index|
+@teams[0..29].each_with_index do |select, index|
 
     Team.transaction do
         team = Team.new
@@ -283,6 +285,16 @@ puts "Seeding Teams..."
                 player.save!
 
                 puts "Player saved!"
+                puts ""
+                puts "Generating member..."
+
+                member = Member.new(team_id: team.id, account_id: player.steam_id, )
+                member.name = player.real_name
+
+                member.save!
+
+                puts "Member saved!"
+
                 # this stores 32 bit player steam profile id into roster
             end
         end
