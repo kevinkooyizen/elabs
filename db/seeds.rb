@@ -23,54 +23,54 @@ start_time = Time.now
 
 # COMMENT/UNCOMMENT AFTER ME
 
-# puts "Seeding Players..."
-# players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
-# seed_counter = 1
-# max_counter = 20
-# players_collection.each do |player|
-#     # seed only 20 players
-#     break if seed_counter > max_counter
+puts "Seeding Players..."
+players_collection = ApiExtension::OpenDota.get_pro_players
+seed_counter = 1
+max_counter = 20
+players_collection.each do |player|
+    # seed only 20 players
+    break if seed_counter > max_counter
 
-#     User.transaction do
-#         user = User.new
-#         user.real_name=Faker::Name.name + ((1..1000).to_a).sample.to_s
-#         user.persona_name=player['personaname']
-#         user.uid = player["account_id"].to_s
-#         user.country = player["loccountrycode"]
-#         user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
-#         user.password = 'password'
-#         user.save!
+    User.transaction do
+        user = User.new
+        user.real_name=Faker::Name.name + ((1..1000).to_a).sample.to_s
+        user.persona_name=player['personaname']
+        user.uid = player["account_id"].to_s
+        user.country = player["loccountrycode"]
+        user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
+        user.password = 'password'
+        user.save!
 
-#         if !player['team_id'].present?
-#             player['team_id']=rand(50000)
-#         end
+        if !player['team_id'].present?
+            player['team_id']=rand(50000)
+        end
 
-#         team = Team.find_by_dota2_team_id(player['team_id'].to_i)
-#         if !team.present?
-#             team = Team.new
-#             team.name=Faker::Team.name
-#             team.dota2_team_id = player['team_id']
-#             team.user_id = user.id
-#             team.save!
-#         end
+        # team = Team.find_by_dota2_team_id(player['team_id'].to_i)
+        # if !team.present?
+        #     team = Team.new
+        #     team.name=Faker::Team.name
+        #     team.dota2_team_id = player['team_id']
+        #     team.user_id = user.id
+        #     team.save!
+        # end
 
 
-#         new_player = Player.new
-#         new_player.user_id = user.id
-#         team.roster << player["account_id"]
-#         team.save
-#         new_player.team_id=team.id
+        new_player = Player.new
+        new_player.user_id = user.id
+        team.roster << player["account_id"]
+        team.save
+        new_player.team_id=team.id
 
-#         if new_player.get_player_stats && team.present?
-#             new_player.save!
-#         end
-#         time_taken = Time.now - start_time
-#         puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
-#         puts "Players seeded: " + Player.all.count.to_s
-#         puts ""
-#     end
-#     seed_counter+=1
-# end
+        if new_player.get_player_stats && team.present?
+            new_player.save!
+        end
+        time_taken = Time.now - start_time
+        puts "Time since seed started: " + time_taken.round(2).to_s + " seconds"
+        puts "Players seeded: " + Player.all.count.to_s
+        puts ""
+    end
+    seed_counter+=1
+end
 
 # puts "Players seed complete."
 
