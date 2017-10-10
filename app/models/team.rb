@@ -53,6 +53,11 @@ class Team < ApplicationRecord
         end
     end
 
+    # manual association to players, 1 team has many players
+    def players
+        Player.where('team_id = ?', self.id)
+    end
+
     # get the players of this team
     def get_team_players
         Player.where('steam_id in (?)', self.members.pluck(:account_id)).extend(DescriptiveStatistics)

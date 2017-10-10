@@ -55,6 +55,12 @@ class Player < ApplicationRecord
         players = self.persona_name(persona_name).real_name(real_name).state(state).mmr(mmr_lower_range, mmr_upper_range).includes(:user)
     end
 
+    # manual association to team, 1 player has 1 team
+    def team
+        Team.find_by(user_id: self.id)
+    end
+
+
     # should return the active relation object of Hero
     def get_heroes
         heroes = self.top_heroes
