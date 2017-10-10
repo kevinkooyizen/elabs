@@ -194,10 +194,9 @@ $(document).ready(function(){
 
 
 <span class="buttonright", id="create-team"> <%= link_to "Create Team", new_team_path %> </span>
-<% if !@var.player_status %>
+<% if @player.nil? %>
   <span class="buttonright", id="create-team"> <%= link_to "Click Here", become_player_path %> if you are a player! </span>
 <% end %>
-
 <!-- Missing:  
 Team
 Sponsors
