@@ -19,7 +19,15 @@
 
       <div class="right-navbar">
         <div class="player-navbar">
-          <p>Username and avatar</p>
+          <!-- <p>Username and avatar</p> -->
+          <div class="user-info">
+            <% if @user.present? %>
+              <% if @user.player.present? %>
+                <p><%= @user.player.persona_name %></p>
+                <div class="avatar-img"><%= image_tag @user.player.avatar %></div>
+              <% end %>
+            <% end %>
+          </div>
         </div>
 
         <div class="nav-links">
@@ -39,6 +47,8 @@
       </div>
 
     </div>
+
+
 
     <%= yield %>
 

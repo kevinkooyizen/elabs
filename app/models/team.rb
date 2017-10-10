@@ -1,7 +1,7 @@
 class Team < ApplicationRecord
     include RankingExtension::CosineDistance
 
-    paginates_per 5
+    paginates_per 8
     has_many :players
     belongs_to :user
     has_many :sponsorships
@@ -149,5 +149,5 @@ class Team < ApplicationRecord
 
         enquired_users = User.where('users.id in (?)', users_ids).includes(:player)
     end
-    
+
 end

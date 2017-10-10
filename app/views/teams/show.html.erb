@@ -1,76 +1,146 @@
 <% @enquiries_users ||= [] %>
-<div class="team-profile-info">
-  <div class="team-info-box">
-    <div  class="team-info">
-      <h1 class="team-profile-header">Team Profile</h1>
-        <main>
-          <section>
-            <div class="team-avatar">
-              <img src="<%= @team.logo %>" id="avatar">
-              <div class="team-enquiry">
-                <h2>Users enquiry</h2>
-                <% @enquiries_users.each do |enquiry| %>
-                  <a href=<%= user_path(enquiry.id) %>><%= enquiry.persona_name %></a><br>
-                <% end %>
-              </div>
-            </div>
-            <div>
-              <h3 class="team-name"> <%= @team.name %> </h3>
-              <% if @team.status == false %>
-                Team Status: <span class="inactive"> Inactive </span>
-              <% else %>
-                Team Status: <span class="active"> Active </span>
-              <% end %>
 
+<div class="team-profile">
+  <div class="team-info">
+    <div class="test-div">
+      <h3 class="title-stamp">TEAM PROFILE</h3>
+      <br>
+      <div class="team-avatar">
+        <img src="<%= @team.logo %>" id="avatar">
+      </div>
+      <br>
+      <div class="team-stats">
+        <h3 class="team-name"> <%= @team.name %> </h3>
+        <p>
+          <% if @team.status == false %>
+            Team Status: <span class="inactive"> Inactive </span>
+          <% else %>
+            Team Status: <span class="active"> Active </span>
+          <% end %>
+        </p>
+        <p> Team ID: <%= @team.dota2_team_id %> </p>
+        <p> Winrate:
+          <% if !@team.winrate.nil? %>
+            <%= @team.winrate %>%
+          <% else %>
+            Insufficient data. Please play more games for us to calibrate your team's winrate.
+          <% end %>
+        </p>
+        <p>Team's current roster:</p>
+          <% @team_players.each do |player| %>
+              <% if player.real_name.present? %>
+                <%= player.real_name %>
+              <% else %>
+                <%= player.persona_name %>
+              <% end %>
               <br>
-          
-              <br>
-          
-              <p> Team ID: <%= @team.dota2_team_id %> </p>
-          
-              <p> Winrate:
-                <% if !@team.winrate.nil? %>
-                  <%= @team.winrate %>%
-                <% else %>
-                  Insufficient data. Please play more games for us to calibrate your team's winrate.
-                <% end %>
-              </p>
-          
-              <p>Team's current roster:</p>
-                <% @team_players.each do |player| %>
-                    <% if player.real_name.present? %>
-                      <%= player.real_name %>
-                    <% else %>
-                      <%= player.persona_name %>
-                    <% end %>
-                    <br>
-                <% end %>
-              <br>
-              <p>Tournament history</p>
-              <p>Manager: <%= @team.manager %></p>
-              <p>Sponsor: <%= @team.sponsor %></p>
-              <p>Coach: <%= @team.coach %></p>
-              <%= link_to "Join Team", enquiries_path(@team) %>
-              <!-- This may not be necessary for now since it's only one game.<p>Games team is affiliated with: Dota 2</p> -->
-              <p>If present, looking for player(with position)?</p>
-              <!-- Contact us option -->
-            </div>
-          </section>
-        </main>
-    </div>  
+          <% end %>
+        <br>
+        <h5>Tournament History</h5>
+        <p>Manager: <%= @team.manager %></p>
+        <p>Sponsor: <%= @team.sponsor %></p>
+        <p>Coach: <%= @team.coach %></p>
+        <br>
+        <!-- <p>If present, looking for player(with position)?</p> -->
+        <!-- Contact us option -->
+
+    </div>
+    </div>
   </div>
+
+  <div class="team-enquiry">
+    <div class="join-team">
+      <%= link_to "Join Team", enquiries_path(@team)%>
+    </div>
+
+    <br>
+
+    <div class="team-requests">
+      <h2>Team Join Requests</h2>
+      <% @enquiries_users.each do |enquiry| %>
+        <a href=<%= user_path(enquiry.id) %>><%= enquiry.persona_name %></a><br>
+      <% end %>
+    </div>
+
+    <br>
+
+    <div class="edit-team">
+      <% if signed_in? %>
+        <% if current_user.id == @team.user_id %>
+          <span class="buttonright", id="edit-team"> <%= link_to 'Edit Team Details', edit_team_path(@team) %> </span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
 </div>
 
+<!-- OLD CODE -->
+<!--
+
+<div class="team-profile-info">
+
+  <div class="team-info-box">
+
+    <div class="team-info">
+
+      <h1 class="team-profile-header">Team Profile</h1>
 
 
+        <div class="team-avatar">
+          <img src="<%= @team.logo %>" id="avatar">
+        </div>
 
-
-
-
-
-
-          <% if signed_in? %>
-            <% if current_user.id == @team.user_id %>
-              <span class="buttonright", id="edit-team"> <%= link_to 'Edit Team Details', edit_team_path(@team) %> </span>
-            <% end %>
+        <div class="team-stats">
+          <h3 class="team-name"> <%= @team.name %> </h3>
+          <% if @team.status == false %>
+            Team Status: <span class="inactive"> Inactive </span>
+          <% else %>
+            Team Status: <span class="active"> Active </span>
           <% end %>
+          <br>
+          <br>
+          <p> Team ID: <%= @team.dota2_team_id %> </p>
+          <p> Winrate:
+            <% if !@team.winrate.nil? %>
+              <%= @team.winrate %>%
+            <% else %>
+              Insufficient data. Please play more games for us to calibrate your team's winrate.
+            <% end %>
+          </p>
+          <p>Team's current roster:</p>
+            <% @team_players.each do |player| %>
+                <% if player.real_name.present? %>
+                  <%= player.real_name %>
+                <% else %>
+                  <%= player.persona_name %>
+                <% end %>
+                <br>
+            <% end %>
+          <br>
+          <p>Tournament history</p>
+          <p>Manager: <%= @team.manager %></p>
+          <p>Sponsor: <%= @team.sponsor %></p>
+          <p>Coach: <%= @team.coach %></p>
+          <%= link_to "Join Team", enquiries_path(@team) %>
+          This may not be necessary for now since it's only one game.<p>Games team is affiliated with: Dota 2</p>
+          <p>If present, looking for player(with position)?</p>
+          Contact us option
+        </div>
+
+        <% if signed_in? %>
+          <% if current_user.id == @team.user_id %>
+            <span class="buttonright", id="edit-team"> <%= link_to 'Edit Team Details', edit_team_path(@team) %> </span>
+          <% end %>
+        <% end %>
+    </div>
+
+    <div class="team-enquiry">
+      <h2>Users enquiry</h2>
+      <% @enquiries_users.each do |enquiry| %>
+        <a href=<%= user_path(enquiry.id) %>><%= enquiry.persona_name %></a><br>
+      <% end %>
+    </div>
+
+  </div>
+</div> -->

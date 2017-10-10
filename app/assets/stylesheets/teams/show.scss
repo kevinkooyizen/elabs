@@ -22,41 +22,53 @@
   min-width: 100%;
 }
 
-.team-profile-info {
-  float: left;
-  padding-left: 20px;
-  padding-top: 20px;
-}
+//BODY
 
-.team-info-box {
+.team-profile {
   background-color: rgba(0, 0 ,0, 0.5);
-  float: left;
-  width: 665px;
-  height: flex;
-  position: relative;
+  padding: 20px;
+  margin: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  // grid-auto-rows: minmax(100px, auto);
+  grid-column-gap: 5px;
+  grid-row-gap: 10px;
+  text-align: left;
+  grid-template-areas:
+    'sidebar content'
+    'sidebar content'
+    'sidebar content';
 }
 
 .team-info {
-  padding-right: 20px;
-  padding-left: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  float: left;
-  clear:left;
+  grid-area: sidebar;
+  padding: 10px;
+  grid-column-start: 1;
+  grid-row-start: 1;
+  margin: 5px;
 }
 
-.team-hero-box {
-  background-color: black;
-  float: left;
-  height: 770px;
-  width: 1050px;
-  opacity: 0.5;
-  position: absolute;
-  z-index: -1;
+.team-name {
+  padding: 10px;
 }
 
-.buttonright {
-  float: right;
-  padding-right: 20px;
-  padding-top: 20px;
+.team-enquiry {
+  padding-top: 10px;
+  grid-area: content;
+  padding: 10px;
+  margin: 5px;
+  grid-column-start: 2;
+  grid-row-start: 1;
+}
+
+.join-team {
+  display: inline;
+  padding: 10px;
+  background-color: white;
+  width: auto;
+  font-size: 1.5em;
+}
+
+.team-requests {
+  margin-top: 30px;
 }
