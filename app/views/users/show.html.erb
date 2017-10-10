@@ -6,8 +6,10 @@ $(document).ready(function(){
     //     event.preventDefault();
     // });
     var currentHero = $("#hero0")
+    currentHero.show()
 
     $("a.xxx").click(function(event){
+      event.preventDefault()
       var heroId = event.currentTarget.id 
       currentHero.hide()
       var newCurrentHero = $("#hero" + heroId)
@@ -16,7 +18,6 @@ $(document).ready(function(){
     })
 })
 </script>
-<div class="statcontainer">
 <div class="player-profile-info">
   <div class="player-info-box">
     <div  class="player-info" id="profile">
@@ -161,7 +162,7 @@ $(document).ready(function(){
   <% end %>
 
 <% end %>
-</div>
+
 
 <span class="buttonright", id="create-team"> <%= link_to "Create Team", new_team_path %> </span>
 
