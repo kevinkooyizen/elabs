@@ -1,12 +1,12 @@
 class TeamsController < ApplicationController
 	def index
 		@teams = Team.order(rating: :desc).page params[:page]
-  end
+  	end
 
   def search
     @params = search_params.to_h
-    @teams = Team.team_search(name: search_params[:name], country: search_params[:country]).order('name').page params[:page]
-
+    	@teams = Team.team_search(name: search_params[:name], country: search_params[:country], rating: search_params[:rating]).order('name').page params[:page]
+   
     render 'index'
   end
 
@@ -104,7 +104,7 @@ class TeamsController < ApplicationController
  		params.require(:team).permit(:name, :sponsor, :coach, :manager, :country, :status, :dota2_team_id, :user_id)
     end
 
-  def search_params
-      params.require(:teams_search).permit(:name, :country)
-  end
+	def search_params
+	    params.require(:teams_search).permit(:name, :country, :rating)
+	end
 end

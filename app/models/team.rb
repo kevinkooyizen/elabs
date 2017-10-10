@@ -12,9 +12,10 @@ class Team < ApplicationRecord
     has_many :titles
 
     has_many :enquiries
+
     # combined search scope
-    def self.team_search(name: nil, country: nil)
-        team_name(name).country(country)
+    def self.team_search(name: nil, country: nil, rating: nil)
+        team_name(name).country(country).rating(rating)
     end
 
     # search scope
@@ -30,6 +31,14 @@ class Team < ApplicationRecord
     def self.country(country)
         if country.present?
             where('country ilike ?', "%#{country}%")
+        else
+            all
+        end
+    end
+
+    def self.rating(rating)
+        if rating.present?
+            where('rating > ?', rating)
         else
             all
         end
@@ -149,4 +158,14 @@ class Team < ApplicationRecord
         enquired_users = User.where('users.id in (?)', users_ids).includes(:player)
     end
 
+    #  def self.filter(filtering_params)
+    #   results = self.where(nil)
+    #      if filtering_params.to_i <= 1000
+    #         filtering_params= nil
+    #     else
+    #         results = filtering_params if filtering_params.present?
+    #     end
+        
+    #   results
+    # end
 end
