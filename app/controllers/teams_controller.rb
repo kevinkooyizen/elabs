@@ -85,14 +85,16 @@ class TeamsController < ApplicationController
 
       team = Team.find(params[:id])
 
-      if !team.present?
-          flash[:notice] = 'Please select one of your team to get the players recommendation. Players are sorted by MMR for now.'
-          # this is a activerecord::relation object
-          @players = Player.all.order('mmr desc')
-      else
-          # this is an array of activerecord, use the [0...N] method to get the topN players by similarity
-          @players = team.players_sorted_by_similarity
-      end
+
+        if !team.present?
+            flash[:notice] = 'Please select one of your team to get the players recommendation. Players are sorted by MMR for now.'
+            # this is a activerecord::relation object
+            @players = Player.all.order('mmr desc').page params[:page]
+        else
+            # this is an array of activerecord, use the [0...N] method to get the topN players by similarity
+            @players = Kaminari.paginate_array(team.players_sorted_by_similarity).page(params[:page])
+        end
+
 
   #     choose a view file to render the players
 

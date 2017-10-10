@@ -5,7 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
 require 'open-uri'
 require 'csv'
 start_time = Time.now
@@ -13,27 +12,29 @@ start_time = Time.now
 # Item.destroy_all
 # Hero.destroy_all
 # Tournament.destroy_all
-Enquiry.destroy_all
-Player.destroy_all
-Team.destroy_all
+# Enquiry.destroy_all
+# Player.destroy_all
+# Team.destroy_all
 # User.destroy_all
 # Happening.all.destroy_all
 
 # Destroy all except first
-# User.all[1..-1].count.destroy_all
+User.all[1..-1].each do |item|
+    byebug
+end
 
 # ~~~~~~ SEED PLAYERS HERE ~~~~~~
 
 # COMMENT/UNCOMMENT AFTER ME
-
+#
 # puts "Seeding Players..."
-# players_collection = JSON.parse open("https://api.opendota.com/api/proPlayers").read
+# players_collection = ApiExtension::OpenDota.get_pro_players
 # seed_counter = 1
 # max_counter = 20
 # players_collection.each do |player|
 #     # seed only 20 players
 #     break if seed_counter > max_counter
-
+#
 #     User.transaction do
 #         user = User.new
 #         user.real_name=Faker::Name.name + ((1..1000).to_a).sample.to_s
@@ -43,27 +44,27 @@ Team.destroy_all
 #         user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
 #         user.password = 'password'
 #         user.save!
-
+#
 #         if !player['team_id'].present?
 #             player['team_id']=rand(50000)
 #         end
-
-#         team = Team.find_by_dota2_team_id(player['team_id'].to_i)
-#         if !team.present?
-#             team = Team.new
-#             team.name=Faker::Team.name
-#             team.dota2_team_id = player['team_id']
-#             team.user_id = user.id
-#             team.save!
-#         end
-
-
+#
+#         # team = Team.find_by_dota2_team_id(player['team_id'].to_i)
+#         # if !team.present?
+#         #     team = Team.new
+#         #     team.name=Faker::Team.name
+#         #     team.dota2_team_id = player['team_id']
+#         #     team.user_id = user.id
+#         #     team.save!
+#         # end
+#
+#
 #         new_player = Player.new
 #         new_player.user_id = user.id
 #         team.roster << player["account_id"]
 #         team.save
 #         new_player.team_id=team.id
-
+#
 #         if new_player.get_player_stats && team.present?
 #             new_player.save!
 #         end
@@ -222,16 +223,22 @@ Team.destroy_all
 # COMMENT/UNCOMMENT AFTER ME
 
 puts "Seeding Teams..."
-@teams = JSON.parse open("https://api.opendota.com/api/teams").read
-@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
-# @user = User.new
-# @user.real_name = "fake dummy"
-# @user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
-# @user.password = 'password'
-# @user.save!
+@teams = ApiExtension::OpenDota.get_all_teams
+@pros = ApiExtension::OpenDota.get_pro_players
+@user = User.new
+@user.real_name = "fake dummy"
+@user.email = Faker::Internet.email.gsub '@', rand(5000).to_s + '@'
+@user.password = 'password'
+@user.save!
 
+<<<<<<< HEAD
+@teams[0..29].each_with_index do |select, index|
+
+=======
 @teams[0..30].each_with_index do |select, index|
-
+    puts "seeding team #{index}"
+    sleep 0.3
+>>>>>>> d9172ecbfaf67241decf2af1bca3123f020e7b22
     Team.transaction do
         team = Team.new
         team.name = select["name"]
@@ -283,6 +290,16 @@ puts "Seeding Teams..."
                 player.save!
 
                 puts "Player saved!"
+                puts ""
+                puts "Generating member..."
+
+                member = Member.new(team_id: team.id, account_id: player.steam_id, )
+                member.name = player.real_name
+
+                member.save!
+
+                puts "Member saved!"
+
                 # this stores 32 bit player steam profile id into roster
             end
         end

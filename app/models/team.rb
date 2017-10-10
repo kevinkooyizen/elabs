@@ -13,6 +13,7 @@ class Team < ApplicationRecord
 
     has_many :enquiries
 
+    has_many :members
     # combined search scope
     def self.team_search(name: nil, country: nil, rating: nil)
         team_name(name).country(country).rating(rating)

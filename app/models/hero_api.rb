@@ -23,19 +23,19 @@ class HeroApi
   end
 
   def winrate
-    (100 * @win.to_f/ @games.to_f).round(2)
+    (100 * @win.to_f/ (@games.to_f)).round(2)
   end
 
   def kills_rate
-    @kills / @games
+    @kills / (@games)
   end
 
   def deaths_rate
-    @deaths / @games
+    @deaths / (@games)
   end
 
   def assists_rate
-    @assists / @games
+    @assists / (@games)
   end
 
   def matches
@@ -66,10 +66,9 @@ class HeroApi
           match_data = JSON.parse open("https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?match_id=#{match["match_id"]}&key=#{ENV["STEAM_KEY"]}").read
           
           data = match_data["result"]["players"].find do |data|
-            data["account_id"] == @uid.to_i
+            data["hero_id"] == @hero_id.to_i
           end
 
-            
           match["gold_per_min"] = data["gold_per_min"]
           match["xp_per_min"] = data["xp_per_min"]
 
@@ -79,7 +78,6 @@ class HeroApi
         end
         # @heroes_avg_gpm += data["gold_per_min"]
         # @heroes_avg_xpm += data["xp_per_min"]
-      
     end
     # @heroes_avg_gpm = @heroes_avg_gpm/(hero_matches.count)
     # @heroes_avg_xpm = @heroes_avg_xpm/(hero_matches.count)    

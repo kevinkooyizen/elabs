@@ -69,7 +69,7 @@ class PlayersController < ApplicationController
         end
 
         # this is an array of activerecord, use the [0...N] method to get the topN players by similarity
-        @players = player.teams_sorted_by_similarity
+        @teams = Kaminari.paginate_array(player.teams_sorted_by_similarity).page(params[:page])
 
         #     choose a view file to render the players
 
