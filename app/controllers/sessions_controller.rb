@@ -3,7 +3,7 @@ class SessionsController < Clearance::SessionsController
     skip_before_action :verify_authenticity_token, only: :create_from_omniauth
 
     def sign_up_oauth
-        redirect_to helpers.oauth_path(email: params[:oauth]["email"])
+        redirect_to helpers.oauth_path
     end
 
     def create_from_omniauth
@@ -24,7 +24,7 @@ class SessionsController < Clearance::SessionsController
                                                  provider: auth_hash[:provider],
                                                  email: SecureRandom.hex(6) + '@example.com',
                                                  avatar_url: auth_hash[:extra][:raw_info][:avatar],
-                                                 large_avatar_full: auth_hash[:extra][:raw_info][:avatarfull]
+                                                 large_avatar_url: auth_hash[:extra][:raw_info][:avatarfull]
 
                 if user.errors.messages.present?
                     # error in user creation
