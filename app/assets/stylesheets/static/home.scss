@@ -71,6 +71,7 @@ $yellow: #FFCA2A;
 .team {
   h6 {
     text-align: center;
+    font-weight: bold;
   }
   grid-area: sidebar;
   padding: 10px;
@@ -79,11 +80,13 @@ $yellow: #FFCA2A;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   margin: 5px;
+  text-align: center
 }
 
 .player {
   h6 {
     text-align: center;
+    font-weight: bold;
   }
   grid-area: sidebar;
   padding: 10px;
@@ -92,6 +95,7 @@ $yellow: #FFCA2A;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
   margin: 5px;
+  text-align: center;
 }
 
 #avatar-home {
@@ -190,3 +194,4 @@ $yellow: #FFCA2A;
     }
   }
 }
+
