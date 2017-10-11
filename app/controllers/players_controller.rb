@@ -41,7 +41,7 @@ class PlayersController < ApplicationController
             return redirect_to user_path(player.user.id)
         else
             flash[:error] = 'Player not exists.'
-            return redirect_to :back
+            return redirect_back fallback_location: players_path
         end
     end
 
@@ -92,7 +92,7 @@ class PlayersController < ApplicationController
 
         if user.nil?
             flash[:error] = 'User does not exist'
-            return redirect_to :back
+            return redirect_back fallback_location: players_path
         end
 
 
