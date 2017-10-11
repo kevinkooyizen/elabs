@@ -50,7 +50,11 @@ $(document).ready(function(){
               <!-- <p>Account ID: <%= @var.uid %></p> -->
               <p>Last Login: 
               <% if @user.present? %>
-                <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
+                 <% if @user["profile"]["last_login"].nil? %>
+                    <%= Date.today %></p>
+                  <% else %> 
+                    <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
+                  <% end %>
               <% else %>
                 <%= Date.today %></p>
               <% end %>

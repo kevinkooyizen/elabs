@@ -44,8 +44,8 @@
               <li><%= link_to 'STEAM SIGN-IN', oauth_path %></li>
             <% end %>
             <li>
-              <% if @user.present? %>
-                <% if signed_in? %>
+              <% if signed_in? %>
+                <% if @user.present?  && @user["profile"].present? %>
                   <img src="<%= @user["profile"]["avatarfull"] %>" id="avatar-navbar">
                   <%= link_to "#{current_user.persona_name}", user_path(current_user), class: 'personaname-navbar' %>
                 <% else %>
