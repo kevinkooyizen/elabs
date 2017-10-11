@@ -171,14 +171,5 @@ class Team < ApplicationRecord
         enquired_users = User.where('users.id in (?)', users_ids).includes(:player)
     end
 
-    #  def self.filter(filtering_params)
-    #   results = self.where(nil)
-    #      if filtering_params.to_i <= 1000
-    #         filtering_params= nil
-    #     else
-    #         results = filtering_params if filtering_params.present?
-    #     end
-        
-    #   results
-    # end
+
 end
