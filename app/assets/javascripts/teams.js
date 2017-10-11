@@ -1,4 +1,4 @@
-$(document).ready(function (){
+document.addEventListener("turbolinks:load", function (){
 	$('#evalSlider').slider({
 	range: true,
 	min: 500,

@@ -18,7 +18,7 @@ class TeamsController < ApplicationController
 
         if @team.nil?
             flash[:error] = 'Team does not exist'
-            return redirect_to :back
+            return redirect_back fallback_location: teams_path
         end
 
 		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read

@@ -1,5 +1,6 @@
 require 'open-uri'
 class User < ApplicationRecord
+    validates :uid, uniqueness: true
     include Clearance::User
     has_one :player
     has_one :role

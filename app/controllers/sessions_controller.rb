@@ -15,12 +15,17 @@ class SessionsController < Clearance::SessionsController
 
             # first time sign in
             if user.nil?
+                user_profile = auth_hash[:profile]
+
                 user = User.create_from_omniauth uid: auth_hash[:uid],
                                                  real_name:auth_hash[:info][:name],
                                                  persona_name: auth_hash[:extra][:raw_info][:personaname],
                                                  country: auth_hash[:info][:location],
                                                  provider: auth_hash[:provider],
-                                                 email: email
+                                                 email: SecureRandom.hex(6) + '@example.com',
+                                                 avatar_url: auth_hash[:extra][:raw_info][:avatar],
+                                                 large_avatar_full: auth_hash[:extra][:raw_info][:avatarfull]
+
                 if user.errors.messages.present?
                     # error in user creation
                     flash[:error] = user.errors.messages

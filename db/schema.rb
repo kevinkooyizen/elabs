@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171010122946) do
+ActiveRecord::Schema.define(version: 20171011085744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,7 +93,8 @@ ActiveRecord::Schema.define(version: 20171010122946) do
     t.string "profile_url"
     t.string "country_code"
     t.integer "mmr", default: 0
-    t.date "last_login", default: "2017-10-10"
+    t.date "last_login", default: "2017-10-09"
+    t.string "avatar_full"
     t.index ["team_id"], name: "index_players_on_team_id"
     t.index ["user_id"], name: "index_players_on_user_id"
   end
@@ -184,6 +185,8 @@ ActiveRecord::Schema.define(version: 20171010122946) do
     t.string "uid"
     t.string "state"
     t.string "persona_name"
+    t.string "avatar_url"
+    t.string "large_avatar_url"
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token"
   end
