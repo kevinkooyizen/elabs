@@ -52,11 +52,19 @@ class TournamentsController < ApplicationController
 	end
 
 	def edit
-		@tournament = Tournament.find(params[:id])
+		@tournament = Tournament.find_by(id:params[:id])
+        if @tournament.nil?
+            flash[:error] = 'Tournament does not exist.'
+            return redirect_to tournaments_path
+        end
 	end
 
 	def update
-		@tournament = Tournament.find(params[:id])
+		@tournament = Tournament.find_by(id: params[:id])
+        if @tournament.nil?
+            flash[:error] = 'Tournament does not exist.'
+            return redirect_to tournaments_path
+        end
 		if @tournament.update(tournament_params)
 			flash[:success] = "You have updated tournament details successfully"
 			redirect_to root_path
@@ -66,7 +74,11 @@ class TournamentsController < ApplicationController
 	end
 
 	def destroy
-		@tournament = Tournament.find(params[:id])
+		@tournament = Tournament.find_by(id: params[:id])
+        if @tournament.nil?
+            flash[:error] = 'Tournament does not exist.'
+            return redirect_to tournaments_path
+        end
 		@tournament.status = false
 		if @team.save
 			flash[:success] = "You have removed your tournament. Hope to see you again."
