@@ -5,13 +5,13 @@
 # #
 # #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 # #   Character.create(name: 'Luke', movie: movies.first)
-# require 'open-uri'
-# require 'csv'
-# require 'rest-client'
+require 'open-uri'
+require 'csv'
+require 'rest-client'
 
-# start_time = Time.now
+start_time = Time.now
 
-# puts "Initializing seed file..."
+puts "Initializing seed file..."
 
 # ## ====== ITEMS ======
 
