@@ -18,6 +18,7 @@ $(document).ready(function(){
     })
 })
 </script>
+
 <div class="player-profile-info">
   <div class="player-info-box">
     <div  class="player-info" id="profile">
@@ -156,20 +157,20 @@ $(document).ready(function(){
                   <% hero.matches.each do |match| %>
                   <tr>
                     <% if match["user_win"] %>
-                      <td><span class="won"> Won </span></td>
+                      <td class="stattd"><span class="won"> Won </span></td>
                     <% else %>
-                      <td><span class="lost"> Lost </span></td>
+                      <td class="stattd"><span class="lost"> Lost </span></td>
                     <% end %>
                
-                    <td><span class="statnumber", id="kills"> <%= match["kills"] %></span></td>
+                    <td class="stattd"><span class="statnumber", id="kills"> <%= match["kills"] %></span></td>
 
-                    <td><span class="statnumber", id="deaths"> <%= match["deaths"] %></span></td>
+                    <td class="stattd"><span class="statnumber", id="deaths"> <%= match["deaths"] %></span></td>
 
-                    <td><span class="statnumber", id="assists"> <%= match["assists"] %></span></td>
+                    <td class="stattd"><span class="statnumber", id="assists"> <%= match["assists"] %></span></td>
 
-                    <td><span class="statnumber", id="gpm"> <%= match["gold_per_min"] %> </span></td>
+                    <td class="stattd"><span class="statnumber", id="gpm"> <%= match["gold_per_min"] %> </span></td>
 
-                    <td><span class="statnumber", id="xpm"> <%= match["xp_per_min"] %> </span></td>
+                    <td class="stattd"><span class="statnumber", id="xpm"> <%= match["xp_per_min"] %> </span></td>
 
                     <td class="itemtd"><span class="statnumber", id="items"> 
                       <% match["player_match_items"].each_with_index do |item, index| %> 
