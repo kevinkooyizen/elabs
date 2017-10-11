@@ -92,6 +92,7 @@ class Player < ApplicationRecord
         self.top_heroes = get_top_3_heroes(player_uid)
         self.persona_name = api_result_profile.dig(:personaname)
         self.avatar = api_result_profile.dig(:avatar)
+        self.avatar_full = api_result_profile.dig(:avatarfull)
         self.profile_url = api_result_profile.dig(:profileurl)
         self.steam_id = player_uid.to_i
         self.country_code = api_result_profile[:loccountrycode]
