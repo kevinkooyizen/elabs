@@ -37,19 +37,24 @@
     <% @teams.each do |team| %>
 
       <div class="team-card">
+      <div class="team-avatar">
         <img src = <%= team.logo %> />
-        <h6 class="team-name">Name: <%= link_to "#{team.name}", team_path(team) %> <br></h6>
-        <h6 class="team-id">Team id: <%= team.dota2_team_id %> <br></h6>
-        <h6 class="team-rating">Rating: <%= team.rating %><br> </h6>
-        <h6 class="team-winrate">
+      </div>  
+        <h3 class="team-name"> <%= link_to "#{team.name}", team_path(team) %></h3>
+        
+        <p class="team-id">Team id: <%= team.dota2_team_id %> </p>
+        
+        <p class="team-rating">Rating: <%= team.rating %> </p>
+        
+        <p class="team-winrate">
           Winrate:
           <% if !team.winrate.nil? %>
             <%= team.winrate %>%
           <% else %>
             Insufficient data.
           <% end %>
-          <br>
-        </h6>
+        </p>
+        
         <hr>
       </div>
     <% end %>
