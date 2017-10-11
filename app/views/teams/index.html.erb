@@ -32,7 +32,7 @@
     <% @teams.each do |team| %>
 
       <div class="team-card">
-        
+        <img src = <%= team.logo %> />
         <h6 class="team-name">Name: <%= link_to "#{team.name}", team_path(team) %> <br></h6>
         <h6 class="team-id">Team id: <%= team.dota2_team_id %> <br></h6>
         <h6 class="team-rating">Rating: <%= team.rating %><br> </h6>
