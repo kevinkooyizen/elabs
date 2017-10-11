@@ -102,7 +102,7 @@ h1, h2, h3, h4 {
     float: right;
     text-align: right;
     background-color: $yellow;
-    color: $white;
+    color: $dark-grey;
     position: relative;
 
     ul {
@@ -116,7 +116,7 @@ h1, h2, h3, h4 {
       display: inline-block;
       padding-left: 5px;
       padding-right: 5px;
-      color: $white;
+      color: $dark-grey;
       font-weight: 600;
     }
 
@@ -131,7 +131,7 @@ h1, h2, h3, h4 {
     }
 
     a {
-      color: $white;
+      color: $dark-grey;
       font-weight: 600;
     }
 
@@ -146,7 +146,7 @@ h1, h2, h3, h4 {
   bottom: 0;
   position: fixed;
   width: 100%;
-  
+
 
 
   ul {
