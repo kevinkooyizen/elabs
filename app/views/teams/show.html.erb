@@ -28,19 +28,20 @@
         </p>
         <p>Team's current roster:</p>
           <% @team_players.each do |player| %>
+              <a href= <%= player_path(player) %> > 
               <% if player.real_name.present? %>
                 <%= player.real_name %>
               <% else %>
                 <%= player.persona_name %>
-              <% end %>
+              <% end %></a>
               <br>
           <% end %>
         <br>
-        <h5>Tournament History</h5>
+        <!-- <h5>Tournament History</h5>
         <p>Manager: <%= @team.manager %></p>
         <p>Sponsor: <%= @team.sponsor %></p>
         <p>Coach: <%= @team.coach %></p>
-        <br>
+        <br> -->
         <!-- <p>If present, looking for player(with position)?</p> -->
         <!-- Contact us option -->
 
