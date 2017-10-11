@@ -56,7 +56,13 @@ class UsersController < ApplicationController
         @var = user
         @var.store
         @teams = Enquiry.where(user_id: params[:id], status: "user")
-        @team = Team.find_by(user_id: current_user.id)
+
+        if signed_in?
+            @team = Team.find_by(user_id: current_user.id)
+        else
+            @team = nil
+        end
+
         # if @team.nil?
         #     if !Player.find_by(user_id: User.find_by(id:params[:id]).id).nil?
         #         if !Player.find_by(user_id: User.find_by(id:params[:id]).id).team_id.nil?
