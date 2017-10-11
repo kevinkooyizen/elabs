@@ -2,6 +2,7 @@ class TournamentsController < ApplicationController
 	include SearchHelper
 	def index
 		@tournaments = Tournament.display_tournaments.page(params[:page]).per(8) 
+		@user = current_user
 	end	
 
 	def search

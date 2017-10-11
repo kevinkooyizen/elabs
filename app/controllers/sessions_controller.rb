@@ -20,7 +20,7 @@ class SessionsController < Clearance::SessionsController
                                                  persona_name: auth_hash[:extra][:raw_info][:personaname],
                                                  country: auth_hash[:info][:location],
                                                  provider: auth_hash[:provider],
-                                                 email: email
+                                                 email: SecureRandom.hex(6) + '@example.com'
                 if user.errors.messages.present?
                     # error in user creation
                     flash[:error] = user.errors.messages
