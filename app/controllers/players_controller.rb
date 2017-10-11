@@ -30,12 +30,12 @@ class PlayersController < ApplicationController
     end
 
     def show
-        # @player = Player.find(params[:id])
+        # @player = Player.find_by(id: params[:id])
         # @user = @player.user
         # @user.store
         # render 'show'
 
-        player = Player.find(params[:id])
+        player = Player.find_by(id:params[:id])
         if player.present?
             # redirect to user show because both view should display the content
             return redirect_to user_path(player.user.id)
@@ -64,7 +64,7 @@ class PlayersController < ApplicationController
             return redirect_to players_path
         end
 
-        player = Player.find(params[:id])
+        player = Player.find_by(id:params[:id])
 
         if !player.present?
             flash[:error] = 'Player does not exist!'
@@ -88,7 +88,14 @@ class PlayersController < ApplicationController
 
     def become_player
         player = Player.new(user_id: params[:id])
-        user = User.find(params[:id])
+        user = User.find_by(id: params[:id])
+
+        if user.nil?
+            flash[:error] = 'User does not exist'
+            return redirect_to :back
+        end
+
+
         if user.real_name.present?
             player.real_name = user.real_name
         end
