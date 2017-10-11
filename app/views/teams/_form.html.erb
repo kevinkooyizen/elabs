@@ -1,45 +1,67 @@
 <%= form.label :name, "Team Name" %>:
+<br>
 <%= form.text_field :name %>
 <br>
+<br>
 
-<%= form.label :sponsor, "Sponsor:" %>:
+<%= form.label :sponsor, "Sponsor" %>:
+<br>
 <%= form.text_field :sponsor  %>
+<br>
 <br>
 
 <%= form.label :manager, "Manager" %>:
+<br>
 <%= form.text_field :manager %>
+<br>
 <br>
 
 <%= form.label :coach, "Coach" %>:
+<br>
 <%= form.text_field :coach %>
+<br>
 <br>
 
 <%= form.label :country, "Country" %>:
+<br>
 <%= form.text_field :country %>
 <br>
+<br>
 
 <%= form.label :roster, "Roster ID" %>:
+<br>
 <%= form.text_field :roster, multiple: true, placeholder: "#{current_user.uid}" %>
 <br>
-
-<%= form.label :roster, "Roster ID" %>:
-<%= form.text_field :roster, multiple: true %>
 <br>
 
 <%= form.label :roster, "Roster ID" %>:
+<br>
 <%= form.text_field :roster, multiple: true %>
+<br>
 <br>
 
 <%= form.label :roster, "Roster ID" %>:
+<br>
 <%= form.text_field :roster, multiple: true %>
+<br>
 <br>
 
 <%= form.label :roster, "Roster ID" %>:
+<br>
 <%= form.text_field :roster, multiple: true %>
+<br>
+<br>
+
+<%= form.label :roster, "Roster ID" %>:
+<br>
+<%= form.text_field :roster, multiple: true %>
+<br>
 <br>
 <!-- will prompt to ask for the user dota2 stream id for verification -->
 <%= form.label :dota2_team_id, "Dota2 Team Steam ID:" %>
+<br>
 <%= form.number_field :dota2_team_id %>
 <%= form.hidden_field :user_id, value: current_user.id %>
-
 <br>
+<br>
+

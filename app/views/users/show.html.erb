@@ -18,6 +18,7 @@ $(document).ready(function(){
     })
 })
 </script>
+
 <div class="player-profile-info">
   <div class="player-info-box">
     <div  class="player-info" id="profile">
@@ -47,13 +48,12 @@ $(document).ready(function(){
                 No team</p>
               <% end %>
               <!-- <p>Account ID: <%= @var.uid %></p> -->
-              <p>Last Login: <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
-              <p>Country: 
-                <% if @var.country.present? %>
-                  <%= @var.country %></p>
-                <% else %>
-                  Not stated</p>
-                <% end %>
+              <p>Last Login: 
+              <% if @user.present? %>
+                <%= DateTime.strptime(@user["profile"]["last_login"], '%Y-%m-%dT%H:%M:%S').strftime('%a %d %b %Y') %></p>
+              <% else %>
+                <%= Date.today %></p>
+              <% end %>
               <p>Solo MMR: 
                 <% if @user["solo_competitive_rank"].present? %>
                   <%= @user["solo_competitive_rank"] %></p>
@@ -70,9 +70,11 @@ $(document).ready(function(){
                 
               <% end %>
               <% if signed_in? %>
-                <% if @user["profile"]["account_id"] != @var.uid.to_i %>
+                <% if current_user.uid.to_i != @var.uid.to_i %>
                   <% if @team.present? %>
-                    <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
+                    <% if Enquiry.find_by(team_id: Team.find_by(user_id: current_user.id).id, status: "user").nil? %>
+                      <%= link_to "Request User to Join Team",  teams_enquiries_path(user_id: @var.id, user_uid: @var.uid, team_id: @team.id) %>
+                    <% end %>
                   <% else %>
                     <p>Please <%= link_to "create a team", new_team_path %> to request this user to join your team</p>
                   <% end %>
@@ -82,15 +84,19 @@ $(document).ready(function(){
               <% end %>
                 </div>
 
+                 <h2>Teams enquiry</h2>
+              <% if @var.enquiries.where(status: "user").present? %>
+                <% @var.enquiries.where(status: "user").each do |enquiry| %>
+                  <a href= "/teams/<%= Team.find(enquiry.team_id).id %>"> <%=  Team.find(enquiry.team_id).name %></a>
+                <% end %>
+              <% end %>    
             <% else %>
               <p>User does not have dota game history</p>
             <% end %>
           </section>
         </main>
-    </div>    
+    </div>
   </div>  
-  <!-- <h2>Teams enquiry</h2> -->
-
 </div>
 
   <% if @var.profile_exist? %>
@@ -156,20 +162,20 @@ $(document).ready(function(){
                   <% hero.matches.each do |match| %>
                   <tr>
                     <% if match["user_win"] %>
-                      <td><span class="won"> Won </span></td>
+                      <td class="stattd"><span class="won"> Won </span></td>
                     <% else %>
-                      <td><span class="lost"> Lost </span></td>
+                      <td class="stattd"><span class="lost"> Lost </span></td>
                     <% end %>
                
-                    <td><span class="statnumber", id="kills"> <%= match["kills"] %></span></td>
+                    <td class="stattd"><span class="statnumber", id="kills"> <%= match["kills"] %></span></td>
 
-                    <td><span class="statnumber", id="deaths"> <%= match["deaths"] %></span></td>
+                    <td class="stattd"><span class="statnumber", id="deaths"> <%= match["deaths"] %></span></td>
 
-                    <td><span class="statnumber", id="assists"> <%= match["assists"] %></span></td>
+                    <td class="stattd"><span class="statnumber", id="assists"> <%= match["assists"] %></span></td>
 
-                    <td><span class="statnumber", id="gpm"> <%= match["gold_per_min"] %> </span></td>
+                    <td class="stattd"><span class="statnumber", id="gpm"> <%= match["gold_per_min"] %> </span></td>
 
-                    <td><span class="statnumber", id="xpm"> <%= match["xp_per_min"] %> </span></td>
+                    <td class="stattd"><span class="statnumber", id="xpm"> <%= match["xp_per_min"] %> </span></td>
 
                     <td class="itemtd"><span class="statnumber", id="items"> 
                       <% match["player_match_items"].each_with_index do |item, index| %> 
