@@ -14,7 +14,11 @@ class TeamsController < ApplicationController
   end
 
 	def show
-		@team = Team.find(params[:id])
+		@team = Team.find_by(id: params[:id])
+		if @team.nil?
+			flash[:failure] = "No Team"
+			return redirect_to teams_path
+		end
 		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 		@enquiries_users = @team.get_enquiries_users.order('players.mmr desc')
 		# @teams = JSON.parse open("https://api.opendota.com/api/teams").read
