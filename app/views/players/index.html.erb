@@ -18,6 +18,9 @@
             <%= f.text_field :state, value: @params.dig(:state) %>
             <br>
             <br>
+
+            <div id="slider"> </div>
+            <br>
             <%= f.label :mmr_lower_range, "MMR Lower Range" %>
             <%= f.number_field :mmr_lower_range, value: @params.dig(:mmr_lower_range) %>
             <br>
