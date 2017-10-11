@@ -49,10 +49,11 @@
   </div>
 
   <div class="team-enquiry">
-    <div class="join-team">
+    <% if signed_in? %>
+      <div class="join-team">
       <%= link_to "Join Team", enquiries_path(@team)%>
-    </div>
-
+      </div>
+    <% end %>
     <br>
 
     <div class="team-requests">
