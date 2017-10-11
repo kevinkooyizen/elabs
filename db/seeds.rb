@@ -1,10 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# # This file should contain all the record creation needed to seed the database with its default values.
+# # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+# #
+# # Examples:
+# #
+# #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+# #   Character.create(name: 'Luke', movie: movies.first)
 require 'open-uri'
 require 'csv'
 require 'rest-client'
@@ -13,39 +13,39 @@ start_time = Time.now
 
 puts "Initializing seed file..."
 
-## ====== ITEMS ======
+# ## ====== ITEMS ======
 
-# puts "Destroying items..."
-# # Item.destroy_all
+# # puts "Destroying items..."
+# # # Item.destroy_all
 
-## ======= END =======
-
-
-
-## ====== HEROES ======
-
-# puts "Destroying heroes..."
-# # Hero.destroy_all
-
-## ======= END =======
+# ## ======= END =======
 
 
 
-## ====== TOURNAMENTS ======
+# ## ====== HEROES ======
 
-# puts "Destroying tournaments..."
-# # Tournament.destroy_all
+# # puts "Destroying heroes..."
+# # # Hero.destroy_all
 
-## ======= END =======
+# ## ======= END =======
 
 
 
-## ====== ENQUIRIES ======
+# ## ====== TOURNAMENTS ======
 
-# puts "Destroying enquiries..."
-# # Enquiry.destroy_all
+# # puts "Destroying tournaments..."
+# # # Tournament.destroy_all
 
-## ======= END =======
+# ## ======= END =======
+
+
+
+# ## ====== ENQUIRIES ======
+
+# # puts "Destroying enquiries..."
+# # # Enquiry.destroy_all
+
+# ## ======= END =======
 
 
 
@@ -79,30 +79,30 @@ User.destroy_all
 
 
 
-## ====== HAPPENINGS ======
-# puts "Destroying happenings..."
-# # Happening.all.destroy_all
-## ======= END =======
+# ## ====== HAPPENINGS ======
+# # puts "Destroying happenings..."
+# # # Happening.all.destroy_all
+# ## ======= END =======
 
 
 
-## ====== FOR ONLY MAINTAINING FIRST USER ======
-# puts "Destroying users except for first user..."
-# Destroy all except first
-# User.all[1..-1].each do |item|
-#     item.destroy
-# end
-## ==================== END ===================
+# ## ====== FOR ONLY MAINTAINING FIRST USER ======
+# # puts "Destroying users except for first user..."
+# # Destroy all except first
+# # User.all[1..-1].each do |item|
+# #     item.destroy
+# # end
+# ## ==================== END ===================
 
 
-puts "All data destroyed. Seeding files now..."
+# puts "All data destroyed. Seeding files now..."
 
 
 
-# ~~~~~~ SEED PLAYERS HERE ~~~~~~
+# # ~~~~~~ SEED PLAYERS HERE ~~~~~~
 
-# COMMENT/UNCOMMENT AFTER ME
-#
+# # COMMENT/UNCOMMENT AFTER ME
+# #
 # puts "Seeding Players..."
 # players_collection = ApiExtension::OpenDota.get_pro_players
 # seed_counter = 1
@@ -154,17 +154,17 @@ puts "All data destroyed. Seeding files now..."
 
 # puts "Players seed complete."
 
-# COMMENT/UNCOMMENT BEFORE ME
+# # COMMENT/UNCOMMENT BEFORE ME
 
-# ~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~
-
-
+# # ~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~
 
 
 
-# ~~~~~~ SEED TOURNAMENTS HERE ~~~~~~
 
-# COMMENT/UNCOMMENT AFTER ME
+
+# # ~~~~~~ SEED TOURNAMENTS HERE ~~~~~~
+
+# # COMMENT/UNCOMMENT AFTER ME
 
 # puts "Seeding tournaments..."
 # # The upcoming event is on the bottom because we will treat it as a pass event and will only show the 4 latest event
@@ -219,17 +219,17 @@ puts "All data destroyed. Seeding files now..."
 
 # puts "Tournaments seed complete."
 
-# COMMENT/UNCOMMENT BEFORE ME
+# # COMMENT/UNCOMMENT BEFORE ME
 
-# ~~~~~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~~~~~~~
-
-
+# # ~~~~~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~~~~~~~
 
 
 
-# ~~~~~~ SEED HAPPENINGS HERE ~~~~~~
 
-# COMMENT/UNCOMMENT AFTER ME
+
+# # ~~~~~~ SEED HAPPENINGS HERE ~~~~~~
+
+# # COMMENT/UNCOMMENT AFTER ME
 
 # puts "Seeding Happenings..."
 # Happening.all.destroy_all
@@ -248,18 +248,18 @@ puts "All data destroyed. Seeding files now..."
 
 # puts "Happenings seed complete."
 
-# COMMENT/UNCOMMENT BEFORE ME
+# # COMMENT/UNCOMMENT BEFORE ME
 
-# ~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~~
-
-
+# # ~~~~~~~~~~~~~END~~~~~~~~~~~~~~~~~
 
 
 
-# ~~~~~~ SEED HEROES HERE ~~~~~~
 
 
-# COMMENT/UNCOMMENT AFTER ME
+# # ~~~~~~ SEED HEROES HERE ~~~~~~
+
+
+# # COMMENT/UNCOMMENT AFTER ME
 
 # puts "Seeding Heroes..."
 # heroes_collection = JSON.parse open("https://api.opendota.com/api/heroes").read
@@ -286,17 +286,17 @@ puts "All data destroyed. Seeding files now..."
 
 # puts "Heroes seed complete."
 
-# COMMENT/UNCOMMENT BEFORE ME
+# # COMMENT/UNCOMMENT BEFORE ME
 
-# ~~~~~~~~~~~~END~~~~~~~~~~~~~~~
-
-
+# # ~~~~~~~~~~~~END~~~~~~~~~~~~~~~
 
 
 
-# ~~~ SEED TEAMS HERE~~~
 
-# COMMENT/UNCOMMENT AFTER ME
+
+# # ~~~ SEED TEAMS HERE~~~
+
+# # COMMENT/UNCOMMENT AFTER ME
 
 puts "Seeding Teams..."
 @teams = ApiExtension::OpenDota.get_all_teams
@@ -308,7 +308,7 @@ puts "Seeding Teams..."
 @user.save!
 
 # Place number of teams to seed here
-teams_to_seed = 10
+teams_to_seed = 30
 @teams[0..teams_to_seed-1].each_with_index do |select, index|
 
     Team.transaction do
@@ -400,17 +400,17 @@ end
 
 puts "Teams seed complete."
 
-# COMMENT/UNCOMMENT BEFORE ME
+# # COMMENT/UNCOMMENT BEFORE ME
 
-# ~~~~~~~~~~~~END~~~~~~~~~~~~~~~
-
-
+# # ~~~~~~~~~~~~END~~~~~~~~~~~~~~~
 
 
 
-# ~~~~~~SEED ITEMS HERE~~~~~~
 
-# COMMENT/UNCOMMENT AFTER ME
+
+# # ~~~~~~SEED ITEMS HERE~~~~~~
+
+# # COMMENT/UNCOMMENT AFTER ME
 
 # puts "Seeding Items..."
 # items = JSON.parse open("https://api.steampowered.com/IEconDOTA2_570/GetGameItems/V001/?key=#{ENV["STEAM_KEY"]}&language=en_en").read
@@ -425,20 +425,20 @@ puts "Teams seed complete."
 
 # puts "Items seed complete."
 
-# COMMENT/UNCOMMENT BEFORE ME
+# # COMMENT/UNCOMMENT BEFORE ME
 
-# ~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~
-
-
+# # ~~~~~~~~~~~~~~END~~~~~~~~~~~~~~~
 
 
 
 
-total_time = Time.now - start_time
-puts "Seed complete"
 
-# if minutes >= 1
-#     puts "Total time taken for seed: " + minutes.to_i.to_s + " min " + seconds.round(2).to_i.to_s + " seconds"
-# else
-#     puts "Total time taken for seed: " + time_taken.round(2).to_f.to_s + " seconds "
-# end
+
+# total_time = Time.now - start_time
+# puts "Seed complete"
+
+# # if minutes >= 1
+# #     puts "Total time taken for seed: " + minutes.to_i.to_s + " min " + seconds.round(2).to_i.to_s + " seconds"
+# # else
+# #     puts "Total time taken for seed: " + time_taken.round(2).to_f.to_s + " seconds "
+# # end
