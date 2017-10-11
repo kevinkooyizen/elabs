@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 20171010122946) do
     t.string "profile_url"
     t.string "country_code"
     t.integer "mmr", default: 0
-    t.date "last_login", default: "2017-10-09"
+    t.date "last_login", default: "2017-10-10"
     t.index ["team_id"], name: "index_players_on_team_id"
     t.index ["user_id"], name: "index_players_on_user_id"
   end
