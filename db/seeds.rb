@@ -72,10 +72,10 @@ Team.destroy_all
 
 
 
-# ## ====== USERS ======
-# puts "Destroying users..."
-# User.destroy_all
-# ## ======= END =======
+## ====== USERS ======
+puts "Destroying users..."
+User.destroy_all
+## ======= END =======
 
 
 
