@@ -21,7 +21,7 @@ $yellow: #FFCA2A;
   background-color: rgba(0, 0, 0, 0.5);
   margin-right: 10px;
   padding: 20px;
-  height: 70%;
+  height: flex;
 
   h5 {
     background-color: $yellow;
@@ -44,7 +44,7 @@ $yellow: #FFCA2A;
   grid-row-start: 1;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 20px;
-  height: 80%;
+  height: flex;
 }
 
 .player-card {

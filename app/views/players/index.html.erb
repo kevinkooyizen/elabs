@@ -40,15 +40,15 @@
         <% @players.each do |player| %>
             <!--the requirement is to display 4 players per row, total 2 rows-->
             <div class="player-card">
+                <img class="player-avatar" src="<%= player.avatar_full %>" alt="">
                 <a href="<%= player_path(player) %>">
-                    <p>
+                    <h3 class="player-name">
                         <%= player.real_name %>
-                    </p>
+                    </h3>
                 </a>
-                <img class="player-avatar" src="<%= player.avatar %>" alt="">
                 <p><%= player.get_player_games_played(player.steam_id).to_s + ' Games played' %></p>
                 <% if player.mmr != 0 %>
-                    <p><%= player.mmr.to_s + 'MMR' %></p>
+                    <p><%= player.mmr.to_s + ' MMR' %></p>
                 <% else %>
                     <p>Currently inactive.</p>
                 <% end %>
