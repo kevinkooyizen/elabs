@@ -38,12 +38,14 @@
         <div class="player">
           <h6>Player Of The Week</h6>
           <br>
+          <% if !@player.nil? %>
           <img src="<%= @player.avatar %>" id="avatar-home">
           <br>
           <br>
           <p><%= @player.persona_name %></p>
           <p>Winrate: <%= @player.winrate %>%</p>
           <p>Team: <%= @player.team_name %></p>
+          <% end %>
         </div>
 
         <div class="ads">
@@ -73,10 +75,10 @@
           <% else %>
               <h6>First time sign in</h6>
               <%= form_for :oauth, url: sign_up_path do |f| %>
-                  <%= f.label :email %>
+                  <!-- < f.label :email %>
                   <br>
-                  <%= f.text_field :email %>
-                  <br>
+                  < f.text_field :email %>
+                  <br> -->
                   <%= f.submit 'Sign up with Steam', class: 'button' %>
               <% end %>
               <hr>

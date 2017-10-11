@@ -11,17 +11,22 @@
           <%= f.text_field :name, value: @params.dig(:name) %>
           <br>
           <br>
-          <%= f.label :country %>
+          <!--
+          < f.label :country >
           <br>
-          <%= f.text_field :country, value: @params.dig(:country) %>
+          < f.text_field :country, value: @params.dig(:country) >
           <br>
           <br>
+          -->
           <%= f.label :rating, "Rating" %><br>
           <% @params[:rating] = @params.dig(:rating).nil? ? 500 : @params.dig(:rating) %>
 
           <div id="evalSlider"></div><br>
-          <%= f.number_field 'min_rating' %><br><br>
-          <%= f.number_field 'max_rating' %><br>
+          <%= f.number_field 'min_rating' %>
+          <br>
+          <br>
+          <%= f.number_field 'max_rating' %>
+          <br>
           <br>
           <%= f.submit 'Search', class: 'search-btn' %>
       <% end %>
