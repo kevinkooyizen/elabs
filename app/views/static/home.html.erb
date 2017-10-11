@@ -24,7 +24,7 @@
           <h6>Team Of The Week</h6>
             <div class="team-info">
               <% if @team.present? %>
-                <img src="<%= @team.logo %>" id="avatar">
+                <img src="<%= @team.logo %>" id="avatar-home">
                 <br>
                 <br>
               <br>
@@ -35,18 +35,14 @@
         </div>
 
         <div class="player">
-          <h6>Player of the week</h6>
-          <% if @user.present? %>
-            <% if @user.player.present? %>
-              <ul>
-                <li>Avatar</li>
-                <li><%= @user.persona_name %></li>
-                <li><%= @user.player.winrate %></li>
-                <li><%= @user.teams.first.name %></li>
-                <li>Top game link</li>
-              </ul>
-            <% end %>
-          <% end %>
+          <h6>Player Of The Week</h6>
+          <br>
+          <img src="<%= @player.avatar %>" id="avatar-home">
+          <br>
+          <br>
+          <p><%= @player.persona_name %></p>
+          <p>Winrate: <%= @player.winrate %>%</p>
+          <p>Team: <%= @player.team_name %></p>
         </div>
 
         <div class="ads">
