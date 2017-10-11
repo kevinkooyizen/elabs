@@ -120,16 +120,28 @@ img {
   padding-top: 40px;
 }
 
+table {
+  border: 1px solid #FFCA2A;
+}
+
 .past-stats-table, td, th {
   border-collapse: collapse;
-  border: 1px solid #FFCA2A;
+  border-bottom: 1px solid #FFCA2A;
   width: flex;
   max-width: 100%;
   text-align: center;
 }
 
+th {
+  background-color: #FFCA2A;
+}
+
+.stattd {
+  width: 100px;
+}
+
 .itemtd {
-  width: 260px;
+  width: 255px;
 }
 
 #item-1 {
@@ -174,18 +186,20 @@ img {
 
 .lost {
   color: red;
+  font-weight: bold;
 }
 
 .won {
   color: green;
+  font-weight: bold;
 }
 
 .statname {
-  color: #FFCA2A;
+  color: white;
 }
 
 .statnumber {
-
+  font-weight: bold;
 }
   
   #kills {

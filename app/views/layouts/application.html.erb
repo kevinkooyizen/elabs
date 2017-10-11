@@ -15,7 +15,7 @@
 
   </head>
   <body>
-    <div class="opaque-box"></div>
+    <div class="opaque-box">
     <div id="navbar">
 
       <div class="left-navbar">
@@ -28,13 +28,6 @@
         <div class="player-navbar">
           <div class="user-info">
 
-            <% if @home_user.present? %>
-              <% if @home_user.player.present? %>
-                <p><%= @home_user.player.persona_name %></p>
-                <div class="avatar-img"><%= image_tag @home_user.player.avatar %></div>
-              <% end %>
-
-            <% end %>
           </div>
         </div>
 
@@ -50,9 +43,16 @@
             <% else %>
               <li><%= link_to 'STEAM SIGN-IN', oauth_path %></li>
             <% end %>
-            <% if signed_in? %>
-            <li> | <%= link_to "#{current_user.persona_name}", user_path(current_user) %></li>
-            <% end %>
+            <li>
+              <% if @user.present? %>
+                <% if signed_in? %>
+                  <img src="<%= @user["profile"]["avatarfull"] %>" id="avatar-navbar">
+                  <%= link_to "#{current_user.persona_name}", user_path(current_user), class: 'personaname-navbar' %>
+                <% else %>
+                  <%= link_to 'STEAM SIGN-IN', oauth_path %>
+                <% end %>
+              <% end %>
+            </li>
           </ul>
         </div>
       </div>
@@ -73,6 +73,6 @@
         <li><i class="fa fa-youtube-square" aria-hidden="true"></i></li>
       </ul>
     </div>
-
+   </div>
   </body>
 </html>
