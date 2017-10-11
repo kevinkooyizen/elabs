@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
 	def index
 		@teams = Team.order(rating: :desc).page params[:page]
-  	end
+	end
 
   def search
     @params = search_params.to_h
