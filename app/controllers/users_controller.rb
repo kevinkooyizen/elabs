@@ -41,7 +41,8 @@ class UsersController < ApplicationController
     end
 
     def show
-        user = User.find(params[:id])
+        user = User.find_by(id:params[:id])
+
 
         if !user.present?
             flash[:error] = 'User not exists.'
@@ -57,13 +58,13 @@ class UsersController < ApplicationController
         @teams = Enquiry.where(user_id: params[:id], status: "user")
         @team = Team.find_by(user_id: current_user.id)
         # if @team.nil?
-        #     if !Player.find_by(user_id: User.find(params[:id]).id).nil?
-        #         if !Player.find_by(user_id: User.find(params[:id]).id).team_id.nil?
-        #             @team = Team.find(Player.find_by(user_id: User.find(params[:id]).id).team_id)
+        #     if !Player.find_by(user_id: User.find_by(id:params[:id]).id).nil?
+        #         if !Player.find_by(user_id: User.find_by(id:params[:id]).id).team_id.nil?
+        #             @team = Team.find_by(id:Player.find_by(user_id: User.find_by(id:params[:id]).id).team_id)
         #         end
         #     end
         # end
-        @player = Player.find_by(user_id: User.find(params[:id]).id)
+        @player = Player.find_by(user_id: user.id)
         @heroes = @var.top_heroes[0..2].map {|x| HeroApi.new(@var.uid, x)}
     end
 

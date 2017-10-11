@@ -14,7 +14,13 @@ class TeamsController < ApplicationController
   end
 
 	def show
-		@team = Team.find(params[:id])
+		@team = Team.find_by(id:params[:id])
+
+        if @team.nil?
+            flash[:error] = 'Team does not exist'
+            return redirect_to :back
+        end
+
 		@pros = JSON.parse open("https://api.opendota.com/api/proPlayers").read
 		@enquiries_users = @team.get_enquiries_users.order('players.mmr desc')
 		# @teams = JSON.parse open("https://api.opendota.com/api/teams").read
@@ -54,11 +60,22 @@ class TeamsController < ApplicationController
 	end
 
 	def edit
-		@team = Team.find(params[:id])
+		@team = Team.find_by(id:params[:id])
+
+        if @team.nil?
+            flash[:error] = 'Team does not exist.'
+            return redirect_to teams_path
+        end
 	end
 
 	def update
-		@team = Team.find(params[:id])
+		@team = Team.find_by(id:params[:id])
+
+        if @team.nil?
+            flash[:error] = 'Team does not exist.'
+            return redirect_to teams_path
+        end
+
 		if @team.update(team_params)
 			flash[:success] = "Updated the team details successfully."
 			redirect_to team_path(@team)
@@ -69,7 +86,13 @@ class TeamsController < ApplicationController
 	end
 
 	def destroy
-		@team = Team.find(params[:id])
+		@team = Team.find_by(id:params[:id])
+
+        if @team.nil?
+            flash[:error] = 'Team does not exist.'
+            return redirect_to teams_path
+        end
+
 		@team.status = false
 		if @team.save
 			flash[:success] = "You have removed your account. Hope to see you again."
@@ -86,7 +109,12 @@ class TeamsController < ApplicationController
           return redirect_to teams_path
       end
 
-      team = Team.find(params[:id])
+      team = Team.find_by(id: params[:id])
+
+      if @team.nil?
+          flash[:error] = 'Team does not exist.'
+          return redirect_to teams_path
+      end
 
 
         if !team.present?
