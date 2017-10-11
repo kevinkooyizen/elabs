@@ -11,7 +11,7 @@ class EnquiriesController < ApplicationController
 	end
 
 	def teams_enquiries
-		@team_enquiry = Enquiry.new(user_id: params[:id], user_uid: params[:user_uid], team_id: params[:team_id],status: "user")
+		@team_enquiry = Enquiry.new(user_id: params[:id], user_uid: params[:user_uid], team_id: params[:team_id], status: "user")
 		if @team_enquiry.save
 			redirect_to user_path
 		else
