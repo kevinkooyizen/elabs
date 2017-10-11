@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
         if !user.present?
             flash[:error] = 'User not exists.'
-            return redirect_to :back
+            return redirect_back fallback_location: users_path
         end
 
         @user = ApiExtension::OpenDota.get_player_profile(uid: user.uid)
